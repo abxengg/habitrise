@@ -1,18 +1,15 @@
 ---
-import { u } from '../../lib/url';
 import Brand from './Brand.astro';
+import { settings, href } from '../../lib/content';
+const h = settings.header;
 ---
 <header class="s-nav" id="nav">
   <Brand />
   <nav id="navLinks">
-    <a href={u('/#how')}>How it works</a>
-    <a href={u('/#program')}>Program</a>
-    <a href={u('/#community')}>Community</a>
-    <a href={u('/about')}>Founder</a>
-    <a href={u('/#pricing')}>Pricing</a>
+    {h.links.map(l => <a href={href(l.href)}>{l.label}</a>)}
   </nav>
-  <a href={u('/#pricing')} class="s-btn s-btn-dark s-nav-cta">Start my streak</a>
-  <button class="s-menu" id="navToggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  <a href={href(h.buttonHref)} class="s-btn s-btn-dark s-nav-cta">{h.button}</a>
+  <button class="s-menu" id="navToggle" aria-label={h.menuLabel} aria-expanded="false"><span></span><span></span><span></span></button>
 </header>
 
 <script>

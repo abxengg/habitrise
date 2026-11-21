@@ -1,0 +1,78 @@
+---
+// Deploy status for the client: every CMS save → commit → GitHub Actions build → live site.
+// Reads the public GitHub Actions API for this repo (no login). Hidden from search engines.
+import { u } from '../lib/url';
+import Shell from '../layouts/Shell.astro';
+import Header from '../components/streak/Header.astro';
+import { streakFonts } from '../components/streak/fonts';
+import '../styles/streak.css';
+import { settings } from '../lib/content';
+const { repo, workflow } = settings.deploys;
+---
+<Shell fonts={streakFonts} title="Deployments" description="Live deployment status of the HabitRise website." noindex>
+  <Header />
+  <main class="s-dp">
+    <div class="s-wrap">
+      <div class="s-head">
+        <span class="s-eyebrow">Content Management</span>
+        <h1>Website deployments</h1>
+        <p>Every time you save in the CMS, the website rebuilds and goes live in about a minute. Watch it here.</p>
+      </div>
+      <div class="s-dp-now" id="dpNow" data-state="loading">
+        <span class="s-dp-dot"></span>
+        <div><b id="dpTitle">Checking…</b><small id="dpSub">Loading the latest deployments</small></div>
+        <div class="s-dp-actions">
+          <a class="s-btn s-btn-line" href="https://app.pagescms.org/" target="_blank" rel="noopener">Edit content</a>
+          <a class="s-btn s-btn-dark" href={u('/')} target="_blank" rel="noopener">View website</a>
+        </div>
+      </div>
+      <ol class="s-dp-list" id="dpList" aria-live="polite"></ol>
+      <p class="s-dp-foot">Updates automatically · <a href={`https://github.com/${repo}/actions`} target="_blank" rel="noopener">Full history on GitHub</a></p>
+    </div>
+  </main>
+
+  <script define:vars={{ repo, workflow }}>
+    const api = `https://api.github.com/repos/${repo}/actions/workflows/${workflow}/runs?per_page=10`;
+    const $ = id => document.getElementById(id);
+    const ago = d => { const s = Math.round((Date.now() - new Date(d)) / 1000);
+      if (s < 60) return 'just now'; if (s < 3600) return Math.round(s / 60) + ' min ago';
+      if (s < 86400) return Math.round(s / 3600) + ' h ago'; return new Date(d).toLocaleString('en-IN', { day: 'numeric', month: 'short', hour: 'numeric', minute: '2-digit' }); };
+    const dur = r => { const a = new Date(r.run_started_at || r.created_at), b = new Date(r.updated_at); const s = Math.max(0, Math.round((b - a) / 1000)); return s < 60 ? s + 's' : Math.floor(s / 60) + 'm ' + (s % 60) + 's'; };
+    const stateOf = r => r.status !== 'completed' ? (r.status === 'queued' || r.status === 'waiting' || r.status === 'pending' ? 'queued' : 'running')
+      : r.conclusion === 'success' ? 'live' : r.conclusion === 'cancelled' || r.conclusion === 'skipped' ? 'cancelled' : 'failed';
+    const label = { queued: 'Waiting to start', running: 'Updating website…', live: 'Live', failed: 'Failed', cancelled: 'Cancelled' };
+    const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+    let timer;
+
+    async function load() {
+      clearTimeout(timer);
+      let active = false;
+      try {
+        const res = await fetch(api, { headers: { Accept: 'application/vnd.github+json' } });
+        if (res.status === 403) throw new Error('GitHub rate limit reached — the page will retry in a few minutes.');
+        if (!res.ok) throw new Error('Could not reach GitHub (' + res.status + ').');
+        const { workflow_runs: runs = [] } = await res.json();
+        active = runs.some(r => r.status !== 'completed');
+        const latest = runs[0];
+        const now = $('dpNow');
+        if (latest) {
+          const st = stateOf(latest);
+          now.dataset.state = st;
+          $('dpTitle').textContent = st === 'live' ? 'Website is live and up to date' : st === 'failed' ? 'Last update failed — the previous version is still live' : label[st];
+          $('dpSub').textContent = (latest.head_commit?.message || '').split('\n')[0] + ' · ' + ago(latest.created_at);
+        } else { now.dataset.state = 'live'; $('dpTitle').textContent = 'No deployments yet'; $('dpSub').textContent = ''; }
+        $('dpList').innerHTML = runs.map(r => { const st = stateOf(r); const c = r.head_commit || {};
+          return `<li data-state="${st}"><span class="s-dp-badge">${label[st]}</span>
+            <div><b>${esc((c.message || r.display_title || '').split('\n')[0])}</b>
+            <small>${esc(c.author?.name || r.actor?.login || '')} · ${ago(r.created_at)}${r.status === 'completed' ? ' · took ' + dur(r) : ''}</small></div>
+            <a href="${r.html_url}" target="_blank" rel="noopener">Details</a></li>`; }).join('');
+      } catch (e) {
+        $('dpNow').dataset.state = 'failed'; $('dpTitle').textContent = 'Status unavailable'; $('dpSub').textContent = e.message;
+      }
+      // fast while a deploy runs, slow when idle; GitHub allows 60 anonymous requests an hour
+      timer = setTimeout(() => { if (!document.hidden) load(); }, active ? 15000 : 90000);
+    }
+    document.addEventListener('visibilitychange', () => { if (!document.hidden) load(); });
+    load();
+  </script>
+</Shell>

@@ -1,19 +1,49 @@
 ---
+// Homepage — "The Habit App" design. Every word comes from src/content/home.json
+// (plus settings.json for prices and founder.json for the coach), edited in Pages CMS.
 import { u } from '../lib/url';
-// REDESIGN 2 — "The Habit App"
-// Bright, playful, product-style (habitcoach.ai + Skool). The hero is a working
-// 21-day streak tracker; the community is presented like a Skool group card.
 import Shell from '../layouts/Shell.astro';
 import Header from '../components/streak/Header.astro';
 import Footer from '../components/streak/Footer.astro';
 import { streakFonts } from '../components/streak/fonts';
 import '../styles/streak.css';
-import { pricing, stats, audiences, savers, weeks, founder, testimonials, faqs, contact, socials, initials } from '../data/site';
+import { home as c, settings, founder, t, rich, href, initials, avatar, money } from '../lib/content';
 
+const pr = settings.pricing;
 const DONE = 14;
-const bubbleColors = ['#f8af3c', '#ff5a36', '#4f7cff', '#23c483', '#b79cff'];
+const chipColors = ['#f8af3c', '#ff5a36', '#4f7cff', '#23c483', '#b79cff'];
+const site = Astro.site!;
+const abs = (p: string) => new URL(u(p), site).href;
+
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    name: c.pricing.programName,
+    description: t(c.seo.description),
+    provider: { '@id': abs('/') + '#org' },
+    inLanguage: 'en-IN',
+    educationalLevel: 'Beginner',
+    offers: [
+      { '@type': 'Offer', category: pr.student.label, price: pr.student.price, priceCurrency: 'INR', availability: 'https://schema.org/InStock', url: abs('/register') },
+      { '@type': 'Offer', category: pr.others.label, price: pr.others.price, priceCurrency: 'INR', availability: 'https://schema.org/InStock', url: abs('/register') },
+    ],
+    hasCourseInstance: {
+      '@type': 'CourseInstance',
+      courseMode: 'Online',
+      courseWorkload: 'PT45M',
+      courseSchedule: { '@type': 'Schedule', repeatFrequency: 'Daily', repeatCount: 21, startTime: '06:00' },
+      instructor: { '@type': 'Person', name: founder.name },
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: c.faq.items.map(f => ({ '@type': 'Question', name: t(f.q), acceptedAnswer: { '@type': 'Answer', text: t(f.a) } })),
+  },
+];
 ---
-<Shell fonts={streakFonts} themeColor="#ffffff">
+<Shell fonts={streakFonts} title={c.seo.title} fullTitle description={c.seo.description} jsonLd={jsonLd}>
   <Header />
 
   <main>
@@ -21,41 +51,37 @@ const bubbleColors = ['#f8af3c', '#ff5a36', '#4f7cff', '#23c483', '#b79cff'];
     <section class="s-hero">
       <div class="s-wrap s-hero-grid">
         <div class="s-hero-copy">
-          <span class="s-badge">🔥 5,000+ streaks started</span>
-          <h1>Rise at 6.<br />Keep the <mark class="y">streak.</mark><br />Change your <mark class="b">life.</mark></h1>
-          <p>HabitRise is a 21-day live habit challenge. Show up at 6 AM, tick off your six morning habits, and let a community of early risers keep you honest.</p>
+          <span class="s-badge">{t(c.hero.badge)}</span>
+          <h1>{c.hero.line1}<br />{c.hero.line2} <mark class="y">{c.hero.line2Highlight}</mark><br />{c.hero.line3} <mark class="b">{c.hero.line3Highlight}</mark></h1>
+          <p>{t(c.hero.text)}</p>
           <div class="s-hero-ctas">
-            <a href="#pricing" class="s-btn s-btn-sun">Start for ₹{pricing.price}</a>
-            <a href="#how" class="s-btn s-btn-line">See how it works</a>
+            <a href={u('/register')} class="s-btn s-btn-sun">{t(c.hero.primaryButton)}</a>
+            <a href="#how" class="s-btn s-btn-line">{t(c.hero.secondaryButton)}</a>
           </div>
-          <ul class="s-mini">
-            <li>Live on Zoom every morning</li><li>Private Skool community</li><li>Ages 12+</li>
-          </ul>
+          <ul class="s-mini">{c.hero.points.map(p => <li>{t(p)}</li>)}</ul>
         </div>
 
         <div class="s-tracker-wrap">
-          <div class="s-sticker s1">+50 pts</div>
-          <div class="s-sticker s2">🔴 Live in 2 min</div>
-          <div class="s-sticker s3">⭐ 4.9/5</div>
-          <div class="s-tracker" id="tracker">
+          <div class="s-sticker s1">{c.tracker.stickerPoints}</div>
+          <div class="s-sticker s2">{c.tracker.stickerLive}</div>
+          <div class="s-sticker s3">{c.tracker.stickerRating}</div>
+          <div class="s-tracker" id="tracker" data-start={c.tracker.statusStart} data-growing={c.tracker.statusGrowing} data-fire={c.tracker.statusOnFire} data-done={c.tracker.statusDone}>
             <div class="s-tr-head">
               <span class="s-tr-mark"><img src={u('/img/brand/mark-black.png')} alt="" width="215" height="256" /></span>
-              <div><small>Good morning ☀️</small><b>Your 21-day streak</b></div>
+              <div><small>{c.tracker.greeting}</small><b>{c.tracker.title}</b></div>
               <svg class="s-ring" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="18" /><circle id="ring" cx="22" cy="22" r="18" /></svg>
             </div>
-            <div class="s-tr-count"><b id="count">{DONE}</b><span>/ 21 days</span><em id="flame">🔥 on fire</em></div>
-            <div class="s-days" role="group" aria-label="21-day tracker, tap a day to tick it">
+            <div class="s-tr-count"><b id="count">{DONE}</b><span>{c.tracker.ofDays}</span><em id="flame">{c.tracker.statusOnFire}</em></div>
+            <div class="s-days" role="group" aria-label={c.tracker.ariaLabel}>
               {Array.from({ length: 21 }, (_, i) => (
                 <button class:list={['s-day', { done: i < DONE, today: i === DONE }]} data-day={i + 1} aria-pressed={i < DONE ? 'true' : 'false'}>{i < DONE ? '✓' : i + 1}</button>
               ))}
             </div>
             <div class="s-tr-today">
-              <small>Today's S.A.V.E.R.S</small>
-              <div class="s-chips">
-                {savers.map((s, i) => <button class:list={['s-chip', { on: i < 4 }]}>{s.title}</button>)}
-              </div>
+              <small>{c.tracker.todayLabel}</small>
+              <div class="s-chips">{c.savers.map((s, i) => <button class:list={['s-chip', { on: i < 4 }]}>{s.title}</button>)}</div>
             </div>
-            <p class="s-tr-hint">Tap a day — this is how members track their mornings.</p>
+            <p class="s-tr-hint">{c.tracker.hint}</p>
           </div>
         </div>
       </div>
@@ -63,10 +89,9 @@ const bubbleColors = ['#f8af3c', '#ff5a36', '#4f7cff', '#23c483', '#b79cff'];
 
     <!-- audience strip -->
     <section class="s-strip">
-      <div class="s-marquee" aria-label="Who HabitRise is for">
+      <div class="s-marquee" aria-label={c.audienceStrip.ariaLabel}>
         <div class="s-marquee-track">
-          {[0, 1].map(() => audiences.map((a, i) => <span style={`--c:${bubbleColors[i]}`}>{a.title}</span>))}
-          {[0, 1].map(() => ['Early risers', 'Night owls who want out', 'Readers', 'Builders'].map((t, i) => <span style={`--c:${bubbleColors[(i + 4) % 5]}`}>{t}</span>))}
+          {[0, 1].map(() => c.audienceStrip.items.map((a, i) => <span style={`--c:${chipColors[i % 5]}`}>{a}</span>))}
         </div>
       </div>
     </section>
@@ -75,36 +100,36 @@ const bubbleColors = ['#f8af3c', '#ff5a36', '#4f7cff', '#23c483', '#b79cff'];
     <section class="s-sec" id="how">
       <div class="s-wrap">
         <div class="s-head">
-          <span class="s-eyebrow">How it works</span>
-          <h2>One morning at HabitRise.</h2>
-          <p>Three things happen every day for 21 days. That's the whole system.</p>
+          <span class="s-eyebrow">{c.how.tag}</span>
+          <h2>{c.how.title}</h2>
+          <p>{t(c.how.text)}</p>
         </div>
         <div class="s-how">
           <article class="s-card c-yellow">
-            <span class="s-step">6:00 AM</span>
-            <h3>Join the live session</h3>
-            <p>A focused 6 AM session with the founder — one topic a day, from purpose to deep work.</p>
+            <span class="s-step">{c.how.cards[0].time}</span>
+            <h3>{c.how.cards[0].title}</h3>
+            <p>{t(c.how.cards[0].text)}</p>
             <div class="s-ui s-ui-live">
-              <div class="s-video"><img src={u('/img/founder-hero.webp')} alt="" width="900" height="900" loading="lazy" /><span class="s-live-tag">● LIVE</span></div>
-              <div class="s-attendees">{testimonials.slice(0, 5).map(t => <i style={`background:${t.color}`}>{initials(t.name)}</i>)}<span>+214 rising</span></div>
+              <div class="s-video"><img src={u('/img/founder-hero.webp')} alt="" width="900" height="900" loading="lazy" /><span class="s-live-tag">{c.how.liveTag}</span></div>
+              <div class="s-attendees">{c.stories.items.slice(0, 5).map((s, i) => <i style={`background:${avatar(i)}`}>{initials(s.name)}</i>)}<span>{c.how.attendees}</span></div>
             </div>
           </article>
           <article class="s-card c-blue">
-            <span class="s-step">6:45 AM</span>
-            <h3>Do your six habits</h3>
-            <p>Silence, Affirmations, Visualisation, Exercise, Reading, Scribing — the S.A.V.E.R.S routine.</p>
+            <span class="s-step">{c.how.cards[1].time}</span>
+            <h3>{c.how.cards[1].title}</h3>
+            <p>{t(c.how.cards[1].text)}</p>
             <div class="s-ui s-ui-list">
-              {savers.slice(0, 4).map((s, i) => <div class:list={{ done: i < 3 }}><i>{i < 3 ? '✓' : ''}</i>{s.title}</div>)}
+              {c.savers.slice(0, 4).map((s, i) => <div class:list={{ done: i < 3 }}><i>{i < 3 ? '✓' : ''}</i>{s.title}</div>)}
             </div>
           </article>
           <article class="s-card c-mint">
-            <span class="s-step">7:00 AM</span>
-            <h3>Check in with the crew</h3>
-            <p>Post your morning in the Skool community. Earn points, climb levels, get noticed.</p>
+            <span class="s-step">{c.how.cards[2].time}</span>
+            <h3>{c.how.cards[2].title}</h3>
+            <p>{t(c.how.cards[2].text)}</p>
             <div class="s-ui s-ui-post">
-              <div><i style="background:#2d9e5f">PK</i><b>Praveen</b><small>Day 14</small></div>
-              <p>All six SAVERS done before 6:30 ✅</p>
-              <span>👍 42</span><span>💬 9</span><span class="pts">+10 pts</span>
+              <div><i style={`background:${avatar(0)}`}>{initials(c.how.post.name)}</i><b>{c.how.post.name}</b><small>{c.how.post.day}</small></div>
+              <p>{c.how.post.text}</p>
+              <span>{c.how.post.likes}</span><span>{c.how.post.comments}</span><span class="pts">{c.how.post.points}</span>
             </div>
           </article>
         </div>
@@ -114,9 +139,7 @@ const bubbleColors = ['#f8af3c', '#ff5a36', '#4f7cff', '#23c483', '#b79cff'];
     <!-- stats bento -->
     <section class="s-sec s-tight">
       <div class="s-wrap s-bento">
-        {stats.map((s, i) => (
-          <div class={`s-stat t${i}`}><b>{s.value.toLocaleString('en-IN')}{s.suffix}</b><span>{s.label}</span></div>
-        ))}
+        {c.stats.map((s, i) => <div class={`s-stat t${i}`}><b>{s.value}</b><span>{s.label}</span></div>)}
       </div>
     </section>
 
@@ -124,23 +147,21 @@ const bubbleColors = ['#f8af3c', '#ff5a36', '#4f7cff', '#23c483', '#b79cff'];
     <section class="s-sec s-program" id="program">
       <div class="s-wrap">
         <div class="s-head">
-          <span class="s-eyebrow">The program</span>
-          <h2>21 days, 3 levels.</h2>
-          <p>Each week unlocks the next. Open to everyone aged 12 and above.</p>
+          <span class="s-eyebrow">{c.program.tag}</span>
+          <h2>{c.program.title}</h2>
+          <p>{t(c.program.text)}</p>
         </div>
         <div class="s-tabs" role="tablist">
-          {weeks.map((w, i) => (
+          {c.program.weeks.map((w, i) => (
             <button role="tab" class:list={['s-tab', { on: i === 0 }]} data-tab={i} aria-selected={i === 0 ? 'true' : 'false'}>
-              <small>Level {i + 1} · {w.days}</small>{w.title}
+              <small>{c.program.levelLabel} {i + 1} · {w.days}</small>{w.title}
             </button>
           ))}
         </div>
-        {weeks.map((w, wi) => (
+        {c.program.weeks.map((w, wi) => (
           <div class:list={['s-panel', { on: wi === 0 }]} data-panel={wi} role="tabpanel">
-            <p class="s-panel-intro">{w.text}</p>
-            <ol>
-              {w.lessons.map((l, li) => <li><span>Day {wi * 7 + li + 1}</span>{l}</li>)}
-            </ol>
+            <p class="s-panel-intro">{t(w.text)}</p>
+            <ol>{w.lessons.map((l, li) => <li><span>{c.program.dayLabel} {wi * 7 + li + 1}</span>{l}</li>)}</ol>
           </div>
         ))}
       </div>
@@ -150,32 +171,28 @@ const bubbleColors = ['#f8af3c', '#ff5a36', '#4f7cff', '#23c483', '#b79cff'];
     <section class="s-sec" id="community">
       <div class="s-wrap">
         <div class="s-head s-center">
-          <span class="s-eyebrow">The community</span>
-          <h2>Your 6 AM club lives on Skool.</h2>
-          <p>Every member gets the private HabitRise group: daily check-ins, the classroom, the live calendar and a leaderboard.</p>
+          <span class="s-eyebrow">{c.community.tag}</span>
+          <h2>{c.community.title}</h2>
+          <p>{t(c.community.text)}</p>
         </div>
         <div class="s-skool">
           <article class="s-group">
             <div class="s-cover"><img src={u('/img/brand/mark-white.png')} alt="" width="215" height="256" /></div>
             <div class="s-group-body">
               <span class="s-group-icon"><img src={u('/img/brand/mark-black.png')} alt="" width="215" height="256" /></span>
-              <h3>HabitRise 6 AM Club</h3>
-              <p class="s-meta">🔒 Private · 5,000+ members · ₹{pricing.price} for 21 days</p>
-              <p>Build discipline with people who wake up when you do. Live sessions every morning at 6:00 AM IST, lessons and replays in the classroom, and a feed full of early risers.</p>
-              <div class="s-members">{testimonials.map(t => <i style={`background:${t.color}`}>{initials(t.name)}</i>)}<span>and 5,000+ more</span></div>
-              <a href="#pricing" class="s-btn s-btn-dark">Join the group</a>
+              <h3>{c.community.groupName}</h3>
+              <p class="s-meta">{t(c.community.groupMeta)}</p>
+              <p>{t(c.community.groupText)}</p>
+              <div class="s-members">{c.stories.items.map((s, i) => <i style={`background:${avatar(i)}`}>{initials(s.name)}</i>)}<span>{c.community.membersMore}</span></div>
+              <a href={u('/register')} class="s-btn s-btn-dark">{c.community.button}</a>
             </div>
           </article>
           <aside class="s-board">
-            <h4>Leaderboard · this week</h4>
-            <ol>
-              {testimonials.slice(0, 5).map((t, i) => <li><span>{i + 1}</span><i style={`background:${t.color}`}>{initials(t.name)}</i>{t.name.split(' ')[0]}<b>+{212 - i * 17}</b></li>)}
-            </ol>
-            <h4>Levels</h4>
-            <div class="s-levels">
-              {[['1', 'Early Riser'], ['3', 'Habit Builder'], ['5', 'Disciplined'], ['9', 'HabitRise Leader']].map(([n, t]) => <span><i>{n}</i>{t}</span>)}
-            </div>
-            <p class="s-note">Illustrative preview</p>
+            <h4>{c.community.leaderboardTitle}</h4>
+            <ol>{c.stories.items.slice(0, 5).map((s, i) => <li><span>{i + 1}</span><i style={`background:${avatar(i)}`}>{initials(s.name)}</i>{s.name.split(' ')[0]}<b>+{212 - i * 17}</b></li>)}</ol>
+            <h4>{c.community.levelsTitle}</h4>
+            <div class="s-levels">{c.community.levels.map(l => <span><i>{l.level}</i>{l.name}</span>)}</div>
+            <p class="s-note">{c.community.note}</p>
           </aside>
         </div>
       </div>
@@ -186,13 +203,13 @@ const bubbleColors = ['#f8af3c', '#ff5a36', '#4f7cff', '#23c483', '#b79cff'];
       <div class="s-wrap s-founder-card">
         <div class="s-founder-img"><img src={u('/img/founder-sitting.webp')} alt={founder.name} width="576" height="1024" loading="lazy" /></div>
         <div>
-          <span class="s-eyebrow">Your coach</span>
-          <h2>Hi, I'm Mani 👋</h2>
+          <span class="s-eyebrow">{c.founderSection.tag}</span>
+          <h2>{c.founderSection.title}</h2>
           <p class="s-role">{founder.name} · {founder.role}</p>
           <blockquote>{founder.quote}</blockquote>
-          <p>{founder.bio[1]}</p>
-          <div class="s-creds">{founder.credentials.map((c, i) => <span style={`--c:${bubbleColors[i % 5]}`}>{c}</span>)}</div>
-          <a href={u('/about')} class="s-btn s-btn-line">Read my story →</a>
+          <p>{t(founder.homeBio)}</p>
+          <div class="s-creds">{founder.credentials.map((cr, i) => <span style={`--c:${chipColors[i % 5]}`}>{cr}</span>)}</div>
+          <a href={u('/about')} class="s-btn s-btn-line">{c.founderSection.button}</a>
         </div>
       </div>
     </section>
@@ -201,16 +218,16 @@ const bubbleColors = ['#f8af3c', '#ff5a36', '#4f7cff', '#23c483', '#b79cff'];
     <section class="s-sec" id="stories">
       <div class="s-wrap s-chat-grid">
         <div class="s-head">
-          <span class="s-eyebrow">Stories</span>
-          <h2>Straight from the group chat.</h2>
-          <p>What members say once the 21 days are done.</p>
+          <span class="s-eyebrow">{c.stories.tag}</span>
+          <h2>{c.stories.title}</h2>
+          <p>{t(c.stories.text)}</p>
         </div>
         <div class="s-chat">
-          <div class="s-chat-top"><b>HabitRise Members</b><small>5,000+ members</small></div>
-          {testimonials.map((t, i) => (
+          <div class="s-chat-top"><b>{c.stories.chatTitle}</b><small>{c.stories.chatMembers}</small></div>
+          {c.stories.items.map((s, i) => (
             <div class:list={['s-msg', { right: i % 2 === 1 }]}>
-              <i style={`background:${t.color}`}>{initials(t.name)}</i>
-              <div><small>{t.name} · {t.role.split(' · ')[0]}</small><p>{t.quote}</p><span>{t.result}</span></div>
+              <i style={`background:${avatar(i)}`}>{initials(s.name)}</i>
+              <div><small>{s.name} · {s.role}</small><p>{s.quote}</p><span>{s.result}</span></div>
             </div>
           ))}
         </div>
@@ -221,32 +238,30 @@ const bubbleColors = ['#f8af3c', '#ff5a36', '#4f7cff', '#23c483', '#b79cff'];
     <section class="s-sec s-pricing" id="pricing">
       <div class="s-wrap">
         <div class="s-head">
-          <span class="s-eyebrow">Early bird</span>
-          <h2>Your ticket to 6 AM.</h2>
-          <p>One seat in the next 21-day cohort. Everything included, paid once.</p>
+          <span class="s-eyebrow">{c.pricing.tag}</span>
+          <h2>{c.pricing.title}</h2>
+          <p>{t(c.pricing.text)}</p>
         </div>
         <div class="s-ticket">
           <div class="s-ticket-main">
             <div class="s-ticket-top">
-              <span class="s-ticket-brand"><img src={u('/img/brand/mark-black.png')} alt="" width="215" height="256" />HABITRISE</span>
-              <span>Admit one · Cohort pass</span>
+              <span class="s-ticket-brand"><img src={u('/img/brand/mark-black.png')} alt="" width="215" height="256" />{settings.brand.wordmark}</span>
+              <span>{c.pricing.ticketLabel}</span>
             </div>
-            <h3>The 21-Day HabitRise Challenge</h3>
-            <dl class="s-ticket-meta">
-              <div><dt>Starts</dt><dd data-next-monday>Monday</dd></div>
-              <div><dt>Time</dt><dd>6:00 AM IST</dd></div>
-              <div><dt>Duration</dt><dd>21 days</dd></div>
-              <div><dt>Where</dt><dd>Zoom + Skool</dd></div>
-            </dl>
-            <ul class="s-ticket-incl">{pricing.includes.map(i => <li>{i}</li>)}</ul>
+            <h3>{c.pricing.programName}</h3>
+            <dl class="s-ticket-meta">{c.pricing.details.map(d => <div><dt>{d.label}</dt><dd set:html={rich(d.value)} /></div>)}</dl>
+            <ul class="s-ticket-incl">{pr.includes.map(i => <li>{t(i)}</li>)}</ul>
           </div>
           <div class="s-ticket-stub">
-            <span class="s-ticket-tag">Early bird · save ₹{pricing.regular - pricing.price}</span>
-            <div class="s-ticket-price"><b>₹{pricing.price}</b><s>₹{pricing.regular}</s></div>
-            <p>One-time payment</p>
-            <a href={pricing.joinUrl} class="s-btn s-btn-dark s-wide">Reserve my seat</a>
-            <p class="s-ticket-pay">UPI · GPay · PhonePe · Paytm</p>
-            <div class="s-ticket-code" aria-hidden="true"><i></i><span>No. HR-21 · 0699</span></div>
+            <span class="s-ticket-tag">{c.pricing.stubTag}</span>
+            <div class="s-ticket-plans">
+              <div><small>{pr.student.label}</small><b>{money(pr.student.price)}</b></div>
+              <div><small>{pr.others.label}</small><b>{money(pr.others.price)}</b></div>
+            </div>
+            <p class="s-ticket-was">{c.pricing.regularLabel} <s>{money(pr.originalPrice)}</s></p>
+            <a href={u('/register')} class="s-btn s-btn-dark s-wide">{c.pricing.button}</a>
+            <p class="s-ticket-pay">{c.pricing.payNote}</p>
+            <div class="s-ticket-code" aria-hidden="true"><i></i><span>{c.pricing.serial}</span></div>
           </div>
         </div>
       </div>
@@ -255,8 +270,8 @@ const bubbleColors = ['#f8af3c', '#ff5a36', '#4f7cff', '#23c483', '#b79cff'];
     <!-- faq -->
     <section class="s-sec" id="faq">
       <div class="s-wrap">
-        <div class="s-head s-center"><span class="s-eyebrow">FAQ</span><h2>Good questions.</h2></div>
-        <div class="s-faq">{faqs.map(f => <details><summary>{f.q}</summary><p>{f.a}</p></details>)}</div>
+        <div class="s-head s-center"><span class="s-eyebrow">{c.faq.tag}</span><h2>{c.faq.title}</h2></div>
+        <div class="s-faq">{c.faq.items.map(f => <details><summary>{t(f.q)}</summary><p>{t(f.a)}</p></details>)}</div>
       </div>
     </section>
 
@@ -266,9 +281,9 @@ const bubbleColors = ['#f8af3c', '#ff5a36', '#4f7cff', '#23c483', '#b79cff'];
         <div class="s-final-box">
           <img class="s-final-mark" src={u('/img/brand/mark-white.png')} alt="" width="215" height="256" />
           <div class="s-final-dots" aria-hidden="true">{Array.from({ length: 21 }, (_, i) => <i class:list={{ on: i === 0 }}></i>)}</div>
-          <h2>Day 1 starts <span data-next-monday>Monday</span>.</h2>
-          <p>Your streak is one tap away. Build the system.</p>
-          <a href="#pricing" class="s-btn s-btn-dark">Start my streak</a>
+          <h2>{c.final.title} <span data-next-monday>Monday</span>{c.final.titleEnd}</h2>
+          <p>{t(c.final.text)}</p>
+          <a href={u('/register')} class="s-btn s-btn-dark">{c.final.button}</a>
         </div>
       </div>
     </section>
@@ -279,14 +294,16 @@ const bubbleColors = ['#f8af3c', '#ff5a36', '#4f7cff', '#23c483', '#b79cff'];
   <script>
     const $ = (s: string) => document.querySelector(s) as HTMLElement;
     const $$ = (s: string) => [...document.querySelectorAll(s)] as HTMLElement[];
-    // streak tracker
+    // streak tracker (status words come from the CMS via data-* attributes)
+    const tracker = $('#tracker');
     const ring = $('#ring');
     const C = 2 * Math.PI * 18;
     const update = () => {
       const n = $$('.s-day.done').length;
       $('#count').textContent = String(n);
       ring.style.strokeDasharray = `${(n / 21) * C} ${C}`;
-      $('#flame').textContent = n >= 21 ? '🏆 new you' : n >= 7 ? '🔥 on fire' : n > 0 ? '🌱 growing' : 'Day 1 awaits';
+      const d = tracker.dataset;
+      $('#flame').textContent = (n >= 21 ? d.done : n >= 7 ? d.fire : n > 0 ? d.growing : d.start) ?? '';
     };
     $$('.s-day').forEach(d => d.addEventListener('click', () => {
       const on = d.classList.toggle('done');

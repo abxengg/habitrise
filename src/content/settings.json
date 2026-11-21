@@ -1,0 +1,121 @@
+{
+  "brand": {
+    "name": "HabitRise",
+    "tagline": "Build the system",
+    "wordmark": "HABITRISE",
+    "taglineUpper": "BUILD THE SYSTEM"
+  },
+  "pricing": {
+    "originalPrice": 999,
+    "currencySymbol": "₹",
+    "student": {
+      "label": "Students",
+      "price": 399,
+      "note": "School & college students. You'll be asked for your college or school name.",
+      "paymentUrl": ""
+    },
+    "others": {
+      "label": "Everyone else",
+      "price": 699,
+      "note": "Working professionals, entrepreneurs, career builders.",
+      "paymentUrl": ""
+    },
+    "includes": [
+      "21 days of LIVE 6 AM sessions",
+      "Exclusive HabitRise community on Skool",
+      "Daily accountability tracking",
+      "The S.A.V.E.R.S methodology framework",
+      "Direct Q&A with the founder",
+      "Lifetime access to session recordings",
+      "Custom habit tracking templates"
+    ]
+  },
+  "forms": {
+    "endpoint": ""
+  },
+  "contact": {
+    "email": "manimitit@gmail.com",
+    "whatsapp": "https://wa.me/918695866684",
+    "whatsappLabel": "Chat on WhatsApp"
+  },
+  "socials": {
+    "instagram": "https://www.instagram.com/habitrise.in",
+    "youtube": "https://youtube.com/@manikandanrs21",
+    "linkedin": "https://www.linkedin.com/in/manikandan-pmp",
+    "facebook": "https://www.facebook.com/share/199ULRgvBw/"
+  },
+  "header": {
+    "links": [
+      { "label": "How it works", "href": "/#how" },
+      { "label": "Program", "href": "/#program" },
+      { "label": "Services", "href": "/services" },
+      { "label": "Founder", "href": "/about" },
+      { "label": "Pricing", "href": "/#pricing" }
+    ],
+    "button": "Register",
+    "buttonHref": "/register",
+    "menuLabel": "Open menu"
+  },
+  "footer": {
+    "columns": [
+      {
+        "title": "Program",
+        "links": [
+          { "label": "How it works", "href": "/#how" },
+          { "label": "21 days", "href": "/#program" },
+          { "label": "Community", "href": "/#community" },
+          { "label": "Pricing", "href": "/#pricing" },
+          { "label": "Register", "href": "/register" }
+        ]
+      },
+      {
+        "title": "About",
+        "links": [
+          { "label": "Founder story", "href": "/about" },
+          { "label": "Services", "href": "/services" },
+          { "label": "Stories", "href": "/#stories" },
+          { "label": "FAQ", "href": "/#faq" }
+        ]
+      },
+      {
+        "title": "Follow",
+        "links": [
+          { "label": "Instagram", "href": "https://www.instagram.com/habitrise.in" },
+          { "label": "YouTube", "href": "https://youtube.com/@manikandanrs21" },
+          { "label": "LinkedIn", "href": "https://www.linkedin.com/in/manikandan-pmp" },
+          { "label": "Facebook", "href": "https://www.facebook.com/share/199ULRgvBw/" }
+        ]
+      },
+      {
+        "title": "Contact",
+        "links": [
+          { "label": "Email", "href": "mailto:manimitit@gmail.com" },
+          { "label": "WhatsApp", "href": "https://wa.me/918695866684" }
+        ]
+      }
+    ],
+    "copyright": "© {year} HabitRise · Build the system.",
+    "legal": [
+      { "label": "Privacy", "href": "https://habitrise.in/privacy" },
+      { "label": "Terms", "href": "https://habitrise.in/terms" }
+    ]
+  },
+  "seo": {
+    "siteUrl": "https://habitrise.in",
+    "defaultTitle": "HabitRise | Build the System — The 21-Day 6 AM Habit Challenge",
+    "titleSuffix": " | HabitRise",
+    "defaultDescription": "Join HabitRise, India's 21-day live 6 AM habit challenge. Master the S.A.V.E.R.S morning routine with live Zoom sessions and a private Skool community. Students ₹399, others ₹699.",
+    "keywords": "habit challenge, 6 AM routine, morning routine, S.A.V.E.R.S, miracle morning India, discipline course, habit coach Tamil Nadu, productivity for students, HabitRise",
+    "ogImage": "/og-image.png",
+    "ogImageAlt": "HabitRise — Build the system. The 21-day 6 AM habit challenge.",
+    "locale": "en_IN",
+    "twitterHandle": ""
+  },
+  "deploys": {
+    "repo": "abxengg/habitrise",
+    "workflow": "pages.yml"
+  },
+  "dates": {
+    "nextCohortPrefix": "Monday, "
+  }
+}

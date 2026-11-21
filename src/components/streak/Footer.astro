@@ -1,33 +1,33 @@
 ---
-import { u } from '../../lib/url';
 import Brand from './Brand.astro';
-import { contact, socials } from '../../data/site';
+import { settings, href, t } from '../../lib/content';
+const f = settings.footer;
+const external = (h: string) => /^https?:/.test(h);
 ---
 <footer class="s-foot">
   <div class="s-wrap">
     <div class="s-foot-top">
       <Brand tone="light" tagline class="s-brand-big" />
       <div class="s-foot-cols">
-        <div><h4>Program</h4><a href={u('/#how')}>How it works</a><a href={u('/#program')}>21 days</a><a href={u('/#community')}>Community</a><a href={u('/#pricing')}>Pricing</a></div>
-        <div><h4>About</h4><a href={u('/about')}>Founder story</a><a href={u('/#stories')}>Stories</a><a href={u('/#faq')}>FAQ</a></div>
-        <div><h4>Follow</h4><a href={socials.instagram}>Instagram</a><a href={socials.youtube}>YouTube</a><a href={socials.linkedin}>LinkedIn</a><a href={socials.facebook}>Facebook</a></div>
-        <div><h4>Contact</h4><a href={`mailto:${contact.email}`}>Email</a><a href={contact.whatsapp}>WhatsApp</a></div>
+        {f.columns.map(c => (
+          <div><h4>{c.title}</h4>{c.links.map(l => <a href={href(l.href)} target={external(l.href) ? '_blank' : undefined} rel={external(l.href) ? 'noopener' : undefined}>{l.label}</a>)}</div>
+        ))}
       </div>
     </div>
     <div class="s-foot-bottom">
-      <small>© {new Date().getFullYear()} HabitRise · Build the system.</small>
-      <small><a href="https://habitrise.in/privacy">Privacy</a> · <a href="https://habitrise.in/terms">Terms</a></small>
+      <small>{t(f.copyright)}</small>
+      <small>{f.legal.map((l, i) => <>{i > 0 && ' · '}<a href={href(l.href)}>{l.label}</a></>)}</small>
     </div>
   </div>
 </footer>
-<a class="s-wa" href={contact.whatsapp} target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
-  <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.3-.5.1-1 .1-3.3-.8-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg>
+<a class="s-wa" href={settings.contact.whatsapp} target="_blank" rel="noopener" aria-label={settings.contact.whatsappLabel}>
+  <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.3-.5.1-1 .1-3.3-.8-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg>
 </a>
 
-<script>
-  // next cohort = next Monday (IST)
+<script define:vars={{ prefix: settings.dates.nextCohortPrefix }}>
+  // next cohort = next Monday (IST), filled into every [data-next-monday]
   const now = new Date();
   const ist = new Date(now.getTime() + (now.getTimezoneOffset() + 330) * 60000);
   const mon = new Date(ist); mon.setDate(ist.getDate() + (((8 - ist.getDay()) % 7) || 7));
-  document.querySelectorAll('[data-next-monday]').forEach(el => (el.textContent = 'Monday, ' + mon.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })));
+  document.querySelectorAll('[data-next-monday]').forEach(el => (el.textContent = prefix + mon.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })));
 </script>

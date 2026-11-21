@@ -1,14 +1,15 @@
 ---
-import { u } from '../../lib/url';
-// HabitRise lockup: the stair "H" mark + the condensed HABITRISE wordmark.
+// HabitRise lockup: the stair "H" mark + the condensed wordmark (text from settings.json).
 // tone="dark" for light backgrounds (black H), tone="light" for dark backgrounds (white H).
+import { u } from '../../lib/url';
+import { settings } from '../../lib/content';
 interface Props { tone?: 'dark' | 'light'; tagline?: boolean; class?: string }
 const { tone = 'dark', tagline = false, class: cls } = Astro.props;
 ---
-<a href={u('/')} class:list={['s-brand', `s-brand-${tone}`, cls]} aria-label="HabitRise home">
+<a href={u('/')} class:list={['s-brand', `s-brand-${tone}`, cls]} aria-label={`${settings.brand.name} home`}>
   <img src={u(`/img/brand/mark-${tone === 'dark' ? 'black' : 'white'}.png`)} alt="" width="215" height="256" />
   <span class="s-word">
-    <span>HABITRISE</span>
-    {tagline && <small>BUILD THE SYSTEM</small>}
+    <span>{settings.brand.wordmark}</span>
+    {tagline && <small>{settings.brand.taglineUpper}</small>}
   </span>
 </a>

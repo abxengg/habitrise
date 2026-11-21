@@ -1,69 +1,92 @@
 # HabitRise website
 
-Marketing site for HabitRise, the 21-day 6 AM habit challenge, built with [Astro](https://astro.build).
-It builds to plain static HTML/CSS (about 240 KB in total), so it can be hosted free on most static hosts.
+Website for HabitRise, the 21-day 6 AM habit challenge, built with [Astro](https://astro.build) as a plain static site.
+Live preview: **https://abxengg.github.io/habitrise/**
 
-## Run locally
+| Page | What it is |
+|---|---|
+| `/` | Home: hero streak tracker, how it works, the program, community, founder, stories, early-bird ticket, FAQ |
+| `/register` | "The 6 AM Times" newspaper page: two price classifieds + a clip-out registration coupon → Razorpay |
+| `/services` | Services (placeholder copy for now) + "I'm interested" form |
+| `/about` | Founder story |
+| `/deploys` | Live deployment status for the CMS (hidden from search engines) |
+
+## Content Management for HabitRise (no code needed)
+
+**Every word on the site lives in `src/content/*.json`** and is edited in [Pages CMS](https://app.pagescms.org),
+configured by [`.pages.yml`](.pages.yml). Saving in the CMS commits to this repo; the GitHub Actions workflow rebuilds
+the site and it is live in about a minute.
+
+1. **Give the client access (once).** They need a free GitHub account. Add it to the repo
+   (*Settings → Collaborators → Add people*, role **Write**), then have them open <https://app.pagescms.org>,
+   **Sign in with GitHub**, install the Pages CMS app on `abxengg/habitrise` when asked, and pick the repo.
+2. **Edit.** The sidebar lists: ⚙️ Site settings, prices & payment · 🏠 Home page · 👤 Founder · 📖 Founder page ·
+   🧭 Services page · 📰 Register page. Change any field → **Save**.
+3. **Watch it go live.** Open **`/deploys`** on the site: it shows *Updating website…* while the build runs and
+   *Website is live and up to date* when done (each save is listed with who made it and how long it took). If a
+   build fails, the previous version stays live.
+
+Text can use placeholders that fill in automatically, so prices only ever change in one place:
+`{currency}` `{studentPrice}` `{othersPrice}` `{originalPrice}` `{year}` `{nextMonday}` (the next cohort date).
+
+### Prices and payment (Razorpay)
+
+*Site settings → Prices & payment links*: Students and Everyone-else prices, the struck-through regular price, and a
+**Razorpay payment link per plan**. After someone submits the registration coupon, their details are saved and they
+are sent to the link for the plan they chose. Until a link is pasted, they see "we'll send your payment link on
+WhatsApp" instead.
+
+### Forms → Google Sheet + email
+
+Registration and Interest submissions are saved to a Google Sheet **first**, then emailed to the client. The sheet's
+**Email status** column shows `sent`, or `failed: <reason>` (the row is kept either way). One-time setup:
+[`scripts/google-apps-script/SETUP.md`](scripts/google-apps-script/SETUP.md) — then paste the Web app URL into
+*Site settings → Forms → Form receiver URL*. Until then the forms politely point people to WhatsApp.
+
+## SEO
+
+- Per-page title and description from each page's **SEO** block in the CMS (defaults in Site settings → SEO).
+- Canonical URLs, `en-IN`, Open Graph + Twitter cards with a 1200×630 share image (`public/og-image.png`,
+  re-render with `node scripts/og/render.mjs`).
+- Structured data (JSON-LD): Organization, WebSite, Course with both price offers, FAQPage, founder Person/ProfilePage,
+  Services, Breadcrumbs.
+- `/sitemap.xml`, `/robots.txt` (keeps `/deploys` out), web manifest, favicons, custom 404.
+- Note: on the GitHub Pages preview the site is in a sub-folder, where crawlers ignore `robots.txt`; it takes full
+  effect once `habitrise.in` points at the site. Submit `https://habitrise.in/sitemap.xml` in Google Search Console then.
+- No star ratings are marked up for Google: the 4.9/5 figure has no verifiable review data behind it.
+
+## For developers
 
 ```bash
 npm install
 npm run dev        # http://localhost:4321
+npm run build      # static site in dist/
 ```
 
-## Build
-
-```bash
-npm run build      # outputs static site to dist/
-npm run preview    # serve dist/ locally
-```
-
-## Where to edit things
-
-The live design is "The Habit App" (bright, product-style, with a 21-day streak tracker in the hero).
-
-| What | File |
+| What | Where |
 |---|---|
-| Copy, prices, links, testimonials, FAQ, founder story | `src/data/site.ts` |
-| Homepage sections and their order | `src/pages/index.astro` |
-| Founder page (`/about`) | `src/pages/about.astro` |
-| Header, footer, logo lockup | `src/components/streak/Header.astro`, `Footer.astro`, `Brand.astro` |
-| Colours, fonts, spacing (tokens at the top) | `src/styles/streak.css` (fonts list in `src/components/streak/fonts.ts`) |
-| Page `<head>`: title, meta, favicon | `src/layouts/Shell.astro` |
-| Logo files | `public/img/brand/` (`mark-black.png` for light backgrounds, `mark-white.png` for dark; original sheets kept alongside) |
-| Other images | `public/img/` |
+| All text | `src/content/*.json` (schema for the CMS in `.pages.yml` — add a field there when you add a key) |
+| Loading content, placeholders | `src/lib/content.ts` (`t()` plain text, `rich()` HTML with the live date, `href()` links) |
+| Pages | `src/pages/*.astro`; header/footer/logo in `src/components/streak/` |
+| Styles | `src/styles/streak.css` (site), `src/styles/register.css` (newspaper page) |
+| Form handling | `src/scripts/forms.ts`; receiver in `scripts/google-apps-script/Code.gs` |
+| `<head>`, SEO, JSON-LD | `src/layouts/Shell.astro` |
+| Logo files | `public/img/brand/` (`mark-black.png` on light, `mark-white.png` on dark; original sheets kept) |
 
-**Brand:** the HabitRise mark is the stair "H". Its amber is `--sun` (`#f8af3c`) in `streak.css`; keep the mark off amber
-backgrounds, where its steps disappear. The HABITRISE wordmark is set in Anton; the tagline is "Build the system".
+**Brand:** the stair "H" mark; amber `#f8af3c`; HABITRISE wordmark in Anton; tagline "Build the system".
 
-The other design options the client was shown live on their own branches (`design-b-sunrise`, `design-c-midnight`,
-`redesign-dawn`, `redesign-founder`, `redesign-minimal`). The older components in `src/components/*.astro`,
-`src/layouts/Base.astro` and `src/styles/global.css` belong to the first design and are not used by the live pages.
+**Base path:** GitHub Pages serves the site under `/habitrise/`, so internal links and images go through `u()`
+(`src/lib/url.ts`) or `href()`. The Pages workflow sets `SITE_URL`/`BASE_PATH`; a normal build targets
+`https://habitrise.in` at the root.
 
-## Live preview (GitHub Pages)
-
-Every push to `main` builds and publishes the site to **https://abxengg.github.io/habitrise/** via
-`.github/workflows/pages.yml`. That build sets `SITE_URL` and `BASE_PATH=/habitrise`; links and images go through
-`u()` in `src/lib/url.ts`, so the same code also works at a domain root. Use `u('/path')` for any new internal link
-or image.
-
-## Deploy (all free)
-
-Every host uses the same settings: **build command** `npm run build`, **output directory** `dist`, Node 22.
-
-- **Cloudflare Pages** (recommended: free unlimited bandwidth, fast in India):
-  push to GitHub → Cloudflare dashboard → Workers & Pages → Create → Pages → connect repo → framework preset "Astro".
-- **Netlify**: push to GitHub → "Add new site" → import repo (Astro is auto-detected).
-  Or with no git: `npm run build`, then drag the `dist/` folder onto app.netlify.com/drop.
-- **Vercel**: push to GitHub → "Add New Project" → import repo (auto-detected).
-- **GitHub Pages**: Settings → Pages → Source "GitHub Actions" → use the official Astro workflow.
-
-Custom domain: point `habitrise.in` at whichever host you pick (each has a "Custom domains" page).
-`site` in `astro.config.mjs` is already set to `https://habitrise.in`.
+Other design options shown to the client live on branches `design-b-sunrise`, `design-c-midnight`, `redesign-dawn`,
+`redesign-founder`, `redesign-minimal`.
 
 ## Before launch
 
-- [ ] Confirm the testimonials in `src/data/site.ts` are from real members (copied from the old site).
-- [ ] Replace the illustrative Skool group card and leaderboard in `src/pages/index.astro` with real details or a screenshot, if available.
-- [ ] Confirm "Reserve my spot" (`pricing.joinUrl`) still points at the live registration/UPI page.
-- [ ] Have the founder review the `/about` story text (`founder.story`, `founder.coaching`) — it was drafted from the old site's copy.
-- [ ] Add FAQ answers for refunds, missed sessions and language once the client confirms them.
+- [ ] Connect the forms (Google Sheet setup above) and paste both Razorpay payment links in the CMS.
+- [ ] Add the client's GitHub account to the repo so they can use the CMS.
+- [ ] Confirm the testimonials are from real members (copied from the old site).
+- [ ] Replace the placeholder Services copy and the illustrative Skool card/leaderboard with real details.
+- [ ] Founder to review the story text (Founder in the CMS).
+- [ ] Point `habitrise.in` at the site, then submit the sitemap in Google Search Console.

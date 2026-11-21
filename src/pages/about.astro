@@ -1,67 +1,87 @@
 ---
+// Founder story. Text: src/content/about.json (page copy) + founder.json (the person).
 import { u } from '../lib/url';
-// Founder story, in the HabitRise ("Habit App") design.
 import Shell from '../layouts/Shell.astro';
 import Header from '../components/streak/Header.astro';
 import Footer from '../components/streak/Footer.astro';
 import { streakFonts } from '../components/streak/fonts';
 import '../styles/streak.css';
-import { founder, stats, pricing } from '../data/site';
+import { about as c, founder, home, settings, t } from '../lib/content';
 
 const tones = ['c-yellow', 'c-blue', 'c-mint', 'c-lilac'];
 const chipColors = ['#f8af3c', '#ff5a36', '#4f7cff', '#23c483', '#b79cff'];
+const site = Astro.site!;
+const abs = (p: string) => new URL(u(p), site).href;
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ProfilePage',
+    mainEntity: {
+      '@type': 'Person',
+      name: founder.name,
+      alternateName: founder.shortName,
+      jobTitle: founder.jobTitle,
+      description: t(founder.homeBio),
+      image: abs('/img/founder-about.webp'),
+      worksFor: { '@id': abs('/') + '#org' },
+      sameAs: [settings.socials.linkedin, settings.socials.youtube],
+      knowsAbout: ['Habit formation', 'Morning routines', 'Productivity', 'Career counselling', 'Project management'],
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: settings.brand.name, item: abs('/') },
+      { '@type': 'ListItem', position: 2, name: founder.name, item: abs('/about') },
+    ],
+  },
+];
 ---
-<Shell
-  fonts={streakFonts}
-  themeColor="#ffffff"
-  title={`${founder.name} | Founder of HabitRise`}
-  description={`The story behind HabitRise: ${founder.name}, PMP-certified delivery lead and habit coach who has trained 5,000+ students across India.`}
->
+<Shell fonts={streakFonts} title={c.seo.title} description={c.seo.description} jsonLd={jsonLd}>
   <Header />
 
   <main>
     <section class="s-hero s-ab-hero">
       <div class="s-wrap s-ab-grid">
         <div>
-          <span class="s-badge">Founder story</span>
-          <h1>Hi, I'm <mark class="y">Mani.</mark></h1>
+          <span class="s-badge">{c.hero.badge}</span>
+          <h1>{c.hero.titleBefore} <mark class="y">{c.hero.titleHighlight}</mark></h1>
           <p class="s-role">{founder.name} · {founder.role}</p>
           <blockquote class="s-ab-quote">{founder.quote}</blockquote>
           <div class="s-ab-stats">
-            {stats.slice(0, 3).map((s, i) => (
-              <div class={`s-stat t${i + 1}`}><b>{s.value.toLocaleString('en-IN')}{s.suffix}</b><span>{s.label}</span></div>
-            ))}
+            {home.stats.slice(0, 3).map((s, i) => <div class={`s-stat t${i + 1}`}><b>{s.value}</b><span>{s.label}</span></div>)}
           </div>
         </div>
         <div class="s-ab-photo">
-          <img src={u('/img/founder-about.webp')} alt={founder.name} width="574" height="1024" fetchpriority="high" />
-          <span class="s-sticker s1">PMP certified</span>
-          <span class="s-sticker s3">PhD scholar · AI</span>
+          <img src={u('/img/founder-about.webp')} alt={c.hero.photoAlt} width="574" height="1024" fetchpriority="high" />
+          <span class="s-sticker s1">{c.hero.stickerTop}</span>
+          <span class="s-sticker s3">{c.hero.stickerBottom}</span>
         </div>
       </div>
     </section>
 
     <section class="s-sec" id="story">
-      <div class="s-head s-wrap"><span class="s-eyebrow">The story</span><h2>From the boardroom to 6 AM.</h2></div>
+      <div class="s-head s-wrap"><span class="s-eyebrow">{c.story.tag}</span><h2>{c.story.title}</h2></div>
       <div class="s-wrap s-ab-body">
         <div class="s-ab-story">
           {founder.story.map((ch, i) => (
             <article class="s-ab-chapter">
-              <span class="s-step">Chapter {i + 1}</span>
+              <span class="s-step">{c.story.chapterLabel} {i + 1}</span>
               <h3>{ch.heading.charAt(0).toUpperCase() + ch.heading.slice(1)}</h3>
-              {ch.paras.map(p => <p>{p}</p>)}
+              {ch.paragraphs.map(p => <p>{t(p)}</p>)}
             </article>
           ))}
         </div>
         <aside class="s-ab-side">
           <div class="s-ab-card">
-            <h4>Experience</h4>
-            {founder.bio.map(p => <p>{p}</p>)}
+            <h4>{c.side.experienceTitle}</h4>
+            {founder.bio.map(p => <p>{t(p)}</p>)}
           </div>
           <div class="s-ab-card">
-            <h4>Education & credentials</h4>
+            <h4>{c.side.educationTitle}</h4>
             <ul>{founder.education.map(e => <li>{e}</li>)}</ul>
-            <div class="s-creds">{founder.credentials.map((c, i) => <span style={`--c:${chipColors[i % 5]}`}>{c}</span>)}</div>
+            <div class="s-creds">{founder.credentials.map((cr, i) => <span style={`--c:${chipColors[i % 5]}`}>{cr}</span>)}</div>
           </div>
         </aside>
       </div>
@@ -69,12 +89,12 @@ const chipColors = ['#f8af3c', '#ff5a36', '#4f7cff', '#23c483', '#b79cff'];
 
     <section class="s-sec s-program" id="coaching">
       <div class="s-wrap">
-        <div class="s-head"><span class="s-eyebrow">How I can help</span><h2>Coaching areas.</h2></div>
+        <div class="s-head"><span class="s-eyebrow">{c.coaching.tag}</span><h2>{c.coaching.title}</h2></div>
         <div class="s-ab-coach">
-          {founder.coaching.map((c, i) => <article class={`s-card ${tones[i % 4]}`}><h3>{c.title}</h3><p>{c.text}</p></article>)}
+          {founder.coaching.map((co, i) => <article class={`s-card ${tones[i % 4]}`}><h3>{co.title}</h3><p>{t(co.text)}</p></article>)}
         </div>
         <ol class="s-ab-journey">
-          {founder.journey.map((j, i) => <li><span>0{i + 1}</span><div><h4>{j.title}</h4><p>{j.text}</p></div></li>)}
+          {founder.journey.map((j, i) => <li><span>0{i + 1}</span><div><h4>{j.title}</h4><p>{t(j.text)}</p></div></li>)}
         </ol>
       </div>
     </section>
@@ -83,9 +103,9 @@ const chipColors = ['#f8af3c', '#ff5a36', '#4f7cff', '#23c483', '#b79cff'];
       <div class="s-wrap">
         <div class="s-final-box">
           <img class="s-final-mark" src={u('/img/brand/mark-white.png')} alt="" width="215" height="256" />
-          <h2>Rise with me at <span>6 AM.</span></h2>
-          <p>21 live mornings, the S.A.V.E.R.S routine and the 6 AM crew. Build the system.</p>
-          <a href={u('/#pricing')} class="s-btn s-btn-dark">Start my streak — ₹{pricing.price}</a>
+          <h2>{c.final.titleBefore} <span>{c.final.titleHighlight}</span></h2>
+          <p>{t(c.final.text)}</p>
+          <a href={u('/register')} class="s-btn s-btn-dark">{t(c.final.button)}</a>
         </div>
       </div>
     </section>

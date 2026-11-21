@@ -1,0 +1,22 @@
+---
+import { u } from '../lib/url';
+import Shell from '../layouts/Shell.astro';
+import Header from '../components/streak/Header.astro';
+import Footer from '../components/streak/Footer.astro';
+import { streakFonts } from '../components/streak/fonts';
+import '../styles/streak.css';
+---
+<Shell fonts={streakFonts} title="Page not found" description="This page doesn't exist." noindex>
+  <Header />
+  <main class="s-hero s-404">
+    <div class="s-wrap">
+      <div class="s-head">
+        <span class="s-eyebrow">404</span>
+        <h1>You're up early — but this page isn't.</h1>
+        <p>The page you're looking for doesn't exist or has moved.</p>
+        <p><a class="s-btn s-btn-dark" href={u('/')}>Back to HabitRise</a></p>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Shell>

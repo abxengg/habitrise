@@ -1,26 +1,81 @@
 ---
+// Document shell: every page's <head> — SEO, social cards, icons, structured data.
+// Text comes from the page's "seo" block in src/content/*.json (editable in the CMS).
 import { u } from '../lib/url';
-// Bare document shell for full redesigns: shared SEO/meta only, no shared styles.
-// Each design brings its own fonts, CSS and scripts.
-import { site } from '../data/site';
-interface Props { title?: string; description?: string; fonts: string; themeColor?: string }
-const { title = site.title, description = site.description, fonts, themeColor = '#000000' } = Astro.props;
+import { settings, t } from '../lib/content';
+
+interface Props {
+  title?: string;            // page title; the site suffix is added unless `fullTitle` is set
+  fullTitle?: boolean;
+  description?: string;
+  fonts: string;
+  themeColor?: string;
+  noindex?: boolean;         // e.g. the deploy-status page and 404
+  jsonLd?: Record<string, unknown>[];
+}
+const s = settings.seo;
+const { title, fullTitle = false, description = s.defaultDescription, fonts, themeColor = '#ffffff', noindex = false, jsonLd = [] } = Astro.props;
+
+const pageTitle = title ? t(fullTitle ? title : title + s.titleSuffix) : t(s.defaultTitle);
+const desc = t(description);
+const site = Astro.site ?? new URL(s.siteUrl);
+const canonical = new URL(Astro.url.pathname, site).href;
+const ogImage = new URL(u(s.ogImage), site).href;
+const home = new URL(u('/'), site).href;
+
+// Shared structured data: who we are and what the site is
+const org = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': home + '#org',
+  name: settings.brand.name,
+  slogan: settings.brand.tagline,
+  url: home,
+  logo: new URL(u('/img/brand/mark-black.png'), site).href,
+  email: settings.contact.email,
+  sameAs: Object.values(settings.socials),
+  contactPoint: { '@type': 'ContactPoint', contactType: 'customer support', email: settings.contact.email, url: settings.contact.whatsapp, availableLanguage: ['English', 'Tamil'] },
+};
+const website = { '@context': 'https://schema.org', '@type': 'WebSite', '@id': home + '#website', name: settings.brand.name, url: home, publisher: { '@id': home + '#org' }, inLanguage: 'en-IN' };
+const schemas = [org, website, ...jsonLd];
 ---
 <!doctype html>
-<html lang="en">
+<html lang="en-IN">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title}</title>
-    <meta name="description" content={description} />
+    <title>{pageTitle}</title>
+    <meta name="description" content={desc} />
+    <meta name="keywords" content={s.keywords} />
+    <meta name="author" content={settings.brand.name} />
+    <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large'} />
+    <link rel="canonical" href={canonical} />
     <meta name="theme-color" content={themeColor} />
     <link rel="icon" type="image/png" href={u('/favicon.png')} />
     <link rel="apple-touch-icon" href={u('/apple-touch-icon.png')} />
-    <link rel="canonical" href={Astro.site ? new URL(Astro.url.pathname, Astro.site) : undefined} />
+    <link rel="manifest" href={u('/site.webmanifest')} />
+    <link rel="sitemap" type="application/xml" href={u('/sitemap.xml')} />
+
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="HabitRise | The 21-Day 6 AM Habit Challenge" />
-    <meta property="og:description" content="Live 6 AM sessions, the SAVERS method and a community that shows up with you. 5000+ lives transformed." />
-    <meta property="og:image" content={Astro.site ? new URL(u('/img/founder-hero.webp'), Astro.site) : u('/img/founder-hero.webp')} />
+    <meta property="og:site_name" content={settings.brand.name} />
+    <meta property="og:locale" content={s.locale} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={desc} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={s.ogImageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    {s.twitterHandle && <meta name="twitter:site" content={s.twitterHandle} />}
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={desc} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={s.ogImageAlt} />
+
+    {schemas.map(d => <script type="application/ld+json" set:html={JSON.stringify(d)} />)}
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href={fonts} rel="stylesheet" />

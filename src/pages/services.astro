@@ -1,0 +1,94 @@
+---
+// Services + "I'm interested" form. Copy: src/content/services.json (placeholder services for now).
+import { u } from '../lib/url';
+import Shell from '../layouts/Shell.astro';
+import Header from '../components/streak/Header.astro';
+import Footer from '../components/streak/Footer.astro';
+import { streakFonts } from '../components/streak/fonts';
+import '../styles/streak.css';
+import { services as c, settings, founder, t, href } from '../lib/content';
+
+const tones = ['c-yellow', 'c-blue', 'c-mint', 'c-lilac'];
+const f = c.interest;
+const site = Astro.site!;
+const abs = (p: string) => new URL(u(p), site).href;
+const jsonLd = [
+  ...c.services.map(s => ({
+    '@context': 'https://schema.org', '@type': 'Service',
+    name: s.title, description: t(s.text), serviceType: s.tagline,
+    provider: { '@id': abs('/') + '#org' }, areaServed: 'IN',
+    url: abs('/services') + '#' + s.id,
+    ...(s.id === 'challenge' ? { offers: { '@type': 'Offer', price: settings.pricing.student.price, priceCurrency: 'INR', url: abs('/register') } } : {}),
+  })),
+  {
+    '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: settings.brand.name, item: abs('/') },
+      { '@type': 'ListItem', position: 2, name: c.hero.tag, item: abs('/services') },
+    ],
+  },
+];
+---
+<Shell fonts={streakFonts} title={c.seo.title} description={c.seo.description} jsonLd={jsonLd}>
+  <Header />
+
+  <main>
+    <section class="s-hero s-sv-hero">
+      <div class="s-wrap">
+        <div class="s-head">
+          <span class="s-eyebrow">{c.hero.tag}</span>
+          <h1>{c.hero.title}</h1>
+          <p>{t(c.hero.text)}</p>
+        </div>
+        <div class="s-sv-grid">
+          {c.services.map((s, i) => (
+            <article class={`s-card ${tones[i % 4]} s-sv-card`} id={s.id}>
+              <span class="s-step">{s.tagline}</span>
+              <h2>{s.title}</h2>
+              <p>{t(s.text)}</p>
+              <ul>{s.points.map(p => <li>{t(p)}</li>)}</ul>
+              <div class="s-sv-foot">
+                <b>{t(s.price)}</b>
+                <a href={href(s.buttonHref)} class:list={['s-btn', s.buttonHref.startsWith('/') ? 's-btn-dark' : 's-btn-line']} data-service={s.title}>{s.button}</a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section class="s-sec s-program" id="interest">
+      <div class="s-wrap">
+        <div class="s-head">
+          <span class="s-eyebrow">{f.tag}</span>
+          <h2>{f.title}</h2>
+          <p>{t(f.text)}</p>
+        </div>
+        <form class="s-form" data-hr-form data-kind="interest" data-endpoint={settings.forms.endpoint}
+          data-msg-sending={f.sending} data-msg-success={f.success} data-msg-error={f.error} data-msg-not-configured={f.notConfigured}>
+          <label><span>{f.nameLabel}</span><input name="name" autocomplete="name" required maxlength="80" placeholder={f.namePlaceholder} /></label>
+          <label><span>{f.phoneLabel}</span><input name="phone" type="tel" autocomplete="tel" required pattern="[+0-9 ()-]{10,16}" placeholder={f.phonePlaceholder} /></label>
+          <label><span>{f.emailLabel}</span><input name="email" type="email" autocomplete="email" maxlength="120" placeholder={f.emailPlaceholder} /></label>
+          <label><span>{f.serviceLabel}</span><select name="service" id="serviceSelect" required>{c.services.map(s => <option>{s.title}</option>)}</select></label>
+          <label class="s-form-wide"><span>{f.organisationLabel}</span><input name="organisation" maxlength="120" placeholder={f.organisationPlaceholder} /></label>
+          <label class="s-form-wide"><span>{f.messageLabel}</span><textarea name="message" rows="4" maxlength="1000" placeholder={f.messagePlaceholder}></textarea></label>
+          <label class="np-hp" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off" /></label>
+          <button type="submit" class="s-btn s-btn-sun s-wide s-form-wide">{f.submit}</button>
+          <p class="s-form-status s-form-wide" data-status hidden role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+
+  <script>
+    import { wireForms } from '../scripts/forms';
+    wireForms();
+    // "I'm interested" buttons preselect their service in the form
+    const select = document.getElementById('serviceSelect') as HTMLSelectElement | null;
+    document.querySelectorAll<HTMLAnchorElement>('a[data-service]').forEach(a => a.addEventListener('click', () => {
+      if (select && a.getAttribute('href')?.startsWith('#')) select.value = a.dataset.service!;
+    }));
+  </script>
+</Shell>

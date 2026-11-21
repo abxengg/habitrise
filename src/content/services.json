@@ -1,0 +1,74 @@
+{
+  "seo": {
+    "title": "Services — Habit Coaching, Workshops & Corporate Sessions",
+    "description": "HabitRise services: the 21-day 6 AM challenge, 1:1 habit coaching, college workshops and corporate morning-routine sessions with Manikandan Rajendran. Tell us what you're interested in."
+  },
+  "hero": {
+    "tag": "Services",
+    "title": "Ways to work with HabitRise.",
+    "text": "From the 21-day challenge to talks for your college or team — pick what fits, and we'll get in touch."
+  },
+  "services": [
+    {
+      "id": "challenge",
+      "title": "21-Day 6 AM Challenge",
+      "tagline": "The flagship programme",
+      "text": "Live 6 AM sessions for 21 days, the S.A.V.E.R.S routine and the private Skool community.",
+      "points": ["21 live morning sessions", "Skool community + leaderboard", "Lifetime recordings"],
+      "price": "From {currency}{studentPrice}",
+      "button": "Register",
+      "buttonHref": "/register"
+    },
+    {
+      "id": "coaching",
+      "title": "1:1 Habit Coaching",
+      "tagline": "Personal accountability",
+      "text": "Weekly one-to-one sessions to design your routine, fix what keeps breaking and stay on track.",
+      "points": ["Personal routine design", "Weekly check-ins", "WhatsApp accountability"],
+      "price": "Price on request",
+      "button": "I'm interested",
+      "buttonHref": "#interest"
+    },
+    {
+      "id": "workshops",
+      "title": "College Workshops",
+      "tagline": "For students & placement cells",
+      "text": "High-energy sessions on discipline, purpose and exam-ready routines for schools and colleges.",
+      "points": ["90-minute live session", "Habit toolkit for students", "Online or on campus"],
+      "price": "Price on request",
+      "button": "I'm interested",
+      "buttonHref": "#interest"
+    },
+    {
+      "id": "corporate",
+      "title": "Corporate Sessions",
+      "tagline": "For teams & leaders",
+      "text": "Morning-routine and focus programmes for teams, from a PMP-certified delivery lead.",
+      "points": ["Focus & deep-work habits", "Leadership mornings", "Custom team challenges"],
+      "price": "Price on request",
+      "button": "I'm interested",
+      "buttonHref": "#interest"
+    }
+  ],
+  "interest": {
+    "tag": "Interested?",
+    "title": "Tell us what you're looking for.",
+    "text": "Leave your details and we'll WhatsApp or email you within 24 hours.",
+    "nameLabel": "Your name",
+    "namePlaceholder": "Full name",
+    "phoneLabel": "WhatsApp number",
+    "phonePlaceholder": "+91 98765 43210",
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@example.com",
+    "serviceLabel": "I'm interested in",
+    "organisationLabel": "College / company (optional)",
+    "organisationPlaceholder": "Where are you from?",
+    "messageLabel": "Anything we should know? (optional)",
+    "messagePlaceholder": "Dates, group size, goals…",
+    "submit": "Send my interest",
+    "sending": "Sending…",
+    "success": "Thank you! We've got your details and will reach out within 24 hours.",
+    "error": "Something went wrong. Please try again, or message us on WhatsApp.",
+    "notConfigured": "The form isn't connected yet. Please message us on WhatsApp for now."
+  }
+}

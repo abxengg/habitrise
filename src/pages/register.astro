@@ -1,0 +1,124 @@
+---
+// Register — newspaper-style page ("The 6 AM Times"). Copy: src/content/register.json;
+// prices + Razorpay links: settings.json. Details go to the Google Sheet, then Razorpay.
+import { u } from '../lib/url';
+import Shell from '../layouts/Shell.astro';
+import Header from '../components/streak/Header.astro';
+import Footer from '../components/streak/Footer.astro';
+import '../styles/streak.css';
+import '../styles/register.css';
+import { register as c, settings, home, t, rich, money } from '../lib/content';
+
+const pr = settings.pricing;
+const f = c.form;
+const fonts = 'https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;0,900;1,400;1,700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=UnifrakturMaguntia&display=swap';
+const site = Astro.site!;
+const abs = (p: string) => new URL(u(p), site).href;
+const jsonLd = [{
+  '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: settings.brand.name, item: abs('/') },
+    { '@type': 'ListItem', position: 2, name: 'Register', item: abs('/register') },
+  ],
+}];
+---
+<Shell fonts={fonts} title={c.seo.title} description={c.seo.description} jsonLd={jsonLd} themeColor="#f3ede1">
+  <Header />
+
+  <main class="np-page">
+    <div class="np">
+      <!-- masthead -->
+      <header class="np-mast">
+        <div class="np-mast-top">
+          <span>{c.masthead.edition}</span>
+          <span id="npDate"></span>
+          <span>{t(c.masthead.priceLine)}</span>
+        </div>
+        <p class="np-title">{c.masthead.name}</p>
+        <p class="np-motto">“{c.masthead.motto}”</p>
+        <div class="np-mast-bottom"><span>{c.masthead.location}</span></div>
+      </header>
+
+      <!-- lead story -->
+      <article class="np-lead">
+        <p class="np-kicker">{c.lead.kicker}</p>
+        <h1 class="np-headline" set:html={rich(c.lead.headline)} />
+        <p class="np-deck">{t(c.lead.deck)}</p>
+        <p class="np-byline">{c.lead.byline}</p>
+        <div class="np-body">
+          <div class="np-cols">
+            {c.columns.map(col => <section><h2>{col.title}</h2><p>{t(col.text)}</p></section>)}
+          </div>
+          <aside class="np-box">
+            <h3>{home.pricing.programName}</h3>
+            <ul>{pr.includes.map(i => <li>{t(i)}</li>)}</ul>
+          </aside>
+        </div>
+      </article>
+
+      <!-- classifieds: the two plans -->
+      <section class="np-ads" aria-label={c.ads.title}>
+        <h2 class="np-section">{c.ads.title}</h2>
+        <div class="np-ad-grid">
+          <button type="button" class="np-ad" data-plan-card="student">
+            <span class="np-ad-head">{c.ads.studentHeadline}</span>
+            <span class="np-ad-label">{pr.student.label}</span>
+            <span class="np-ad-price">{money(pr.student.price)}</span>
+            <span class="np-ad-was">{c.ads.regularLabel} <s>{money(pr.originalPrice)}</s> · {c.ads.perPerson}</span>
+            <span class="np-ad-note">{t(pr.student.note)}</span>
+          </button>
+          <button type="button" class="np-ad" data-plan-card="others">
+            <span class="np-ad-head">{c.ads.othersHeadline}</span>
+            <span class="np-ad-label">{pr.others.label}</span>
+            <span class="np-ad-price">{money(pr.others.price)}</span>
+            <span class="np-ad-was">{c.ads.regularLabel} <s>{money(pr.originalPrice)}</s> · {c.ads.perPerson}</span>
+            <span class="np-ad-note">{t(pr.others.note)}</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- the clip-out coupon -->
+      <section class="np-coupon" id="register">
+        <div class="np-cut" aria-hidden="true"><span>✂</span></div>
+        <h2>{f.title}</h2>
+        <p class="np-coupon-sub">{f.subtitle}</p>
+        <form
+          data-hr-form data-kind="register" data-endpoint={settings.forms.endpoint}
+          data-pay-student={pr.student.paymentUrl} data-pay-others={pr.others.paymentUrl}
+          data-msg-sending={f.sending} data-msg-redirecting={f.redirecting} data-msg-no-payment-link={f.noPaymentLink}
+          data-msg-error={f.error} data-msg-not-configured={f.notConfigured}
+        >
+          <fieldset class="np-plans">
+            <legend>{f.planLabel}</legend>
+            <label><input type="radio" name="plan" value="student" required /> <span>{pr.student.label} — <b>{money(pr.student.price)}</b> <s>{money(pr.originalPrice)}</s></span></label>
+            <label><input type="radio" name="plan" value="others" required checked /> <span>{pr.others.label} — <b>{money(pr.others.price)}</b> <s>{money(pr.originalPrice)}</s></span></label>
+          </fieldset>
+          <div class="np-fields">
+            <label class="np-wide"><span>{f.nameLabel}</span><input name="name" autocomplete="name" required maxlength="80" placeholder={f.namePlaceholder} /></label>
+            <label><span>{f.emailLabel}</span><input name="email" type="email" autocomplete="email" required maxlength="120" placeholder={f.emailPlaceholder} /></label>
+            <label><span>{f.phoneLabel}</span><input name="phone" type="tel" autocomplete="tel" required pattern="[+0-9 ()-]{10,16}" placeholder={f.phonePlaceholder} /></label>
+            <label class="np-wide" data-college hidden><span>{f.collegeLabel}</span><input name="college" maxlength="120" placeholder={f.collegePlaceholder} /></label>
+            <label><span>{f.cityLabel}</span><input name="city" autocomplete="address-level2" maxlength="60" placeholder={f.cityPlaceholder} /></label>
+            <label><span>{f.ageLabel}</span><input name="age" type="number" min="12" max="99" inputmode="numeric" /></label>
+            <label><span>{f.occupationLabel}</span><select name="occupation" required><option value="" disabled selected>—</option>{f.occupationOptions.map(o => <option>{o}</option>)}</select></label>
+            <label><span>{f.sourceLabel}</span><select name="source"><option value="" selected>—</option>{f.sourceOptions.map(o => <option>{o}</option>)}</select></label>
+            <label class="np-hp" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off" /></label>
+          </div>
+          <label class="np-consent"><input type="checkbox" name="consent" value="yes" required /> <span>{f.consent}</span></label>
+          <button type="submit" class="np-submit">{f.submit} →</button>
+          <p class="np-status" data-status hidden role="status" aria-live="polite"></p>
+          <p class="np-secure">{f.secureNote}</p>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <Footer />
+
+  <script>
+    import { wireForms } from '../scripts/forms';
+    wireForms();
+    const d = document.getElementById('npDate');
+    if (d) d.textContent = new Date().toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  </script>
+</Shell>

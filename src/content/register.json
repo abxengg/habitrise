@@ -1,0 +1,68 @@
+{
+  "seo": {
+    "title": "Register — Join the Next 6 AM Cohort",
+    "description": "Register for the HabitRise 21-day 6 AM habit challenge. Students ₹399, everyone else ₹699 (regular ₹999). Fill in your details and pay securely via Razorpay."
+  },
+  "masthead": {
+    "name": "The 6 AM Times",
+    "motto": "All the habits fit to build",
+    "edition": "Cohort edition",
+    "priceLine": "From {currency}{studentPrice}",
+    "location": "Live from Tamil Nadu · Online across India"
+  },
+  "lead": {
+    "kicker": "Registrations open",
+    "headline": "Early risers wanted: next cohort begins {nextMonday}",
+    "deck": "A 21-day live programme is looking for students, professionals and founders ready to own their mornings. Sessions start at 6:00 AM sharp.",
+    "byline": "By the HabitRise desk"
+  },
+  "columns": [
+    {
+      "title": "What you get",
+      "text": "Twenty-one live 6 AM sessions on Zoom, the S.A.V.E.R.S routine, daily accountability and a private Skool community that notices when you show up."
+    },
+    {
+      "title": "Who it's for",
+      "text": "Anyone aged 12 and above. Students preparing for exams, professionals stuck in a rut, and founders who want their mornings back."
+    },
+    {
+      "title": "How to join",
+      "text": "Pick your plan, fill in the coupon below, and you'll be taken to Razorpay to pay securely. Your Skool invite follows by email."
+    }
+  ],
+  "ads": {
+    "title": "Classifieds",
+    "studentHeadline": "Student special",
+    "othersHeadline": "Everyone else",
+    "regularLabel": "Regular",
+    "perPerson": "one-time · all 21 days"
+  },
+  "form": {
+    "title": "Clip & register",
+    "subtitle": "Fill in the coupon. Takes under a minute.",
+    "planLabel": "Choose your plan",
+    "nameLabel": "Full name",
+    "namePlaceholder": "As you'd like it on your certificate",
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@example.com",
+    "phoneLabel": "WhatsApp number",
+    "phonePlaceholder": "+91 98765 43210",
+    "collegeLabel": "College / school name",
+    "collegePlaceholder": "Required for the student price",
+    "cityLabel": "City",
+    "cityPlaceholder": "Where are you joining from?",
+    "ageLabel": "Age",
+    "occupationLabel": "You are a…",
+    "occupationOptions": ["School student", "College student", "Working professional", "Entrepreneur", "Career switcher", "Other"],
+    "sourceLabel": "How did you hear about us?",
+    "sourceOptions": ["Instagram", "YouTube", "LinkedIn", "WhatsApp", "Friend or family", "College event", "Other"],
+    "consent": "I agree to receive programme updates on WhatsApp and email.",
+    "submit": "Continue to payment",
+    "sending": "Saving your details…",
+    "redirecting": "Taking you to secure payment…",
+    "noPaymentLink": "Thanks! Your details are saved. We'll send your payment link on WhatsApp shortly.",
+    "error": "We couldn't save your details. Please try again, or message us on WhatsApp.",
+    "notConfigured": "Registration isn't connected yet. Please message us on WhatsApp to register.",
+    "secureNote": "🔒 Payments are processed by Razorpay. We never see your card or UPI details."
+  }
+}

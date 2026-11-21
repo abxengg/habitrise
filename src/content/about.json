@@ -1,0 +1,33 @@
+{
+  "seo": {
+    "title": "Manikandan Rajendran — Founder of HabitRise",
+    "description": "Meet Manikandan Rajendran (Mani): PMP-certified delivery lead, habit coach and founder of HabitRise, who has trained 5,000+ students across India to own their mornings."
+  },
+  "hero": {
+    "badge": "Founder story",
+    "titleBefore": "Hi, I'm",
+    "titleHighlight": "Mani.",
+    "stickerTop": "PMP certified",
+    "stickerBottom": "PhD scholar · AI",
+    "photoAlt": "Manikandan Rajendran, founder of HabitRise"
+  },
+  "story": {
+    "tag": "The story",
+    "title": "From the boardroom to 6 AM.",
+    "chapterLabel": "Chapter"
+  },
+  "side": {
+    "experienceTitle": "Experience",
+    "educationTitle": "Education & credentials"
+  },
+  "coaching": {
+    "tag": "How I can help",
+    "title": "Coaching areas."
+  },
+  "final": {
+    "titleBefore": "Rise with me at",
+    "titleHighlight": "6 AM.",
+    "text": "21 live mornings, the S.A.V.E.R.S routine and the 6 AM crew. Build the system.",
+    "button": "Register now"
+  }
+}

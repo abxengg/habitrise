@@ -1,0 +1,14 @@
+{
+  "name": "HabitRise — Build the System",
+  "short_name": "HabitRise",
+  "description": "The 21-day 6 AM habit challenge.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "browser",
+  "background_color": "#ffffff",
+  "theme_color": "#121212",
+  "icons": [
+    { "src": "favicon.png", "sizes": "64x64", "type": "image/png" },
+    { "src": "apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}

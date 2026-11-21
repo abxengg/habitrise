@@ -467,3 +467,77 @@ mark.b::before { background: #c9d6ff; }
   .s-ticket-top > span:last-child { display: none; }
   .s-pricing { margin: 0 8px; border-radius: var(--r-lg); }
 }
+
+/* Ticket stub: two plans side by side ------------------------------------------ */
+.s-ticket-plans { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; margin: var(--s-3) 0 8px; }
+.s-ticket-plans div { background: rgba(255,255,255,.55); border: 2px solid var(--ink); border-radius: 14px; padding: 10px 6px; }
+.s-ticket-plans small { display: block; font-size: 11.5px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+.s-ticket-plans b { display: block; font-size: 34px; font-weight: 800; letter-spacing: -.04em; line-height: 1.1; }
+.s-ticket-was { font-size: 14px; font-weight: 700; color: rgba(18,18,18,.7); margin: 0 0 var(--s-3); }
+.s-ticket-was s { font-size: 18px; }
+
+/* Services page ------------------------------------------------------------------ */
+.s-sv-hero { padding-bottom: var(--section); }
+.s-sv-hero h1 { font-size: clamp(40px, 5.4vw, 68px); margin: var(--s-2) 0; }
+.s-sv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--grid-gap); }
+.s-sv-card h2 { font-size: 28px; margin: var(--s-2) 0 var(--s-1); }
+.s-sv-card > p { margin-bottom: var(--s-2) !important; }
+.s-sv-card ul { list-style: none; padding: 0; margin: 0 0 var(--s-3); display: grid; gap: 8px; font-weight: 600; font-size: 15px; }
+.s-sv-card li::before { content: "✓ "; font-weight: 800; }
+.s-sv-foot { margin-top: auto; display: flex; align-items: center; justify-content: space-between; gap: var(--s-2); padding-top: var(--s-2); border-top: 2px dashed rgba(18,18,18,.15); }
+.s-sv-foot b { font-size: 18px; }
+
+/* Forms (interest) ---------------------------------------------------------------- */
+.s-form { max-width: 760px; margin: 0 auto; background: #fff; border: 2px solid var(--ink); border-radius: 28px; box-shadow: 10px 10px 0 var(--ink); padding: var(--s-5); display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-3) var(--s-3); }
+.s-form label { display: grid; gap: 6px; }
+.s-form label span { font-weight: 700; font-size: 14px; }
+.s-form input, .s-form select, .s-form textarea { font: inherit; font-size: 16px; color: var(--ink); background: var(--soft); border: 2px solid transparent; border-radius: 14px; padding: 12px 14px; outline: none; transition: border-color .15s, background .15s; }
+.s-form input:focus, .s-form select:focus, .s-form textarea:focus { border-color: var(--ink); background: #fff; }
+.s-form textarea { resize: vertical; }
+.s-form-wide { grid-column: 1 / -1; }
+.s-form button:disabled { opacity: .6; cursor: wait; }
+.s-form-status { margin: 0; padding: 12px 14px; border-radius: 12px; background: var(--soft); font-weight: 600; }
+.s-form-status[data-kind="ok"] { background: #dcf7ea; }
+.s-form-status[data-kind="err"] { background: #ffe9e3; }
+.np-hp { position: absolute !important; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+@media (max-width: 760px) {
+  .s-sv-grid, .s-form { grid-template-columns: 1fr; }
+  .s-form { padding: var(--s-4) var(--s-3); box-shadow: 6px 6px 0 var(--ink); }
+  .s-sv-foot { flex-direction: column; align-items: stretch; text-align: center; }
+}
+
+/* Deploy status page ----------------------------------------------------------------- */
+.s-dp { padding: 140px 0 var(--section); min-height: 100vh; background: var(--soft); }
+.s-dp h1, .s-404 h1 { font-size: clamp(36px, 5vw, 56px); margin: var(--s-2) 0; }
+.s-dp-now { max-width: 860px; margin: 0 auto var(--s-4); display: flex; align-items: center; gap: var(--s-3); flex-wrap: wrap; background: #fff; border: 2px solid var(--ink); border-radius: 24px; box-shadow: 8px 8px 0 var(--ink); padding: var(--s-3) var(--s-4); }
+.s-dp-now > div:nth-child(2) { flex: 1; min-width: 220px; }
+.s-dp-now b { display: block; font-size: 20px; }
+.s-dp-now small { color: var(--ink-2); font-size: 14px; }
+.s-dp-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+.s-dp-actions .s-btn { padding: 11px 16px; font-size: 14px; }
+.s-dp-dot { width: 18px; height: 18px; border-radius: 50%; flex: none; background: var(--ink-3); }
+[data-state="live"] .s-dp-dot, .s-dp-now[data-state="live"] .s-dp-dot { background: #23c483; box-shadow: 0 0 0 6px rgba(35,196,131,.18); }
+.s-dp-now[data-state="running"] .s-dp-dot, .s-dp-now[data-state="queued"] .s-dp-dot, .s-dp-now[data-state="loading"] .s-dp-dot { background: var(--sun); animation: pulse 1.2s infinite; }
+.s-dp-now[data-state="failed"] .s-dp-dot { background: #e5484d; box-shadow: 0 0 0 6px rgba(229,72,77,.16); }
+.s-dp-list { list-style: none; max-width: 860px; margin: 0 auto; padding: 0; display: grid; gap: 10px; }
+.s-dp-list li { display: flex; align-items: center; gap: var(--s-2); background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 14px 18px; }
+.s-dp-list li > div { flex: 1; min-width: 0; }
+.s-dp-list b { display: block; font-size: 15.5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.s-dp-list small { color: var(--ink-3); font-size: 13px; }
+.s-dp-list a { font-weight: 700; font-size: 14px; text-decoration: underline; text-underline-offset: 3px; }
+.s-dp-badge { flex: none; font-size: 12px; font-weight: 800; padding: 5px 10px; border-radius: 999px; background: var(--soft); min-width: 92px; text-align: center; }
+li[data-state="live"] .s-dp-badge { background: #dcf7ea; color: #0f7a4f; }
+li[data-state="running"] .s-dp-badge, li[data-state="queued"] .s-dp-badge { background: #fff4d1; color: #8a5a00; }
+li[data-state="failed"] .s-dp-badge { background: #ffe1df; color: #b42318; }
+.s-dp-foot { text-align: center; color: var(--ink-3); font-size: 14px; margin-top: var(--s-3); }
+.s-dp-foot a { text-decoration: underline; }
+.s-404 { min-height: 70vh; display: flex; align-items: center; }
+.s-404 .s-btn { margin-top: var(--s-3); }
+@media (max-width: 760px) {
+  .s-dp { padding-top: 110px; }
+  .s-dp-now { box-shadow: 5px 5px 0 var(--ink); padding: var(--s-3); }
+  .s-dp-list li { flex-wrap: wrap; }
+  .s-dp-list li > div { flex-basis: 100%; order: 3; }
+  .s-dp-list b { white-space: normal; overflow-wrap: anywhere; }
+}
