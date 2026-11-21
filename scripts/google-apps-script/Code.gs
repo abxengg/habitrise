@@ -1,7 +1,7 @@
 /**
  * HabitRise form receiver — Google Apps Script web app.
  *
- * Every Register / Interest submission from the website:
+ * Every Register / Interest / Newsletter submission from the website:
  *   1. is saved as a row in this Google Sheet FIRST (so nothing is ever lost),
  *   2. is then emailed to NOTIFY_EMAIL,
  *   3. gets its "Email status" cell set to "sent" or "failed: <reason>".
@@ -22,6 +22,12 @@ const FORMS = {
       ['city', 'City'], ['age', 'Age'], ['occupation', 'Occupation'], ['source', 'Heard from'], ['consent', 'Consent'], ['page', 'Page'],
     ],
   },
+  newsletter: {
+    sheet: 'Newsletter',
+    subject: d => `New newsletter subscriber: ${d.email}`,
+    required: ['email'],
+    fields: [['email', 'Email'], ['name', 'First name'], ['page', 'Page']],
+  },
   interest: {
     sheet: 'Interest',
     subject: d => `New interest: ${d.name} — ${d.service}`,
@@ -39,7 +45,10 @@ function doPost(e) {
     const data = JSON.parse((e && e.postData && e.postData.contents) || '{}');
     const form = FORMS[data.form];
     if (!form) return json({ ok: false, error: 'unknown form' });
-    if (!clean(data.name) || (!clean(data.phone) && !clean(data.email))) return json({ ok: false, error: 'missing name or contact' });
+    const missing = form.required
+      ? form.required.some(k => !clean(data[k]))
+      : !clean(data.name) || (!clean(data.phone) && !clean(data.email)); // register / interest: name + a way to reach them
+    if (missing) return json({ ok: false, error: 'missing required details' });
 
     // 1) save the row first
     const sheet = getSheet(form);

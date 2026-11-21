@@ -1,7 +1,7 @@
 // Shared form handling for the Register and Interest forms.
 // Each <form data-hr-form> carries its settings as data-* attributes (all from the CMS):
 //   data-endpoint   Google Apps Script web-app URL (settings.json → forms.endpoint)
-//   data-kind       "register" | "interest"  (which Sheet tab the row goes to)
+//   data-kind       "register" | "interest" | "newsletter"  (which Sheet tab the row goes to)
 //   data-msg-*      status messages
 //   data-pay-*      Razorpay links per plan (register only)
 // Submissions are sent as text/plain JSON so the browser doesn't need a CORS preflight;
@@ -19,6 +19,8 @@ function status(form: HTMLFormElement, text: string, kind: 'info' | 'ok' | 'err'
 
 export function wireForms() {
   document.querySelectorAll<HTMLFormElement>('form[data-hr-form]').forEach(form => {
+    if (form.dataset.wired) return; // safe to call more than once per page
+    form.dataset.wired = '1';
     const d = form.dataset;
     const msgs: Msgs = {
       sending: d.msgSending ?? 'Sending…', success: d.msgSuccess, error: d.msgError ?? 'Something went wrong.',

@@ -6,7 +6,7 @@ Live preview: **https://abxengg.github.io/habitrise/**
 | Page | What it is |
 |---|---|
 | `/` | Home: hero streak tracker, how it works, the program, community, founder, stories, early-bird ticket, FAQ |
-| `/register` | "The 6 AM Times" newspaper page: two price classifieds + a clip-out registration coupon → Razorpay |
+| `/register` | Plan cards (Students / Everyone else) + registration form → Google Sheet → Razorpay link |
 | `/services` | Services (placeholder copy for now) + "I'm interested" form |
 | `/about` | Founder story |
 | `/deploys` | Live deployment status for the CMS (hidden from search engines) |
@@ -21,7 +21,7 @@ the site and it is live in about a minute.
    (*Settings → Collaborators → Add people*, role **Write**), then have them open <https://app.pagescms.org>,
    **Sign in with GitHub**, install the Pages CMS app on `abxengg/habitrise` when asked, and pick the repo.
 2. **Edit.** The sidebar lists: ⚙️ Site settings, prices & payment · 🏠 Home page · 👤 Founder · 📖 Founder page ·
-   🧭 Services page · 📰 Register page. Change any field → **Save**.
+   🧭 Services page · 📝 Register page. The newsletter signup (bottom of every page) is under Site settings. Change any field → **Save**.
 3. **Watch it go live.** Open **`/deploys`** on the site: it shows *Updating website…* while the build runs and
    *Website is live and up to date* when done (each save is listed with who made it and how long it took). If a
    build fails, the previous version stays live.
@@ -32,13 +32,13 @@ Text can use placeholders that fill in automatically, so prices only ever change
 ### Prices and payment (Razorpay)
 
 *Site settings → Prices & payment links*: Students and Everyone-else prices, the struck-through regular price, and a
-**Razorpay payment link per plan**. After someone submits the registration coupon, their details are saved and they
+**Razorpay payment link per plan**. After someone submits the registration form, their details are saved and they
 are sent to the link for the plan they chose. Until a link is pasted, they see "we'll send your payment link on
 WhatsApp" instead.
 
 ### Forms → Google Sheet + email
 
-Registration and Interest submissions are saved to a Google Sheet **first**, then emailed to the client. The sheet's
+Registration, Interest and Newsletter submissions are saved to a Google Sheet **first** (one tab each), then emailed to the client. The sheet's
 **Email status** column shows `sent`, or `failed: <reason>` (the row is kept either way). One-time setup:
 [`scripts/google-apps-script/SETUP.md`](scripts/google-apps-script/SETUP.md) — then paste the Web app URL into
 *Site settings → Forms → Form receiver URL*. Until then the forms politely point people to WhatsApp.
@@ -68,7 +68,7 @@ npm run build      # static site in dist/
 | All text | `src/content/*.json` (schema for the CMS in `.pages.yml` — add a field there when you add a key) |
 | Loading content, placeholders | `src/lib/content.ts` (`t()` plain text, `rich()` HTML with the live date, `href()` links) |
 | Pages | `src/pages/*.astro`; header/footer/logo in `src/components/streak/` |
-| Styles | `src/styles/streak.css` (site), `src/styles/register.css` (newspaper page) |
+| Styles | `src/styles/streak.css` |
 | Form handling | `src/scripts/forms.ts`; receiver in `scripts/google-apps-script/Code.gs` |
 | `<head>`, SEO, JSON-LD | `src/layouts/Shell.astro` |
 | Logo files | `public/img/brand/` (`mark-black.png` on light, `mark-white.png` on dark; original sheets kept) |

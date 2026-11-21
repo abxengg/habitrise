@@ -3,44 +3,23 @@
     "title": "Register — Join the Next 6 AM Cohort",
     "description": "Register for the HabitRise 21-day 6 AM habit challenge. Students ₹399, everyone else ₹699 (regular ₹999). Fill in your details and pay securely via Razorpay."
   },
-  "masthead": {
-    "name": "The 6 AM Times",
-    "motto": "All the habits fit to build",
-    "edition": "Cohort edition",
-    "priceLine": "From {currency}{studentPrice}",
-    "location": "Live from Tamil Nadu · Online across India"
+  "hero": {
+    "tag": "Register",
+    "title": "Claim your seat for {nextMonday}.",
+    "text": "Pick your plan, fill in your details, and you'll go straight to secure payment. Your Skool invite follows by email."
   },
-  "lead": {
-    "kicker": "Registrations open",
-    "headline": "Early risers wanted: next cohort begins {nextMonday}",
-    "deck": "A 21-day live programme is looking for students, professionals and founders ready to own their mornings. Sessions start at 6:00 AM sharp.",
-    "byline": "By the HabitRise desk"
-  },
-  "columns": [
-    {
-      "title": "What you get",
-      "text": "Twenty-one live 6 AM sessions on Zoom, the S.A.V.E.R.S routine, daily accountability and a private Skool community that notices when you show up."
-    },
-    {
-      "title": "Who it's for",
-      "text": "Anyone aged 12 and above. Students preparing for exams, professionals stuck in a rut, and founders who want their mornings back."
-    },
-    {
-      "title": "How to join",
-      "text": "Pick your plan, fill in the coupon below, and you'll be taken to Razorpay to pay securely. Your Skool invite follows by email."
-    }
-  ],
-  "ads": {
-    "title": "Classifieds",
-    "studentHeadline": "Student special",
-    "othersHeadline": "Everyone else",
+  "plans": {
+    "title": "Choose your plan",
+    "studentTag": "Student price",
+    "othersTag": "Standard",
     "regularLabel": "Regular",
-    "perPerson": "one-time · all 21 days"
+    "perPerson": "one-time · all 21 days",
+    "includesTitle": "Every plan includes"
   },
   "form": {
-    "title": "Clip & register",
-    "subtitle": "Fill in the coupon. Takes under a minute.",
-    "planLabel": "Choose your plan",
+    "title": "Your details",
+    "subtitle": "Takes under a minute.",
+    "planLabel": "Plan",
     "nameLabel": "Full name",
     "namePlaceholder": "As you'd like it on your certificate",
     "emailLabel": "Email",
