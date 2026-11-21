@@ -23,6 +23,8 @@ the site and it is live in about a minute.
    🧭 Services page · 💳 Pricing & Register page. The newsletter signup (bottom of every page) is under Site settings. Change any field → **Save**.
 3. **It goes live by itself.** Each save rebuilds the site; it's live in about a minute. If a build fails, the
    previous version stays live.
+   Every successful deploy is tagged with the next patch version (v1.0.1, v1.0.2 …), so the repo's **Tags** list
+   is a history of what went live and when; the tag message is the change (e.g. the CMS save's description).
 
 Text can use placeholders that fill in automatically, so prices only ever change in one place:
 `{currency}` `{studentPrice}` `{othersPrice}` `{originalPrice}` `{year}` `{nextMonday}` (the next cohort date).
