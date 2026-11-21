@@ -1,4 +1,5 @@
 ---
+import { u } from '../../lib/url';
 import Brand from './Brand.astro';
 import { contact, socials } from '../../data/site';
 ---
@@ -7,8 +8,8 @@ import { contact, socials } from '../../data/site';
     <div class="s-foot-top">
       <Brand tone="light" tagline class="s-brand-big" />
       <div class="s-foot-cols">
-        <div><h4>Program</h4><a href="/#how">How it works</a><a href="/#program">21 days</a><a href="/#community">Community</a><a href="/#pricing">Pricing</a></div>
-        <div><h4>About</h4><a href="/about">Founder story</a><a href="/#stories">Stories</a><a href="/#faq">FAQ</a></div>
+        <div><h4>Program</h4><a href={u('/#how')}>How it works</a><a href={u('/#program')}>21 days</a><a href={u('/#community')}>Community</a><a href={u('/#pricing')}>Pricing</a></div>
+        <div><h4>About</h4><a href={u('/about')}>Founder story</a><a href={u('/#stories')}>Stories</a><a href={u('/#faq')}>FAQ</a></div>
         <div><h4>Follow</h4><a href={socials.instagram}>Instagram</a><a href={socials.youtube}>YouTube</a><a href={socials.linkedin}>LinkedIn</a><a href={socials.facebook}>Facebook</a></div>
         <div><h4>Contact</h4><a href={`mailto:${contact.email}`}>Email</a><a href={contact.whatsapp}>WhatsApp</a></div>
       </div>

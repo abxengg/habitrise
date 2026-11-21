@@ -1,4 +1,5 @@
 ---
+import { u } from '../lib/url';
 // Founder story, in the HabitRise ("Habit App") design.
 import Shell from '../layouts/Shell.astro';
 import Header from '../components/streak/Header.astro';
@@ -33,7 +34,7 @@ const chipColors = ['#f8af3c', '#ff5a36', '#4f7cff', '#23c483', '#b79cff'];
           </div>
         </div>
         <div class="s-ab-photo">
-          <img src="/img/founder-about.webp" alt={founder.name} width="574" height="1024" fetchpriority="high" />
+          <img src={u('/img/founder-about.webp')} alt={founder.name} width="574" height="1024" fetchpriority="high" />
           <span class="s-sticker s1">PMP certified</span>
           <span class="s-sticker s3">PhD scholar · AI</span>
         </div>
@@ -81,10 +82,10 @@ const chipColors = ['#f8af3c', '#ff5a36', '#4f7cff', '#23c483', '#b79cff'];
     <section class="s-final">
       <div class="s-wrap">
         <div class="s-final-box">
-          <img class="s-final-mark" src="/img/brand/mark-white.png" alt="" width="215" height="256" />
+          <img class="s-final-mark" src={u('/img/brand/mark-white.png')} alt="" width="215" height="256" />
           <h2>Rise with me at <span>6 AM.</span></h2>
           <p>21 live mornings, the S.A.V.E.R.S routine and the 6 AM crew. Build the system.</p>
-          <a href="/#pricing" class="s-btn s-btn-dark">Start my streak — ₹{pricing.price}</a>
+          <a href={u('/#pricing')} class="s-btn s-btn-dark">Start my streak — ₹{pricing.price}</a>
         </div>
       </div>
     </section>

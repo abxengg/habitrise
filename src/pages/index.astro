@@ -1,4 +1,5 @@
 ---
+import { u } from '../lib/url';
 // REDESIGN 2 — "The Habit App"
 // Bright, playful, product-style (habitcoach.ai + Skool). The hero is a working
 // 21-day streak tracker; the community is presented like a Skool group card.
@@ -38,7 +39,7 @@ const bubbleColors = ['#f8af3c', '#ff5a36', '#4f7cff', '#23c483', '#b79cff'];
           <div class="s-sticker s3">⭐ 4.9/5</div>
           <div class="s-tracker" id="tracker">
             <div class="s-tr-head">
-              <span class="s-tr-mark"><img src="/img/brand/mark-black.png" alt="" width="215" height="256" /></span>
+              <span class="s-tr-mark"><img src={u('/img/brand/mark-black.png')} alt="" width="215" height="256" /></span>
               <div><small>Good morning ☀️</small><b>Your 21-day streak</b></div>
               <svg class="s-ring" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="18" /><circle id="ring" cx="22" cy="22" r="18" /></svg>
             </div>
@@ -84,7 +85,7 @@ const bubbleColors = ['#f8af3c', '#ff5a36', '#4f7cff', '#23c483', '#b79cff'];
             <h3>Join the live session</h3>
             <p>A focused 6 AM session with the founder — one topic a day, from purpose to deep work.</p>
             <div class="s-ui s-ui-live">
-              <div class="s-video"><img src="/img/founder-hero.webp" alt="" width="900" height="900" loading="lazy" /><span class="s-live-tag">● LIVE</span></div>
+              <div class="s-video"><img src={u('/img/founder-hero.webp')} alt="" width="900" height="900" loading="lazy" /><span class="s-live-tag">● LIVE</span></div>
               <div class="s-attendees">{testimonials.slice(0, 5).map(t => <i style={`background:${t.color}`}>{initials(t.name)}</i>)}<span>+214 rising</span></div>
             </div>
           </article>
@@ -155,9 +156,9 @@ const bubbleColors = ['#f8af3c', '#ff5a36', '#4f7cff', '#23c483', '#b79cff'];
         </div>
         <div class="s-skool">
           <article class="s-group">
-            <div class="s-cover"><img src="/img/brand/mark-white.png" alt="" width="215" height="256" /></div>
+            <div class="s-cover"><img src={u('/img/brand/mark-white.png')} alt="" width="215" height="256" /></div>
             <div class="s-group-body">
-              <span class="s-group-icon"><img src="/img/brand/mark-black.png" alt="" width="215" height="256" /></span>
+              <span class="s-group-icon"><img src={u('/img/brand/mark-black.png')} alt="" width="215" height="256" /></span>
               <h3>HabitRise 6 AM Club</h3>
               <p class="s-meta">🔒 Private · 5,000+ members · ₹{pricing.price} for 21 days</p>
               <p>Build discipline with people who wake up when you do. Live sessions every morning at 6:00 AM IST, lessons and replays in the classroom, and a feed full of early risers.</p>
@@ -183,7 +184,7 @@ const bubbleColors = ['#f8af3c', '#ff5a36', '#4f7cff', '#23c483', '#b79cff'];
     <!-- founder -->
     <section class="s-sec s-founder" id="founder">
       <div class="s-wrap s-founder-card">
-        <div class="s-founder-img"><img src="/img/founder-sitting.webp" alt={founder.name} width="576" height="1024" loading="lazy" /></div>
+        <div class="s-founder-img"><img src={u('/img/founder-sitting.webp')} alt={founder.name} width="576" height="1024" loading="lazy" /></div>
         <div>
           <span class="s-eyebrow">Your coach</span>
           <h2>Hi, I'm Mani 👋</h2>
@@ -191,7 +192,7 @@ const bubbleColors = ['#f8af3c', '#ff5a36', '#4f7cff', '#23c483', '#b79cff'];
           <blockquote>{founder.quote}</blockquote>
           <p>{founder.bio[1]}</p>
           <div class="s-creds">{founder.credentials.map((c, i) => <span style={`--c:${bubbleColors[i % 5]}`}>{c}</span>)}</div>
-          <a href="/about" class="s-btn s-btn-line">Read my story →</a>
+          <a href={u('/about')} class="s-btn s-btn-line">Read my story →</a>
         </div>
       </div>
     </section>
@@ -242,7 +243,7 @@ const bubbleColors = ['#f8af3c', '#ff5a36', '#4f7cff', '#23c483', '#b79cff'];
     <section class="s-final">
       <div class="s-wrap">
         <div class="s-final-box">
-          <img class="s-final-mark" src="/img/brand/mark-white.png" alt="" width="215" height="256" />
+          <img class="s-final-mark" src={u('/img/brand/mark-white.png')} alt="" width="215" height="256" />
           <div class="s-final-dots" aria-hidden="true">{Array.from({ length: 21 }, (_, i) => <i class:list={{ on: i === 0 }}></i>)}</div>
           <h2>Day 1 starts <span data-next-monday>Monday</span>.</h2>
           <p>Your streak is one tap away. Build the system.</p>

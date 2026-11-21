@@ -1,16 +1,17 @@
 ---
+import { u } from '../../lib/url';
 import Brand from './Brand.astro';
 ---
 <header class="s-nav" id="nav">
   <Brand />
   <nav id="navLinks">
-    <a href="/#how">How it works</a>
-    <a href="/#program">Program</a>
-    <a href="/#community">Community</a>
-    <a href="/about">Founder</a>
-    <a href="/#pricing">Pricing</a>
+    <a href={u('/#how')}>How it works</a>
+    <a href={u('/#program')}>Program</a>
+    <a href={u('/#community')}>Community</a>
+    <a href={u('/about')}>Founder</a>
+    <a href={u('/#pricing')}>Pricing</a>
   </nav>
-  <a href="/#pricing" class="s-btn s-btn-dark s-nav-cta">Start my streak</a>
+  <a href={u('/#pricing')} class="s-btn s-btn-dark s-nav-cta">Start my streak</a>
   <button class="s-menu" id="navToggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
 </header>
 

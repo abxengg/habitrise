@@ -39,6 +39,13 @@ The other design options the client was shown live on their own branches (`desig
 `redesign-dawn`, `redesign-founder`, `redesign-minimal`). The older components in `src/components/*.astro`,
 `src/layouts/Base.astro` and `src/styles/global.css` belong to the first design and are not used by the live pages.
 
+## Live preview (GitHub Pages)
+
+Every push to `main` builds and publishes the site to **https://abxengg.github.io/habitrise/** via
+`.github/workflows/pages.yml`. That build sets `SITE_URL` and `BASE_PATH=/habitrise`; links and images go through
+`u()` in `src/lib/url.ts`, so the same code also works at a domain root. Use `u('/path')` for any new internal link
+or image.
+
 ## Deploy (all free)
 
 Every host uses the same settings: **build command** `npm run build`, **output directory** `dist`, Node 22.
