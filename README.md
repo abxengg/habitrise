@@ -24,8 +24,8 @@ the site and it is live in about a minute.
 3. **Publish with Redeploy.** Saving only stores your change, so you can make many edits safely. When you're ready,
    press **Redeploy site** (sidebar → Actions in Pages CMS) and everything saved so far goes live in about a minute.
    If a build fails, the previous version stays live. Developers can also run the *Deploy to GitHub Pages* workflow
-   from the repo's Actions tab. Each deploy is tagged with the next patch version (v1.0.1, v1.0.2 …), and the tag
-   lists the changes it published, so the repo's **Tags** list is a history of what went live.
+   from the repo's Actions tab. Each deploy is a release: `package.json` gets the next patch version (1.0.1, 1.0.2 …),
+   committed as "Release vX.Y.Z" and tagged, and the tag lists the changes it published, so the repo's **Tags** list is a history of what went live.
 
 Text can use placeholders that fill in automatically, so prices only ever change in one place:
 `{currency}` `{studentPrice}` `{othersPrice}` `{originalPrice}` `{year}` `{nextMonday}` (the next cohort date).

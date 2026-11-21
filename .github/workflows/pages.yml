@@ -1,8 +1,8 @@
 name: Deploy to GitHub Pages
 # The site goes live ONLY when someone presses "Redeploy site" in Pages CMS (or runs this workflow by
 # hand from the Actions tab). Saving in the CMS just stores the change; edits pile up until Redeploy.
-# Each deploy tags the deployed commit with the next patch version (v1.0.1 → v1.0.2 …) and the tag
-# message lists every change since the previous version. A Redeploy with no new changes adds no version.
+# Each deploy is a release: package.json gets the next patch version (1.0.1 → 1.0.2 …), committed as
+# "Release vX.Y.Z" and tagged; the tag message lists every change since the previous version. A Redeploy with no new changes adds no version.
 # For a bigger jump (v1.1.0, v2.0.0), push that tag by hand; the count continues from there.
 
 on:
@@ -52,7 +52,7 @@ jobs:
         uses: actions/deploy-pages@v4
 
   version:
-    name: Tag version (patch + 1)
+    name: Release version (patch + 1)
     needs: deploy
     runs-on: ubuntu-latest
     permissions:
@@ -61,19 +61,31 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Tag this deploy
+      - name: Bump package.json, commit, tag
         run: |
-          # a re-run or manual redeploy of an already-tagged commit gets no new version
+          # a Redeploy with nothing new since the last release gets no new version
           if git tag --points-at "$GITHUB_SHA" | grep -qE '^v[0-9]+\.[0-9]+\.[0-9]+$'; then
-            echo "Already tagged: $(git tag --points-at "$GITHUB_SHA")"; exit 0
+            echo "Already released: $(git tag --points-at "$GITHUB_SHA")"; exit 0
           fi
           last=$(git tag --list 'v*.*.*' --sort=-v:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -n1)
           IFS=. read -r major minor patch <<< "${last:-v1.0.0}"
           next="${major}.${minor}.$((patch + 1))"
+          # what this release published (every change since the previous one, minus release commits)
+          changes=$(git log --no-merges --invert-grep --grep='^Release v' --format='- %s' "${last:+$last..}$GITHUB_SHA" | head -n 50)
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          # the tag message lists every change since the previous version
-          changes=$(git log --no-merges --format='- %s' "${last:+$last..}$GITHUB_SHA" | head -n 50)
-          git tag -a "$next" -m "Deployed by $GITHUB_ACTOR" -m "${changes:-- Redeploy}" "$GITHUB_SHA"
+          # the release commit = exactly what was deployed + the new version number
+          git checkout -q --detach "$GITHUB_SHA"
+          npm version "${next#v}" --no-git-tag-version --allow-same-version >/dev/null
+          git commit -qam "Release $next"
+          git tag -a "$next" -m "Release $next · deployed by $GITHUB_ACTOR" -m "${changes:-- Redeploy}"
           git push origin "$next"
-          { echo "### Deployed $next"; echo; echo "$changes"; } >> "$GITHUB_STEP_SUMMARY"
+
+          # put the release commit on main (merge if someone saved in the CMS meanwhile)
+          if ! git push origin HEAD:main; then
+            git fetch -q origin main
+            git merge -q --no-edit -m "Merge release $next" origin/main
+            git push origin HEAD:main
+          fi
+          { echo "### Released $next"; echo; echo "${changes:-- Redeploy}"; } >> "$GITHUB_STEP_SUMMARY"
