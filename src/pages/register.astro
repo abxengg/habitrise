@@ -1,28 +1,47 @@
 ---
-// Register — plan choice + details form → Google Sheet → Razorpay link for the chosen plan.
+// Pricing & Registration — the only page that shows prices. The ticket shows the offer; the
+// form saves details to the Google Sheet, then sends people to the Razorpay link for their plan.
 // Copy: src/content/register.json; prices + Razorpay links: settings.json.
 import { u } from '../lib/url';
 import Shell from '../layouts/Shell.astro';
 import Header from '../components/streak/Header.astro';
 import Footer from '../components/streak/Footer.astro';
+import Floaters from '../components/streak/Floaters.astro';
 import { streakFonts } from '../components/streak/fonts';
 import '../styles/streak.css';
-import { register as c, settings, home, t, rich, money } from '../lib/content';
+import { register as c, settings, founder, t, rich, money } from '../lib/content';
 
 const pr = settings.pricing;
 const f = c.form;
+const tk = c.ticket;
 const site = Astro.site!;
 const abs = (p: string) => new URL(u(p), site).href;
-const jsonLd = [{
-  '@context': 'https://schema.org', '@type': 'BreadcrumbList',
-  itemListElement: [
-    { '@type': 'ListItem', position: 1, name: settings.brand.name, item: abs('/') },
-    { '@type': 'ListItem', position: 2, name: c.hero.tag, item: abs('/register') },
-  ],
-}];
 const plans = [
   { id: 'student', tag: c.plans.studentTag, ...pr.student },
   { id: 'others', tag: c.plans.othersTag, ...pr.others },
+];
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    name: tk.programName,
+    description: t(c.seo.description),
+    provider: { '@id': abs('/') + '#org' },
+    inLanguage: 'en-IN',
+    offers: plans.map(pl => ({ '@type': 'Offer', category: pl.label, price: pl.price, priceCurrency: 'INR', availability: 'https://schema.org/InStock', url: abs('/register') })),
+    hasCourseInstance: {
+      '@type': 'CourseInstance', courseMode: 'Online', courseWorkload: 'PT45M',
+      courseSchedule: { '@type': 'Schedule', repeatFrequency: 'Daily', repeatCount: 21, startTime: '06:00' },
+      instructor: { '@type': 'Person', name: founder.name },
+    },
+  },
+  {
+    '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: settings.brand.name, item: abs('/') },
+      { '@type': 'ListItem', position: 2, name: c.hero.tag, item: abs('/register') },
+    ],
+  },
 ];
 ---
 <Shell fonts={streakFonts} title={c.seo.title} description={c.seo.description} jsonLd={jsonLd}>
@@ -30,6 +49,7 @@ const plans = [
 
   <main>
     <section class="s-hero s-rg">
+      <Floaters />
       <div class="s-wrap">
         <div class="s-head">
           <span class="s-eyebrow">{c.hero.tag}</span>
@@ -37,51 +57,65 @@ const plans = [
           <p>{t(c.hero.text)}</p>
         </div>
 
-        <div class="s-rg-grid">
-          <form class="s-form s-rg-form" id="register"
-            data-hr-form data-kind="register" data-endpoint={settings.forms.endpoint}
-            data-pay-student={pr.student.paymentUrl} data-pay-others={pr.others.paymentUrl}
-            data-msg-sending={f.sending} data-msg-redirecting={f.redirecting} data-msg-no-payment-link={f.noPaymentLink}
-            data-msg-error={f.error} data-msg-not-configured={f.notConfigured}>
-            <fieldset class="s-rg-plans s-form-wide">
-              <legend>{c.plans.title}</legend>
-              {plans.map(pl => (
-                <label class="s-rg-plan">
-                  <input type="radio" name="plan" value={pl.id} required checked={pl.id === 'others'} />
-                  <span class="s-rg-plan-tag">{pl.tag}</span>
-                  <span class="s-rg-plan-name">{pl.label}</span>
-                  <span class="s-rg-plan-price"><b>{money(pl.price)}</b><s>{money(pr.originalPrice)}</s></span>
-                  <span class="s-rg-plan-note">{c.plans.perPerson}</span>
-                  <span class="s-rg-plan-text">{t(pl.note)}</span>
-                </label>
-              ))}
-            </fieldset>
-
-            <h2 class="s-form-wide s-rg-title">{f.title} <small>{f.subtitle}</small></h2>
-            <label class="s-form-wide"><span>{f.nameLabel}</span><input name="name" autocomplete="name" required maxlength="80" placeholder={f.namePlaceholder} /></label>
-            <label><span>{f.emailLabel}</span><input name="email" type="email" autocomplete="email" required maxlength="120" placeholder={f.emailPlaceholder} /></label>
-            <label><span>{f.phoneLabel}</span><input name="phone" type="tel" autocomplete="tel" required pattern="[+0-9 ()-]{10,16}" placeholder={f.phonePlaceholder} /></label>
-            <label class="s-form-wide" data-college hidden><span>{f.collegeLabel}</span><input name="college" maxlength="120" placeholder={f.collegePlaceholder} /></label>
-            <label><span>{f.cityLabel}</span><input name="city" autocomplete="address-level2" maxlength="60" placeholder={f.cityPlaceholder} /></label>
-            <label><span>{f.ageLabel}</span><input name="age" type="number" min="12" max="99" inputmode="numeric" /></label>
-            <label><span>{f.occupationLabel}</span><select name="occupation" required><option value="" disabled selected>—</option>{f.occupationOptions.map(o => <option>{o}</option>)}</select></label>
-            <label><span>{f.sourceLabel}</span><select name="source"><option value="" selected>—</option>{f.sourceOptions.map(o => <option>{o}</option>)}</select></label>
-            <label class="np-hp" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off" /></label>
-            <label class="s-rg-consent s-form-wide"><input type="checkbox" name="consent" value="yes" required /><span>{f.consent}</span></label>
-            <button type="submit" class="s-btn s-btn-sun s-wide s-form-wide">{f.submit} →</button>
-            <p class="s-form-status s-form-wide" data-status hidden role="status" aria-live="polite"></p>
-            <p class="s-rg-secure s-form-wide">{f.secureNote}</p>
-          </form>
-
-          <aside class="s-rg-side">
-            <div class="s-rg-summary">
-              <h3>{home.pricing.programName}</h3>
-              <dl>{home.pricing.details.map(d => <div><dt>{d.label}</dt><dd set:html={rich(d.value)} /></div>)}</dl>
-              <h4>{c.plans.includesTitle}</h4>
-              <ul>{pr.includes.map(i => <li>{t(i)}</li>)}</ul>
+        <!-- the offer -->
+        <div class="s-ticket" id="pricing">
+          <div class="s-ticket-main">
+            <div class="s-ticket-top">
+              <span class="s-ticket-brand"><img src={u('/img/brand/mark-black.png')} alt="" width="215" height="256" />{settings.brand.wordmark}</span>
+              <span>{tk.ticketLabel}</span>
             </div>
-          </aside>
+            <h2 class="s-ticket-name">{tk.programName}</h2>
+            <dl class="s-ticket-meta">{tk.details.map(d => <div><dt>{d.label}</dt><dd set:html={rich(d.value)} /></div>)}</dl>
+            <ul class="s-ticket-incl">{pr.includes.map(i => <li>{t(i)}</li>)}</ul>
+          </div>
+          <div class="s-ticket-stub">
+            <span class="s-ticket-tag">{tk.stubTag}</span>
+            <div class="s-ticket-plans">
+              {plans.map(pl => (
+                <button type="button" data-plan-card={pl.id}><small>{pl.label}</small><b>{money(pl.price)}</b><span>{tk.chooseButton} →</span></button>
+              ))}
+            </div>
+            <p class="s-ticket-was">{tk.regularLabel} <s>{money(pr.originalPrice)}</s></p>
+            <p class="s-ticket-pay">{tk.payNote}</p>
+            <div class="s-ticket-code" aria-hidden="true"><i></i><span>{tk.serial}</span></div>
+          </div>
         </div>
+
+        <!-- registration -->
+        <form class="s-form s-rg-form" id="register"
+          data-hr-form data-kind="register" data-endpoint={settings.forms.endpoint}
+          data-pay-student={pr.student.paymentUrl} data-pay-others={pr.others.paymentUrl}
+          data-msg-sending={f.sending} data-msg-redirecting={f.redirecting} data-msg-no-payment-link={f.noPaymentLink}
+          data-msg-error={f.error} data-msg-not-configured={f.notConfigured}>
+          <fieldset class="s-rg-plans s-form-wide">
+            <legend>{c.plans.title}</legend>
+            {plans.map(pl => (
+              <label class="s-rg-plan">
+                <input type="radio" name="plan" value={pl.id} required checked={pl.id === 'others'} />
+                <span class="s-rg-plan-tag">{pl.tag}</span>
+                <span class="s-rg-plan-name">{pl.label}</span>
+                <span class="s-rg-plan-price"><b>{money(pl.price)}</b><s>{money(pr.originalPrice)}</s></span>
+                <span class="s-rg-plan-note">{c.plans.perPerson}</span>
+                <span class="s-rg-plan-text">{t(pl.note)}</span>
+              </label>
+            ))}
+          </fieldset>
+
+          <h2 class="s-form-wide s-rg-title">{f.title} <small>{f.subtitle}</small></h2>
+          <label class="s-form-wide"><span>{f.nameLabel}</span><input name="name" autocomplete="name" required maxlength="80" placeholder={f.namePlaceholder} /></label>
+          <label><span>{f.emailLabel}</span><input name="email" type="email" autocomplete="email" required maxlength="120" placeholder={f.emailPlaceholder} /></label>
+          <label><span>{f.phoneLabel}</span><input name="phone" type="tel" autocomplete="tel" required pattern="[+0-9 ()-]{10,16}" placeholder={f.phonePlaceholder} /></label>
+          <label class="s-form-wide" data-college hidden><span>{f.collegeLabel}</span><input name="college" maxlength="120" placeholder={f.collegePlaceholder} /></label>
+          <label><span>{f.cityLabel}</span><input name="city" autocomplete="address-level2" maxlength="60" placeholder={f.cityPlaceholder} /></label>
+          <label><span>{f.ageLabel}</span><input name="age" type="number" min="12" max="99" inputmode="numeric" /></label>
+          <label><span>{f.occupationLabel}</span><select name="occupation" required><option value="" disabled selected>—</option>{f.occupationOptions.map(o => <option>{o}</option>)}</select></label>
+          <label><span>{f.sourceLabel}</span><select name="source"><option value="" selected>—</option>{f.sourceOptions.map(o => <option>{o}</option>)}</select></label>
+          <label class="np-hp" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off" /></label>
+          <label class="s-rg-consent s-form-wide"><input type="checkbox" name="consent" value="yes" required /><span>{f.consent}</span></label>
+          <button type="submit" class="s-btn s-btn-sun s-wide s-form-wide">{f.submit} →</button>
+          <p class="s-form-status s-form-wide" data-status hidden role="status" aria-live="polite"></p>
+          <p class="s-rg-secure s-form-wide">{f.secureNote}</p>
+        </form>
       </div>
     </section>
   </main>

@@ -5,8 +5,8 @@ Live preview: **https://abxengg.github.io/habitrise/**
 
 | Page | What it is |
 |---|---|
-| `/` | Home: hero streak tracker, how it works, the program, community, founder, stories, early-bird ticket, FAQ |
-| `/register` | Plan cards (Students / Everyone else) + registration form → Google Sheet → Razorpay link |
+| `/` | Home: hero streak tracker, how it works, the program, community, founder, stories, FAQ (no prices) |
+| `/register` | **Pricing & Registration** — the only page with prices: the early-bird ticket, plan cards and the form → Google Sheet → Razorpay link |
 | `/services` | Services (placeholder copy for now) + "I'm interested" form |
 | `/about` | Founder story |
 | `/deploys` | Live deployment status for the CMS (hidden from search engines) |
@@ -21,7 +21,7 @@ the site and it is live in about a minute.
    (*Settings → Collaborators → Add people*, role **Write**), then have them open <https://app.pagescms.org>,
    **Sign in with GitHub**, install the Pages CMS app on `abxengg/habitrise` when asked, and pick the repo.
 2. **Edit.** The sidebar lists: ⚙️ Site settings, prices & payment · 🏠 Home page · 👤 Founder · 📖 Founder page ·
-   🧭 Services page · 📝 Register page. The newsletter signup (bottom of every page) is under Site settings. Change any field → **Save**.
+   🧭 Services page · 💳 Pricing & Register page. The newsletter signup (bottom of every page) is under Site settings. Change any field → **Save**.
 3. **Watch it go live.** Open **`/deploys`** on the site: it shows *Updating website…* while the build runs and
    *Website is live and up to date* when done (each save is listed with who made it and how long it took). If a
    build fails, the previous version stays live.
@@ -42,6 +42,13 @@ Registration, Interest and Newsletter submissions are saved to a Google Sheet **
 **Email status** column shows `sent`, or `failed: <reason>` (the row is kept either way). One-time setup:
 [`scripts/google-apps-script/SETUP.md`](scripts/google-apps-script/SETUP.md) — then paste the Web app URL into
 *Site settings → Forms → Form receiver URL*. Until then the forms politely point people to WhatsApp.
+
+## Motion
+
+Floating shapes from the logo (amber stair steps, a staircase, diamonds, a sun) drift in each page's top section
+(`src/components/streak/Floaters.astro`). As you scroll, sections and cards reveal in sequence, numbers count up, an
+amber progress bar tracks the page, and the hero streak tracker builds itself day by day (`src/scripts/motion.ts`).
+All of it is switched off for visitors whose device asks for reduced motion, and pages are fully visible without JS.
 
 ## SEO
 

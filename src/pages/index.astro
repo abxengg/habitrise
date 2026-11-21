@@ -1,41 +1,18 @@
 ---
 // Homepage — "The Habit App" design. Every word comes from src/content/home.json
-// (plus settings.json for prices and founder.json for the coach), edited in Pages CMS.
+// (plus founder.json for the coach), edited in Pages CMS. Prices appear only on /register.
 import { u } from '../lib/url';
 import Shell from '../layouts/Shell.astro';
 import Header from '../components/streak/Header.astro';
 import Footer from '../components/streak/Footer.astro';
+import Floaters from '../components/streak/Floaters.astro';
 import { streakFonts } from '../components/streak/fonts';
 import '../styles/streak.css';
-import { home as c, settings, founder, t, rich, href, initials, avatar, money } from '../lib/content';
+import { home as c, founder, t, initials, avatar } from '../lib/content';
 
-const pr = settings.pricing;
 const DONE = 14;
 const chipColors = ['#f8af3c', '#ff5a36', '#4f7cff', '#23c483', '#b79cff'];
-const site = Astro.site!;
-const abs = (p: string) => new URL(u(p), site).href;
-
 const jsonLd = [
-  {
-    '@context': 'https://schema.org',
-    '@type': 'Course',
-    name: c.pricing.programName,
-    description: t(c.seo.description),
-    provider: { '@id': abs('/') + '#org' },
-    inLanguage: 'en-IN',
-    educationalLevel: 'Beginner',
-    offers: [
-      { '@type': 'Offer', category: pr.student.label, price: pr.student.price, priceCurrency: 'INR', availability: 'https://schema.org/InStock', url: abs('/register') },
-      { '@type': 'Offer', category: pr.others.label, price: pr.others.price, priceCurrency: 'INR', availability: 'https://schema.org/InStock', url: abs('/register') },
-    ],
-    hasCourseInstance: {
-      '@type': 'CourseInstance',
-      courseMode: 'Online',
-      courseWorkload: 'PT45M',
-      courseSchedule: { '@type': 'Schedule', repeatFrequency: 'Daily', repeatCount: 21, startTime: '06:00' },
-      instructor: { '@type': 'Person', name: founder.name },
-    },
-  },
   {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
@@ -49,6 +26,7 @@ const jsonLd = [
   <main>
     <!-- HERO with live streak tracker -->
     <section class="s-hero">
+      <Floaters set="hero" />
       <div class="s-wrap s-hero-grid">
         <div class="s-hero-copy">
           <span class="s-badge">{t(c.hero.badge)}</span>
@@ -234,39 +212,6 @@ const jsonLd = [
       </div>
     </section>
 
-    <!-- pricing: early-bird ticket -->
-    <section class="s-sec s-pricing" id="pricing">
-      <div class="s-wrap">
-        <div class="s-head">
-          <span class="s-eyebrow">{c.pricing.tag}</span>
-          <h2>{c.pricing.title}</h2>
-          <p>{t(c.pricing.text)}</p>
-        </div>
-        <div class="s-ticket">
-          <div class="s-ticket-main">
-            <div class="s-ticket-top">
-              <span class="s-ticket-brand"><img src={u('/img/brand/mark-black.png')} alt="" width="215" height="256" />{settings.brand.wordmark}</span>
-              <span>{c.pricing.ticketLabel}</span>
-            </div>
-            <h3>{c.pricing.programName}</h3>
-            <dl class="s-ticket-meta">{c.pricing.details.map(d => <div><dt>{d.label}</dt><dd set:html={rich(d.value)} /></div>)}</dl>
-            <ul class="s-ticket-incl">{pr.includes.map(i => <li>{t(i)}</li>)}</ul>
-          </div>
-          <div class="s-ticket-stub">
-            <span class="s-ticket-tag">{c.pricing.stubTag}</span>
-            <div class="s-ticket-plans">
-              <div><small>{pr.student.label}</small><b>{money(pr.student.price)}</b></div>
-              <div><small>{pr.others.label}</small><b>{money(pr.others.price)}</b></div>
-            </div>
-            <p class="s-ticket-was">{c.pricing.regularLabel} <s>{money(pr.originalPrice)}</s></p>
-            <a href={u('/register')} class="s-btn s-btn-dark s-wide">{c.pricing.button}</a>
-            <p class="s-ticket-pay">{c.pricing.payNote}</p>
-            <div class="s-ticket-code" aria-hidden="true"><i></i><span>{c.pricing.serial}</span></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- faq -->
     <section class="s-sec" id="faq">
       <div class="s-wrap">
@@ -314,6 +259,30 @@ const jsonLd = [
     }));
     $$('.s-chip').forEach(c => c.addEventListener('click', () => c.classList.toggle('on')));
     update();
+
+    // story: the streak builds itself day by day the first time the tracker is seen
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+      const days = $$('.s-day');
+      const target = days.filter(d => d.classList.contains('done')).length;
+      const today = days.findIndex(d => d.classList.contains('today'));
+      days.forEach(d => { d.classList.remove('done', 'today'); d.textContent = d.dataset.day!; d.setAttribute('aria-pressed', 'false'); });
+      update();
+      const io = new IntersectionObserver(([e]) => {
+        if (!e.isIntersecting) return;
+        io.disconnect();
+        let i = 0;
+        const step = () => {
+          if (i < target) {
+            const d = days[i++];
+            d.classList.add('done', 'pop'); d.textContent = '✓'; d.setAttribute('aria-pressed', 'true');
+            update();
+            setTimeout(step, 90);
+          } else if (today >= 0) days[today].classList.add('today');
+        };
+        setTimeout(step, 500);
+      }, { threshold: .4 });
+      io.observe(tracker);
+    }
     // program tabs
     $$('.s-tab').forEach(t => t.addEventListener('click', () => {
       $$('.s-tab').forEach(x => { x.classList.toggle('on', x === t); x.setAttribute('aria-selected', String(x === t)); });

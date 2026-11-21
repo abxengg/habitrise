@@ -1,20 +1,46 @@
 {
   "seo": {
-    "title": "Register — Join the Next 6 AM Cohort",
-    "description": "Register for the HabitRise 21-day 6 AM habit challenge. Students ₹399, everyone else ₹699 (regular ₹999). Fill in your details and pay securely via Razorpay."
+    "title": "Pricing & Registration — The 21-Day 6 AM Challenge",
+    "description": "HabitRise pricing: students ₹399, everyone else ₹699 (regular ₹999), one-time for all 21 days. Choose your plan, fill in your details and pay securely via Razorpay."
   },
   "hero": {
-    "tag": "Register",
-    "title": "Claim your seat for {nextMonday}.",
-    "text": "Pick your plan, fill in your details, and you'll go straight to secure payment. Your Skool invite follows by email."
+    "tag": "Pricing",
+    "title": "Your ticket to 6 AM.",
+    "text": "One seat in the next 21-day cohort, everything included. Choose your plan, fill in your details, and pay securely."
+  },
+  "ticket": {
+    "ticketLabel": "Admit one · Cohort pass",
+    "programName": "The 21-Day HabitRise Challenge",
+    "details": [
+      {
+        "label": "Starts",
+        "value": "{nextMonday}"
+      },
+      {
+        "label": "Time",
+        "value": "6:00 AM IST"
+      },
+      {
+        "label": "Duration",
+        "value": "21 days"
+      },
+      {
+        "label": "Where",
+        "value": "Zoom + Skool"
+      }
+    ],
+    "stubTag": "Early bird pricing",
+    "regularLabel": "Regular",
+    "chooseButton": "Choose",
+    "payNote": "Secure payment via Razorpay · UPI · Cards",
+    "serial": "No. HR-21 · 0699"
   },
   "plans": {
     "title": "Choose your plan",
     "studentTag": "Student price",
     "othersTag": "Standard",
     "regularLabel": "Regular",
-    "perPerson": "one-time · all 21 days",
-    "includesTitle": "Every plan includes"
+    "perPerson": "one-time · all 21 days"
   },
   "form": {
     "title": "Your details",
@@ -32,9 +58,24 @@
     "cityPlaceholder": "Where are you joining from?",
     "ageLabel": "Age",
     "occupationLabel": "You are a…",
-    "occupationOptions": ["School student", "College student", "Working professional", "Entrepreneur", "Career switcher", "Other"],
+    "occupationOptions": [
+      "School student",
+      "College student",
+      "Working professional",
+      "Entrepreneur",
+      "Career switcher",
+      "Other"
+    ],
     "sourceLabel": "How did you hear about us?",
-    "sourceOptions": ["Instagram", "YouTube", "LinkedIn", "WhatsApp", "Friend or family", "College event", "Other"],
+    "sourceOptions": [
+      "Instagram",
+      "YouTube",
+      "LinkedIn",
+      "WhatsApp",
+      "Friend or family",
+      "College event",
+      "Other"
+    ],
     "consent": "I agree to receive programme updates on WhatsApp and email.",
     "submit": "Continue to payment",
     "sending": "Saving your details…",

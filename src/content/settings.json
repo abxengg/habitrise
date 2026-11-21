@@ -78,10 +78,10 @@
       },
       {
         "label": "Pricing",
-        "href": "/#pricing"
+        "href": "/register"
       }
     ],
-    "button": "Register",
+    "button": "Join now",
     "buttonHref": "/register",
     "menuLabel": "Open menu"
   },
@@ -104,10 +104,6 @@
           },
           {
             "label": "Pricing",
-            "href": "/#pricing"
-          },
-          {
-            "label": "Register",
             "href": "/register"
           }
         ]
@@ -184,7 +180,7 @@
     "siteUrl": "https://habitrise.in",
     "defaultTitle": "HabitRise | Build the System — The 21-Day 6 AM Habit Challenge",
     "titleSuffix": " | HabitRise",
-    "defaultDescription": "Join HabitRise, India's 21-day live 6 AM habit challenge. Master the S.A.V.E.R.S morning routine with live Zoom sessions and a private Skool community. Students ₹399, others ₹699.",
+    "defaultDescription": "Join HabitRise, India's 21-day live 6 AM habit challenge. Master the S.A.V.E.R.S morning routine with live Zoom sessions and a private Skool community.",
     "keywords": "habit challenge, 6 AM routine, morning routine, S.A.V.E.R.S, miracle morning India, discipline course, habit coach Tamil Nadu, productivity for students, HabitRise",
     "ogImage": "/og-image.png",
     "ogImageAlt": "HabitRise — Build the system. The 21-day 6 AM habit challenge.",

@@ -42,7 +42,9 @@ const external = (h: string) => /^https?:/.test(h);
 
 <script>
   import { wireForms } from '../../scripts/forms';
+  import { startMotion } from '../../scripts/motion';
   wireForms();
+  startMotion();
 </script>
 
 <script define:vars={{ prefix: settings.dates.nextCohortPrefix }}>

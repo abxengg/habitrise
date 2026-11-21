@@ -306,27 +306,6 @@ content:
               - { name: place, label: City, type: string }
               - { name: result, label: Result tag, type: string }
               - { name: quote, label: Story, type: text }
-      - name: pricing
-        label: Early-bird ticket (prices are in Site settings)
-        type: object
-        fields:
-          - { name: tag, label: Section tag, type: string }
-          - { name: title, label: Heading, type: string }
-          - { name: text, label: Paragraph, type: text }
-          - { name: ticketLabel, label: Ticket top label, type: string }
-          - { name: programName, label: Programme name, type: string }
-          - name: details
-            label: Ticket details
-            type: object
-            list: { collapsible: { collapsed: true, summary: "{label}: {value}" } }
-            fields:
-              - { name: label, label: Label, type: string }
-              - { name: value, label: Value, type: string, description: "{nextMonday} shows the next cohort date" }
-          - { name: stubTag, label: Stub tag, type: string }
-          - { name: regularLabel, label: "'Regular' word", type: string }
-          - { name: button, label: Button text, type: string }
-          - { name: payNote, label: Payment note, type: string }
-          - { name: serial, label: Ticket serial, type: string }
       - name: faq
         label: FAQ
         type: object
@@ -497,7 +476,7 @@ content:
 
   # ───────────────────────────── Register page ─────────────────────────────
   - name: register
-    label: "📝 Register page"
+    label: "💳 Pricing & Register page"
     type: file
     path: src/content/register.json
     format: json
@@ -515,6 +494,24 @@ content:
           - { name: tag, label: Section tag, type: string }
           - { name: title, label: Heading, type: string, description: "{nextMonday} shows the next cohort date" }
           - { name: text, label: Paragraph, type: text }
+      - name: ticket
+        label: Pricing ticket (prices are in Site settings)
+        type: object
+        fields:
+          - { name: ticketLabel, label: Ticket top label, type: string }
+          - { name: programName, label: Programme name, type: string }
+          - name: details
+            label: Ticket details
+            type: object
+            list: { collapsible: { collapsed: true, summary: "{label}: {value}" } }
+            fields:
+              - { name: label, label: Label, type: string }
+              - { name: value, label: Value, type: string, description: "{nextMonday} shows the next cohort date" }
+          - { name: stubTag, label: Stub tag, type: string }
+          - { name: regularLabel, label: "'Regular' word", type: string }
+          - { name: chooseButton, label: Plan button text, type: string }
+          - { name: payNote, label: Payment note, type: string }
+          - { name: serial, label: Ticket serial, type: string }
       - name: plans
         label: Plan cards (names, prices and notes are in Site settings)
         type: object
@@ -524,7 +521,6 @@ content:
           - { name: othersTag, label: Everyone-else card tag, type: string }
           - { name: regularLabel, label: "'Regular' word", type: string }
           - { name: perPerson, label: Price note, type: string }
-          - { name: includesTitle, label: Summary card — includes title, type: string }
       - name: form
         label: Registration form
         type: object
