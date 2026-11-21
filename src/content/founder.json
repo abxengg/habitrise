@@ -9,12 +9,34 @@
     "I'm a Delivery Lead at Mindgate Solutions, a habit coach, career & personal counsellor, content creator and an active Toastmaster — with a B.E. in CSE, an M.E. in IT, and currently pursuing my PhD in Artificial Intelligence.",
     "Over the last 5+ years I've trained 5,000+ students across Tamil Nadu, mentored 15+ entrepreneurs, and built the HabitRise system — a 21-day program that turns confusion into clarity, procrastination into discipline, and existence into purpose."
   ],
-  "credentials": ["PMP Certified", "12+ Years in IT", "PhD Scholar · AI", "Toastmaster", "15+ Entrepreneurs Mentored", "Book Reader"],
-  "education": ["B.E. Computer Science & Engineering", "M.E. Information Technology", "PhD scholar · Artificial Intelligence (ongoing)", "PMP® certification"],
+  "credentials": [
+    "PMP Certified",
+    "12+ Years in IT",
+    "Project Manager",
+    "PhD Scholar · AI",
+    "Toastmaster",
+    "15+ Entrepreneurs Mentored",
+    "Book Reader"
+  ],
+  "education": [
+    "B.E. Computer Science & Engineering",
+    "M.E. Information Technology",
+    "PhD scholar · Artificial Intelligence (ongoing)",
+    "PMP® certification"
+  ],
   "journey": [
-    { "title": "Corporate Leadership", "text": "10+ years managing high-stakes enterprise projects as a PMP-certified delivery lead." },
-    { "title": "The Awakening", "text": "Noticed the pattern behind every high performer — and discovered the power of the 6 AM routine." },
-    { "title": "The HabitRise Movement", "text": "A system, a community and 5,000+ lives transformed across India." }
+    {
+      "title": "Corporate Leadership",
+      "text": "10+ years managing high-stakes enterprise projects as a PMP-certified delivery lead."
+    },
+    {
+      "title": "The Awakening",
+      "text": "Noticed the pattern behind every high performer — and discovered the power of the 6 AM routine."
+    },
+    {
+      "title": "The HabitRise Movement",
+      "text": "A system, a community and 5,000+ lives transformed across India."
+    }
   ],
   "story": [
     {
@@ -40,9 +62,21 @@
     }
   ],
   "coaching": [
-    { "title": "Morning routines & discipline", "text": "Installing the S.A.V.E.R.S routine and making it stick past the first week." },
-    { "title": "Career & personal counselling", "text": "Clarity on direction for students, graduates and professionals switching tracks." },
-    { "title": "Entrepreneur mentoring", "text": "Focus, execution habits and accountability for founders — 15+ mentored so far." },
-    { "title": "Talks & workshops", "text": "Sessions for colleges and teams on habits, purpose and leadership." }
+    {
+      "title": "Morning routines & discipline",
+      "text": "Installing the S.A.V.E.R.S routine and making it stick past the first week."
+    },
+    {
+      "title": "Career & personal counselling",
+      "text": "Clarity on direction for students, graduates and professionals switching tracks."
+    },
+    {
+      "title": "Entrepreneur mentoring",
+      "text": "Focus, execution habits and accountability for founders — 15+ mentored so far."
+    },
+    {
+      "title": "Talks & workshops",
+      "text": "Sessions for colleges and teams on habits, purpose and leadership."
+    }
   ]
 }
