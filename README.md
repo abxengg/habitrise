@@ -5,11 +5,10 @@ Live preview: **https://abxengg.github.io/habitrise/**
 
 | Page | What it is |
 |---|---|
-| `/` | Home: hero streak tracker, how it works, the program, community, founder, stories, early-bird ticket, FAQ |
-| `/register` | Plan cards (Students / Everyone else) + registration form → Google Sheet → Razorpay link |
+| `/` | Home: hero streak tracker, how it works, the program, community, founder, stories, FAQ (no prices) |
+| `/register` | **Pricing & Registration** — the only page with prices: the early-bird ticket, plan cards and the form → Google Sheet → Razorpay link |
 | `/services` | Services (placeholder copy for now) + "I'm interested" form |
 | `/about` | Founder story |
-| `/deploys` | Live deployment status for the CMS (hidden from search engines) |
 
 ## Content Management for HabitRise (no code needed)
 
@@ -21,10 +20,9 @@ the site and it is live in about a minute.
    (*Settings → Collaborators → Add people*, role **Write**), then have them open <https://app.pagescms.org>,
    **Sign in with GitHub**, install the Pages CMS app on `abxengg/habitrise` when asked, and pick the repo.
 2. **Edit.** The sidebar lists: ⚙️ Site settings, prices & payment · 🏠 Home page · 👤 Founder · 📖 Founder page ·
-   🧭 Services page · 📝 Register page. The newsletter signup (bottom of every page) is under Site settings. Change any field → **Save**.
-3. **Watch it go live.** Open **`/deploys`** on the site: it shows *Updating website…* while the build runs and
-   *Website is live and up to date* when done (each save is listed with who made it and how long it took). If a
-   build fails, the previous version stays live.
+   🧭 Services page · 💳 Pricing & Register page. The newsletter signup (bottom of every page) is under Site settings. Change any field → **Save**.
+3. **It goes live by itself.** Each save rebuilds the site; it's live in about a minute. If a build fails, the
+   previous version stays live.
 
 Text can use placeholders that fill in automatically, so prices only ever change in one place:
 `{currency}` `{studentPrice}` `{othersPrice}` `{originalPrice}` `{year}` `{nextMonday}` (the next cohort date).
@@ -43,6 +41,20 @@ Registration, Interest and Newsletter submissions are saved to a Google Sheet **
 [`scripts/google-apps-script/SETUP.md`](scripts/google-apps-script/SETUP.md) — then paste the Web app URL into
 *Site settings → Forms → Form receiver URL*. Until then the forms politely point people to WhatsApp.
 
+## Motion
+
+Everything moves smoothly with one easing curve (`--ease-out` in `src/styles/streak.css`): sections and cards fade
+up in sequence as you scroll, numbers count up, an amber progress bar tracks the page, the hero streak tracker builds
+itself day by day, and buttons, cards and fields ease on hover and focus (`src/scripts/motion.ts`).
+
+The forms each have their own touch:
+- **Register** (`/register`, the only page with prices) is one rectangular ticket: a 3-step form (plan → about you →
+  contact) on the left and a stub on the right that fills in as people type, then gets a "Seat reserved" stamp.
+- **Services interest form** shows the message being written as a chat, which gets a reply when it's sent.
+- **Newsletter** (footer, every page) is a letter with an airmail border and stamp that flies off on signup.
+
+All motion is switched off for visitors whose device asks for reduced motion, and pages are fully visible without JS.
+
 ## SEO
 
 - Per-page title and description from each page's **SEO** block in the CMS (defaults in Site settings → SEO).
@@ -50,7 +62,7 @@ Registration, Interest and Newsletter submissions are saved to a Google Sheet **
   re-render with `node scripts/og/render.mjs`).
 - Structured data (JSON-LD): Organization, WebSite, Course with both price offers, FAQPage, founder Person/ProfilePage,
   Services, Breadcrumbs.
-- `/sitemap.xml`, `/robots.txt` (keeps `/deploys` out), web manifest, favicons, custom 404.
+- `/sitemap.xml`, `/robots.txt`, `/.well-known/security.txt`, web manifest, favicons, custom 404.
 - Note: on the GitHub Pages preview the site is in a sub-folder, where crawlers ignore `robots.txt`; it takes full
   effect once `habitrise.in` points at the site. Submit `https://habitrise.in/sitemap.xml` in Google Search Console then.
 - No star ratings are marked up for Google: the 4.9/5 figure has no verifiable review data behind it.

@@ -39,7 +39,7 @@ export function wireForms() {
       }
       document.querySelectorAll<HTMLElement>('[data-plan-card]').forEach(c => c.classList.toggle('on', c.dataset.planCard === plan));
     };
-    form.querySelectorAll('input[name="plan"]').forEach(r => r.addEventListener('change', syncPlan));
+    form.addEventListener('change', syncPlan);
     // the classified ads double as plan pickers
     document.querySelectorAll<HTMLElement>('[data-plan-card]').forEach(card => card.addEventListener('click', () => {
       const r = form.querySelector<HTMLInputElement>(`input[name="plan"][value="${card.dataset.planCard}"]`);
@@ -72,14 +72,16 @@ export function wireForms() {
 
         if (d.kind === 'register') {
           const link = data.plan === 'student' ? d.payStudent : d.payOthers;
+          form.dispatchEvent(new CustomEvent('hr:saved')); // the live ticket gets its "Seat reserved" stamp
           if (link) {
             status(form, msgs.redirecting ?? msgs.sending, 'ok');
-            location.href = link;
+            setTimeout(() => (location.href = link), 1100); // let the stamp land first
           } else {
             status(form, msgs.noPaymentLink ?? msgs.success ?? '', 'ok');
-            form.reset(); syncPlan();
+            form.reset(); syncPlan(); form.dispatchEvent(new Event('input'));
           }
         } else {
+          form.dispatchEvent(new CustomEvent('hr:saved', { detail: data })); // lets the page celebrate (letter flies off, chat reply…)
           status(form, msgs.success ?? '', 'ok');
           form.reset();
         }

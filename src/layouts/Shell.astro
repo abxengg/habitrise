@@ -10,7 +10,7 @@ interface Props {
   description?: string;
   fonts: string;
   themeColor?: string;
-  noindex?: boolean;         // e.g. the deploy-status page and 404
+  noindex?: boolean;         // e.g. the 404 page
   jsonLd?: Record<string, unknown>[];
 }
 const s = settings.seo;
@@ -43,9 +43,12 @@ const schemas = [org, website, ...jsonLd];
 <html lang="en-IN">
   <head>
     <meta charset="UTF-8" />
+    <script is:inline>document.documentElement.classList.add('js')</script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{pageTitle}</title>
+    <meta name="title" content={pageTitle} />
     <meta name="description" content={desc} />
+    <meta name="generator" content={Astro.generator} />
     <meta name="keywords" content={s.keywords} />
     <meta name="author" content={settings.brand.name} />
     <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large'} />
@@ -69,6 +72,7 @@ const schemas = [org, website, ...jsonLd];
     <meta property="og:image:alt" content={s.ogImageAlt} />
     <meta name="twitter:card" content="summary_large_image" />
     {s.twitterHandle && <meta name="twitter:site" content={s.twitterHandle} />}
+    <meta name="twitter:url" content={canonical} />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={desc} />
     <meta name="twitter:image" content={ogImage} />
@@ -81,6 +85,7 @@ const schemas = [org, website, ...jsonLd];
     <link href={fonts} rel="stylesheet" />
   </head>
   <body>
+    <a href="#main" class="s-skip">{settings.header.skipLabel}</a>
     <slot />
   </body>
 </html>

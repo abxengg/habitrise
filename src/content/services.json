@@ -14,8 +14,12 @@
       "title": "21-Day 6 AM Challenge",
       "tagline": "The flagship programme",
       "text": "Live 6 AM sessions for 21 days, the S.A.V.E.R.S routine and the private Skool community.",
-      "points": ["21 live morning sessions", "Skool community + leaderboard", "Lifetime recordings"],
-      "price": "From {currency}{studentPrice}",
+      "points": [
+        "21 live morning sessions",
+        "Skool community + leaderboard",
+        "Lifetime recordings"
+      ],
+      "price": "See pricing",
       "button": "Register",
       "buttonHref": "/register"
     },
@@ -24,7 +28,11 @@
       "title": "1:1 Habit Coaching",
       "tagline": "Personal accountability",
       "text": "Weekly one-to-one sessions to design your routine, fix what keeps breaking and stay on track.",
-      "points": ["Personal routine design", "Weekly check-ins", "WhatsApp accountability"],
+      "points": [
+        "Personal routine design",
+        "Weekly check-ins",
+        "WhatsApp accountability"
+      ],
       "price": "Price on request",
       "button": "I'm interested",
       "buttonHref": "#interest"
@@ -34,7 +42,11 @@
       "title": "College Workshops",
       "tagline": "For students & placement cells",
       "text": "High-energy sessions on discipline, purpose and exam-ready routines for schools and colleges.",
-      "points": ["90-minute live session", "Habit toolkit for students", "Online or on campus"],
+      "points": [
+        "90-minute live session",
+        "Habit toolkit for students",
+        "Online or on campus"
+      ],
       "price": "Price on request",
       "button": "I'm interested",
       "buttonHref": "#interest"
@@ -44,7 +56,11 @@
       "title": "Corporate Sessions",
       "tagline": "For teams & leaders",
       "text": "Morning-routine and focus programmes for teams, from a PMP-certified delivery lead.",
-      "points": ["Focus & deep-work habits", "Leadership mornings", "Custom team challenges"],
+      "points": [
+        "Focus & deep-work habits",
+        "Leadership mornings",
+        "Custom team challenges"
+      ],
       "price": "Price on request",
       "button": "I'm interested",
       "buttonHref": "#interest"
@@ -69,6 +85,14 @@
     "sending": "Sending…",
     "success": "Thank you! We've got your details and will reach out within 24 hours.",
     "error": "Something went wrong. Please try again, or message us on WhatsApp.",
-    "notConfigured": "The form isn't connected yet. Please message us on WhatsApp for now."
+    "notConfigured": "The form isn't connected yet. Please message us on WhatsApp for now.",
+    "previewTitle": "Your message to us",
+    "previewName": "HabitRise team",
+    "previewStatus": "usually replies within a day",
+    "previewHello": "Hi! I'm {name}{from}.",
+    "previewFrom": " from {organisation}",
+    "previewNameFallback": "…",
+    "previewInterest": "I'm interested in {service}.",
+    "previewReply": "Got it! 🙌 We'll reach out within 24 hours."
   }
 }

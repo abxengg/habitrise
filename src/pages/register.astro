@@ -1,5 +1,7 @@
 ---
-// Register — plan choice + details form → Google Sheet → Razorpay link for the chosen plan.
+// Pricing & Registration. A 3-step form (plan → about you → contact) with a live ticket that
+// fills in as people type. On submit the details go to the Google Sheet, the ticket gets a
+// "Seat reserved" stamp, then people are sent to the Razorpay link for their plan.
 // Copy: src/content/register.json; prices + Razorpay links: settings.json.
 import { u } from '../lib/url';
 import Shell from '../layouts/Shell.astro';
@@ -7,28 +9,48 @@ import Header from '../components/streak/Header.astro';
 import Footer from '../components/streak/Footer.astro';
 import { streakFonts } from '../components/streak/fonts';
 import '../styles/streak.css';
-import { register as c, settings, home, t, rich, money } from '../lib/content';
+import { register as c, settings, founder, t, rich, money } from '../lib/content';
 
 const pr = settings.pricing;
 const f = c.form;
+const tk = c.ticket;
+const w = c.wizard;
+const pv = c.preview;
+const steps = w.steps;
 const site = Astro.site!;
 const abs = (p: string) => new URL(u(p), site).href;
-const jsonLd = [{
-  '@context': 'https://schema.org', '@type': 'BreadcrumbList',
-  itemListElement: [
-    { '@type': 'ListItem', position: 1, name: settings.brand.name, item: abs('/') },
-    { '@type': 'ListItem', position: 2, name: c.hero.tag, item: abs('/register') },
-  ],
-}];
 const plans = [
   { id: 'student', tag: c.plans.studentTag, ...pr.student },
   { id: 'others', tag: c.plans.othersTag, ...pr.others },
+];
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    name: tk.programName,
+    description: t(c.seo.description),
+    provider: { '@id': abs('/') + '#org' },
+    inLanguage: 'en-IN',
+    offers: plans.map(pl => ({ '@type': 'Offer', category: pl.label, price: pl.price, priceCurrency: 'INR', availability: 'https://schema.org/InStock', url: abs('/register') })),
+    hasCourseInstance: {
+      '@type': 'CourseInstance', courseMode: 'Online', courseWorkload: 'PT45M',
+      courseSchedule: { '@type': 'Schedule', repeatFrequency: 'Daily', repeatCount: 21, startTime: '06:00' },
+      instructor: { '@type': 'Person', name: founder.name },
+    },
+  },
+  {
+    '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: settings.brand.name, item: abs('/') },
+      { '@type': 'ListItem', position: 2, name: c.hero.tag, item: abs('/register') },
+    ],
+  },
 ];
 ---
 <Shell fonts={streakFonts} title={c.seo.title} description={c.seo.description} jsonLd={jsonLd}>
   <Header />
 
-  <main>
+  <main id="main" tabindex="-1">
     <section class="s-hero s-rg">
       <div class="s-wrap">
         <div class="s-head">
@@ -37,48 +59,101 @@ const plans = [
           <p>{t(c.hero.text)}</p>
         </div>
 
-        <div class="s-rg-grid">
-          <form class="s-form s-rg-form" id="register"
+        <div class="s-wz" id="register">
+          <form class="s-form s-wz-form"
             data-hr-form data-kind="register" data-endpoint={settings.forms.endpoint}
             data-pay-student={pr.student.paymentUrl} data-pay-others={pr.others.paymentUrl}
             data-msg-sending={f.sending} data-msg-redirecting={f.redirecting} data-msg-no-payment-link={f.noPaymentLink}
-            data-msg-error={f.error} data-msg-not-configured={f.notConfigured}>
-            <fieldset class="s-rg-plans s-form-wide">
+            data-msg-error={f.error} data-msg-not-configured={f.notConfigured}
+            data-step-of={w.stepOf} novalidate>
+
+            <div class="s-wz-head" aria-hidden="true">
+              <span class="s-ticket-brand"><img src={u('/img/brand/mark-white.png')} alt="" width="215" height="256" />{settings.brand.wordmark}</span>
+              <span>{tk.ticketLabel}</span>
+            </div>
+            <div class="s-wz-progress">
+              <ol>{steps.map((s, i) => <li data-dot={i} class={i === 0 ? 'on' : ''}><b>{i + 1}</b><span>{s}</span></li>)}</ol>
+              <div class="s-wz-bar"><i></i></div>
+            </div>
+
+            <!-- step 1: plan -->
+            <fieldset class="s-wz-step" data-step="0">
               <legend>{c.plans.title}</legend>
-              {plans.map(pl => (
-                <label class="s-rg-plan">
-                  <input type="radio" name="plan" value={pl.id} required checked={pl.id === 'others'} />
-                  <span class="s-rg-plan-tag">{pl.tag}</span>
-                  <span class="s-rg-plan-name">{pl.label}</span>
-                  <span class="s-rg-plan-price"><b>{money(pl.price)}</b><s>{money(pr.originalPrice)}</s></span>
-                  <span class="s-rg-plan-note">{c.plans.perPerson}</span>
-                  <span class="s-rg-plan-text">{t(pl.note)}</span>
-                </label>
-              ))}
+              <div class="s-rg-plans">
+                {plans.map(pl => (
+                  <label class="s-rg-plan">
+                    <input type="radio" name="plan" value={pl.id} required checked={pl.id === 'others'} data-label={pl.label} data-price={money(pl.price)} />
+                    <span class="s-rg-plan-tag">{pl.tag}</span>
+                    <span class="s-rg-plan-name">{pl.label}</span>
+                    <span class="s-rg-plan-price"><b>{money(pl.price)}</b><s>{money(pr.originalPrice)}</s></span>
+                    <span class="s-rg-plan-note">{c.plans.perPerson}</span>
+                    <span class="s-rg-plan-text">{t(pl.note)}</span>
+                  </label>
+                ))}
+              </div>
             </fieldset>
 
-            <h2 class="s-form-wide s-rg-title">{f.title} <small>{f.subtitle}</small></h2>
-            <label class="s-form-wide"><span>{f.nameLabel}</span><input name="name" autocomplete="name" required maxlength="80" placeholder={f.namePlaceholder} /></label>
-            <label><span>{f.emailLabel}</span><input name="email" type="email" autocomplete="email" required maxlength="120" placeholder={f.emailPlaceholder} /></label>
-            <label><span>{f.phoneLabel}</span><input name="phone" type="tel" autocomplete="tel" required pattern="[+0-9 ()-]{10,16}" placeholder={f.phonePlaceholder} /></label>
-            <label class="s-form-wide" data-college hidden><span>{f.collegeLabel}</span><input name="college" maxlength="120" placeholder={f.collegePlaceholder} /></label>
-            <label><span>{f.cityLabel}</span><input name="city" autocomplete="address-level2" maxlength="60" placeholder={f.cityPlaceholder} /></label>
-            <label><span>{f.ageLabel}</span><input name="age" type="number" min="12" max="99" inputmode="numeric" /></label>
-            <label><span>{f.occupationLabel}</span><select name="occupation" required><option value="" disabled selected>—</option>{f.occupationOptions.map(o => <option>{o}</option>)}</select></label>
-            <label><span>{f.sourceLabel}</span><select name="source"><option value="" selected>—</option>{f.sourceOptions.map(o => <option>{o}</option>)}</select></label>
-            <label class="np-hp" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off" /></label>
-            <label class="s-rg-consent s-form-wide"><input type="checkbox" name="consent" value="yes" required /><span>{f.consent}</span></label>
-            <button type="submit" class="s-btn s-btn-sun s-wide s-form-wide">{f.submit} →</button>
-            <p class="s-form-status s-form-wide" data-status hidden role="status" aria-live="polite"></p>
-            <p class="s-rg-secure s-form-wide">{f.secureNote}</p>
+            <!-- step 2: about you -->
+            <fieldset class="s-wz-step" data-step="1" hidden>
+              <legend>{f.aboutTitle}</legend>
+              <div class="s-wz-grid">
+                <label class="s-form-wide"><span>{f.nameLabel}</span><input name="name" autocomplete="name" required maxlength="80" placeholder={f.namePlaceholder} data-pv="name" /></label>
+                <div class="s-form-wide s-chips" role="radiogroup" aria-label={f.occupationLabel}>
+                  <span>{f.occupationLabel}</span>
+                  <div>{f.occupationOptions.map(o => <label><input type="radio" name="occupation" value={o} required /><em>{o}</em></label>)}</div>
+                </div>
+                <label class="s-form-wide" data-college hidden><span>{f.collegeLabel}</span><input name="college" maxlength="120" placeholder={f.collegePlaceholder} /></label>
+                <label><span>{f.cityLabel}</span><input name="city" autocomplete="address-level2" maxlength="60" placeholder={f.cityPlaceholder} data-pv="city" /></label>
+                <label><span>{f.ageLabel}</span><input name="age" type="number" min="12" max="99" inputmode="numeric" /></label>
+              </div>
+            </fieldset>
+
+            <!-- step 3: contact -->
+            <fieldset class="s-wz-step" data-step="2" hidden>
+              <legend>{f.contactTitle}</legend>
+              <div class="s-wz-grid">
+                <label><span>{f.emailLabel}</span><input name="email" type="email" autocomplete="email" required maxlength="120" placeholder={f.emailPlaceholder} /></label>
+                <label><span>{f.phoneLabel}</span><input name="phone" type="tel" autocomplete="tel" required pattern="[+0-9 ()-]{10,16}" placeholder={f.phonePlaceholder} /></label>
+                <div class="s-form-wide s-chips" role="radiogroup" aria-label={f.sourceLabel}>
+                  <span>{f.sourceLabel}</span>
+                  <div>{f.sourceOptions.map(o => <label><input type="radio" name="source" value={o} /><em>{o}</em></label>)}</div>
+                </div>
+                <label class="np-hp" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off" /></label>
+                <label class="s-rg-consent s-form-wide"><input type="checkbox" name="consent" value="yes" required /><span>{f.consent}</span></label>
+              </div>
+            </fieldset>
+
+            <div class="s-wz-nav">
+              <button type="button" class="s-btn s-btn-line" data-back hidden>← {w.back}</button>
+              <span class="s-wz-count" data-count>{w.stepOf.replace('{n}', '1').replace('{total}', String(steps.length))}</span>
+              <button type="button" class="s-btn s-btn-dark" data-next>{w.next} →</button>
+              <button type="submit" class="s-btn s-btn-sun" data-submit hidden>{f.submit} →</button>
+            </div>
+            <p class="s-form-status" data-status hidden role="status" aria-live="polite"></p>
+            <p class="s-rg-secure">{f.secureNote}</p>
           </form>
 
-          <aside class="s-rg-side">
-            <div class="s-rg-summary">
-              <h3>{home.pricing.programName}</h3>
-              <dl>{home.pricing.details.map(d => <div><dt>{d.label}</dt><dd set:html={rich(d.value)} /></div>)}</dl>
-              <h4>{c.plans.includesTitle}</h4>
-              <ul>{pr.includes.map(i => <li>{t(i)}</li>)}</ul>
+          <!-- live ticket: fills in as people type -->
+          <aside class="s-wz-stub" aria-label={pv.title}>
+            <span class="s-wz-side-title">{pv.title}</span>
+            <div class="s-pv" data-preview>
+              <div class="s-pv-top">
+                <span class="s-ticket-brand"><img src={u('/img/brand/mark-black.png')} alt="" width="215" height="256" />{settings.brand.wordmark}</span>
+                <span>{pv.admit}</span>
+              </div>
+              <b class="s-pv-name" data-pv-out="name" data-empty={pv.namePlaceholder}>{pv.namePlaceholder}</b>
+              <small class="s-pv-prog">{tk.programName}</small>
+              <dl>
+                <div><dt>{pv.planLabel}</dt><dd data-pv-out="plan">—</dd></div>
+                <div><dt>{pv.startsLabel}</dt><dd><span data-next-monday>Monday</span> · 6 AM</dd></div>
+                <div><dt>{pv.fromLabel}</dt><dd data-pv-out="city" data-empty={pv.fromPlaceholder}>{pv.fromPlaceholder}</dd></div>
+              </dl>
+              <div class="s-pv-stub">
+                <b data-pv-out="price">—</b>
+                <s>{money(pr.originalPrice)}</s>
+                <div class="s-ticket-code" aria-hidden="true"><i></i><span>{tk.serial}</span></div>
+              </div>
+              <span class="s-pv-stamp" aria-hidden="true">{pv.stamp}</span>
             </div>
           </aside>
         </div>
@@ -91,5 +166,77 @@ const plans = [
   <script>
     import { wireForms } from '../scripts/forms';
     wireForms();
+
+    // 3-step wizard + live ticket preview
+    const form = document.querySelector<HTMLFormElement>('.s-wz-form');
+    if (form) {
+      const stepsEls = [...form.querySelectorAll<HTMLFieldSetElement>('[data-step]')];
+      const dots = [...form.querySelectorAll<HTMLElement>('[data-dot]')];
+      const bar = form.querySelector<HTMLElement>('.s-wz-bar i')!;
+      const back = form.querySelector<HTMLButtonElement>('[data-back]')!;
+      const next = form.querySelector<HTMLButtonElement>('[data-next]')!;
+      const submit = form.querySelector<HTMLButtonElement>('[data-submit]')!;
+      const count = form.querySelector<HTMLElement>('[data-count]')!;
+      const preview = document.querySelector<HTMLElement>('[data-preview]');
+      let cur = 0;
+
+      const show = (i: number, focus = true) => {
+        cur = i;
+        stepsEls.forEach((s, j) => (s.hidden = j !== i));
+        dots.forEach((d, j) => { d.classList.toggle('on', j === i); d.classList.toggle('done', j < i); });
+        bar.style.transform = `scaleX(${(i + 1) / stepsEls.length})`;
+        back.hidden = i === 0;
+        next.hidden = i === stepsEls.length - 1;
+        submit.hidden = !next.hidden;
+        count.textContent = (form.dataset.stepOf || '').replace('{n}', String(i + 1)).replace('{total}', String(stepsEls.length));
+        if (focus) {
+          stepsEls[i].querySelector<HTMLElement>('input:not([type=radio]), input[type=radio]')?.focus({ preventScroll: true });
+          const top = form.getBoundingClientRect().top;
+          if (top < 80) form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      };
+      // validate only the fields of the current step
+      const valid = () => {
+        for (const el of stepsEls[cur].querySelectorAll<HTMLInputElement>('input')) {
+          if (el.closest('[hidden]') && el.closest('[hidden]') !== stepsEls[cur]) continue;
+          if (!el.checkValidity()) { el.reportValidity(); return false; }
+        }
+        return true;
+      };
+      next.addEventListener('click', () => valid() && show(cur + 1));
+      back.addEventListener('click', () => show(cur - 1));
+      form.addEventListener('keydown', e => {
+        if (e.key === 'Enter' && !next.hidden && (e.target as HTMLElement).tagName === 'INPUT') { e.preventDefault(); next.click(); }
+      });
+      // the browser checks the whole form on submit; make sure all steps are valid and jump to any that isn't
+      form.addEventListener('submit', e => {
+        for (let i = 0; i < stepsEls.length; i++) {
+          show(i, false);
+          if (!valid()) { e.stopImmediatePropagation(); e.preventDefault(); return; }
+        }
+      }, true);
+
+      // live ticket
+      const out = (k: string) => preview?.querySelector<HTMLElement>(`[data-pv-out="${k}"]`);
+      const paint = () => {
+        if (!preview) return;
+        for (const k of ['name', 'city']) {
+          const v = (form.elements.namedItem(k) as HTMLInputElement).value.trim();
+          const o = out(k)!; o.textContent = v || o.dataset.empty || ''; o.classList.toggle('empty', !v);
+        }
+        const plan = form.querySelector<HTMLInputElement>('input[name="plan"]:checked');
+        out('plan')!.textContent = plan?.dataset.label ?? '—';
+        const price = out('price')!;
+        if (price.textContent !== (plan?.dataset.price ?? '—')) {
+          price.textContent = plan?.dataset.price ?? '—';
+          price.classList.remove('bump'); void price.offsetWidth; price.classList.add('bump');
+        }
+      };
+      form.addEventListener('input', paint);
+      form.addEventListener('change', paint);
+      form.addEventListener('hr:saved', () => preview?.classList.add('stamped'));
+      paint();
+      show(0, false);
+    }
   </script>
 </Shell>

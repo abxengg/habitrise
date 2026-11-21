@@ -1,7 +1,7 @@
 # Content Management for HabitRise — Pages CMS (https://app.pagescms.org)
 # Every word on the website lives in src/content/*.json. Editing a field here and pressing
 # Save commits to the repo; GitHub Actions rebuilds the site and it is live in ~1 minute.
-# Watch progress at <site>/deploys.
+# Progress is visible in the repo's Actions tab.
 #
 # Text can use these placeholders, filled in automatically:
 #   {currency} {studentPrice} {othersPrice} {originalPrice} {year} {nextMonday}
@@ -71,6 +71,9 @@ content:
           - { name: error, label: Error message, type: text }
           - { name: notConfigured, label: Message before the form is connected, type: text }
           - { name: note, label: Small note under the form, type: string }
+          - { name: toLabel, label: "'To' label on the letter", type: string }
+          - { name: stamp, label: Text on the stamp, type: string }
+          - { name: postmark, label: Text in the postmark circle, type: string }
       - name: contact
         label: Contact
         type: object
@@ -100,6 +103,7 @@ content:
           - { name: button, label: Button text, type: string }
           - { name: buttonHref, label: Button link, type: string }
           - { name: menuLabel, label: Phone menu button label (screen readers), type: string }
+          - { name: skipLabel, label: "'Skip to content' link (for keyboard users)", type: string }
       - name: footer
         label: Footer
         type: object
@@ -138,12 +142,6 @@ content:
           - { name: ogImageAlt, label: Share image description, type: string }
           - { name: locale, label: Locale, type: string }
           - { name: twitterHandle, label: X/Twitter handle (optional), type: string }
-      - name: deploys
-        label: Deploy status page (technical)
-        type: object
-        fields:
-          - { name: repo, label: GitHub repository, type: string, readonly: true }
-          - { name: workflow, label: Workflow file, type: string, readonly: true }
       - name: dates
         label: Dates
         type: object
@@ -306,27 +304,6 @@ content:
               - { name: place, label: City, type: string }
               - { name: result, label: Result tag, type: string }
               - { name: quote, label: Story, type: text }
-      - name: pricing
-        label: Early-bird ticket (prices are in Site settings)
-        type: object
-        fields:
-          - { name: tag, label: Section tag, type: string }
-          - { name: title, label: Heading, type: string }
-          - { name: text, label: Paragraph, type: text }
-          - { name: ticketLabel, label: Ticket top label, type: string }
-          - { name: programName, label: Programme name, type: string }
-          - name: details
-            label: Ticket details
-            type: object
-            list: { collapsible: { collapsed: true, summary: "{label}: {value}" } }
-            fields:
-              - { name: label, label: Label, type: string }
-              - { name: value, label: Value, type: string, description: "{nextMonday} shows the next cohort date" }
-          - { name: stubTag, label: Stub tag, type: string }
-          - { name: regularLabel, label: "'Regular' word", type: string }
-          - { name: button, label: Button text, type: string }
-          - { name: payNote, label: Payment note, type: string }
-          - { name: serial, label: Ticket serial, type: string }
       - name: faq
         label: FAQ
         type: object
@@ -494,10 +471,18 @@ content:
           - { name: success, label: Success message, type: text }
           - { name: error, label: Error message, type: text }
           - { name: notConfigured, label: Message before the form is connected, type: text }
+          - { name: previewTitle, label: Chat preview — title above it, type: string }
+          - { name: previewName, label: Chat preview — contact name, type: string }
+          - { name: previewStatus, label: Chat preview — status line, type: string }
+          - { name: previewHello, label: Chat preview — first line, type: string, description: "{name} = their name, {from} = the 'from' text below (only when they fill in college/company)" }
+          - { name: previewFrom, label: Chat preview — 'from' text, type: string, description: "{organisation} = their college/company" }
+          - { name: previewNameFallback, label: Chat preview — shown before a name is typed, type: string }
+          - { name: previewInterest, label: Chat preview — second line, type: string, description: "{service} = the service they picked" }
+          - { name: previewReply, label: Chat preview — reply after sending, type: string }
 
   # ───────────────────────────── Register page ─────────────────────────────
   - name: register
-    label: "📝 Register page"
+    label: "💳 Pricing & Register page"
     type: file
     path: src/content/register.json
     format: json
@@ -515,6 +500,32 @@ content:
           - { name: tag, label: Section tag, type: string }
           - { name: title, label: Heading, type: string, description: "{nextMonday} shows the next cohort date" }
           - { name: text, label: Paragraph, type: text }
+      - name: ticket
+        label: Ticket (prices are in Site settings)
+        type: object
+        fields:
+          - { name: ticketLabel, label: Ticket top label, type: string }
+          - { name: programName, label: Programme name, type: string }
+          - name: details
+            label: Ticket details
+            type: object
+            list: { collapsible: { collapsed: true, summary: "{label}: {value}" } }
+            fields:
+              - { name: label, label: Label, type: string }
+              - { name: value, label: Value, type: string, description: "{nextMonday} shows the next cohort date" }
+          - { name: stubTag, label: Stub tag, type: string }
+          - { name: regularLabel, label: "'Regular' word", type: string }
+          - { name: chooseButton, label: Plan button text, type: string }
+          - { name: payNote, label: Payment note, type: string }
+          - { name: serial, label: Ticket serial, type: string }
+      - name: wizard
+        label: Form steps
+        type: object
+        fields:
+          - { name: steps, label: Step names (plan, about you, contact), type: string, list: { min: 3, max: 3 } }
+          - { name: next, label: Next button, type: string }
+          - { name: back, label: Back button, type: string }
+          - { name: stepOf, label: Step counter, type: string, description: "{n} = current step, {total} = number of steps" }
       - name: plans
         label: Plan cards (names, prices and notes are in Site settings)
         type: object
@@ -524,13 +535,24 @@ content:
           - { name: othersTag, label: Everyone-else card tag, type: string }
           - { name: regularLabel, label: "'Regular' word", type: string }
           - { name: perPerson, label: Price note, type: string }
-          - { name: includesTitle, label: Summary card — includes title, type: string }
+      - name: preview
+        label: Live ticket beside the form
+        type: object
+        fields:
+          - { name: title, label: Title above it, type: string }
+          - { name: admit, label: Top-right label, type: string }
+          - { name: namePlaceholder, label: Shown before a name is typed, type: string }
+          - { name: planLabel, label: "'Plan' label", type: string }
+          - { name: startsLabel, label: "'Starts' label", type: string }
+          - { name: fromLabel, label: "'From' label", type: string }
+          - { name: fromPlaceholder, label: Shown before a city is typed, type: string }
+          - { name: stamp, label: Stamp after submitting, type: string }
       - name: form
         label: Registration form
         type: object
         fields:
-          - { name: title, label: Form title, type: string }
-          - { name: subtitle, label: Form subtitle, type: string }
+          - { name: aboutTitle, label: Step 2 heading, type: string }
+          - { name: contactTitle, label: Step 3 heading, type: string }
           - { name: planLabel, label: Plan label, type: string }
           - { name: nameLabel, label: Name label, type: string }
           - { name: namePlaceholder, label: Name placeholder, type: string }
