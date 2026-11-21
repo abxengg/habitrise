@@ -6,7 +6,7 @@ import { testimonials, initials } from '../data/site';
   <div class="wrap">
     <div class="reveal">
       <span class="pill"><span class="dot"></span>Live every morning at 6:00 AM IST</span>
-      <h1>Rise at 6.<br />Build the habits.<br /><em>Become changed.</em></h1>
+      <h1>One habit.<br />One step.<br />One life <em>changed.</em></h1>
       <p class="lead">The 21-day habit system that has helped 5,000+ students and professionals build discipline, find purpose and rise every single day — together.</p>
       <div class="hero-ctas">
         <a href="/#join" class="btn btn-primary">Start your 21 days <Icon name="arrow" /></a>
@@ -33,3 +33,11 @@ import { testimonials, initials } from '../data/site';
     </div>
   </div>
 </section>
+<!-- Design C "Midnight": scrolling ticker under the hero -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    {[0, 1].map(() => (
+      <span>Silence ✦ Affirmations ✦ Visualisation ✦ Exercise ✦ Reading ✦ Scribing ✦ Rise at 6 AM ✦ 21 days ✦&nbsp;</span>
+    ))}
+  </div>
+</div>
