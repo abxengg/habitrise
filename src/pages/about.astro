@@ -9,7 +9,7 @@ import '../styles/streak.css';
 import { founder, stats, pricing } from '../data/site';
 
 const tones = ['c-yellow', 'c-blue', 'c-mint', 'c-lilac'];
-const chipColors = ['#f8af3c', '#ff5a36', '#4f7cff', '#23c483', '#b79cff'];
+const chipColors = ['#f8af3c', '#121212'];
 ---
 <Shell
   fonts={streakFonts}
@@ -61,7 +61,7 @@ const chipColors = ['#f8af3c', '#ff5a36', '#4f7cff', '#23c483', '#b79cff'];
           <div class="s-ab-card">
             <h4>Education & credentials</h4>
             <ul>{founder.education.map(e => <li>{e}</li>)}</ul>
-            <div class="s-creds">{founder.credentials.map((c, i) => <span style={`--c:${chipColors[i % 5]}`}>{c}</span>)}</div>
+            <div class="s-creds">{founder.credentials.map((c, i) => <span style={`--c:${chipColors[i % 2]}`}>{c}</span>)}</div>
           </div>
         </aside>
       </div>

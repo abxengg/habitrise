@@ -144,12 +144,12 @@ export const founder = {
 // TODO before launch: confirm with the client that these are real members
 // (copied from the current habitrise.in). Replace with verified stories.
 export const testimonials = [
-  { name: 'Praveen Kumar', role: 'Engineering Student · Coimbatore', color: '#2d9e5f', result: 'CGPA 6.8 → 8.4', quote: 'I used to scroll till 2 AM and wake up at noon. After 21 days with HabitRise, I wake at 6 AM without an alarm. My CGPA went from 6.8 to 8.4 in one semester.' },
-  { name: 'Divya Ramesh', role: 'Software Professional · Chennai', color: '#c08a1a', result: 'Daily 6 AM routine locked in', quote: 'The accountability is what changed everything. Knowing the group was showing up at 6 AM made me show up too. The SAVERS routine is now non-negotiable for me.' },
-  { name: 'Arjun Nair', role: 'Early-Stage Founder · Bangalore', color: '#6b5bd2', result: 'Reclaimed mornings for deep work', quote: 'As a founder I thought I had discipline. HabitRise showed me the difference between being busy and being intentional. My mornings now belong to me, not my inbox.' },
-  { name: 'Sneha Patel', role: 'School Teacher · Madurai', color: '#d2555b', result: 'Launched a long-delayed project', quote: 'I was stuck in procrastination for years. The visualisation and scribing habits gave me clarity I had never felt. I finally started the side project I kept postponing.' },
-  { name: 'Karthik Subramanian', role: 'Final-Year Student · Trichy', color: '#2f7fb5', result: 'Completed all 21 days', quote: 'The community kept me going on days I wanted to quit. By day 21 the habits felt automatic. This is the most practical self-improvement system I have tried.' },
-  { name: 'Meera Iyer', role: 'Marketing Manager · Hyderabad', color: '#0d2818', result: 'First program ever finished', quote: 'I have bought many courses that I never finished. HabitRise is the first one where the daily live sessions actually made me complete it. Worth every rupee.' },
+  { name: 'Praveen Kumar', role: 'Engineering Student · Coimbatore', color: '#121212', result: 'CGPA 6.8 → 8.4', quote: 'I used to scroll till 2 AM and wake up at noon. After 21 days with HabitRise, I wake at 6 AM without an alarm. My CGPA went from 6.8 to 8.4 in one semester.' },
+  { name: 'Divya Ramesh', role: 'Software Professional · Chennai', color: '#b8741a', result: 'Daily 6 AM routine locked in', quote: 'The accountability is what changed everything. Knowing the group was showing up at 6 AM made me show up too. The SAVERS routine is now non-negotiable for me.' },
+  { name: 'Arjun Nair', role: 'Early-Stage Founder · Bangalore', color: '#5c4a3a', result: 'Reclaimed mornings for deep work', quote: 'As a founder I thought I had discipline. HabitRise showed me the difference between being busy and being intentional. My mornings now belong to me, not my inbox.' },
+  { name: 'Sneha Patel', role: 'School Teacher · Madurai', color: '#8a5a1f', result: 'Launched a long-delayed project', quote: 'I was stuck in procrastination for years. The visualisation and scribing habits gave me clarity I had never felt. I finally started the side project I kept postponing.' },
+  { name: 'Karthik Subramanian', role: 'Final-Year Student · Trichy', color: '#3a3a3a', result: 'Completed all 21 days', quote: 'The community kept me going on days I wanted to quit. By day 21 the habits felt automatic. This is the most practical self-improvement system I have tried.' },
+  { name: 'Meera Iyer', role: 'Marketing Manager · Hyderabad', color: '#cf8a1f', result: 'First program ever finished', quote: 'I have bought many courses that I never finished. HabitRise is the first one where the daily live sessions actually made me complete it. Worth every rupee.' },
 ];
 
 export const faqs = [

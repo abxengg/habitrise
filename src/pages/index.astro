@@ -11,7 +11,7 @@ import '../styles/streak.css';
 import { pricing, stats, audiences, savers, weeks, founder, testimonials, faqs, contact, socials, initials } from '../data/site';
 
 const DONE = 14;
-const bubbleColors = ['#f8af3c', '#ff5a36', '#4f7cff', '#23c483', '#b79cff'];
+const bubbleColors = ['#f8af3c', '#121212']; // brand: amber + ink, alternating
 ---
 <Shell fonts={streakFonts} themeColor="#ffffff">
   <Header />
@@ -65,8 +65,8 @@ const bubbleColors = ['#f8af3c', '#ff5a36', '#4f7cff', '#23c483', '#b79cff'];
     <section class="s-strip">
       <div class="s-marquee" aria-label="Who HabitRise is for">
         <div class="s-marquee-track">
-          {[0, 1].map(() => audiences.map((a, i) => <span style={`--c:${bubbleColors[i]}`}>{a.title}</span>))}
-          {[0, 1].map(() => ['Early risers', 'Night owls who want out', 'Readers', 'Builders'].map((t, i) => <span style={`--c:${bubbleColors[(i + 4) % 5]}`}>{t}</span>))}
+          {[0, 1].map(() => audiences.map((a, i) => <span style={`--c:${bubbleColors[i % 2]}`}>{a.title}</span>))}
+          {[0, 1].map(() => ['Early risers', 'Night owls who want out', 'Readers', 'Builders'].map((t, i) => <span style={`--c:${bubbleColors[(i + 1) % 2]}`}>{t}</span>))}
         </div>
       </div>
     </section>
@@ -191,7 +191,7 @@ const bubbleColors = ['#f8af3c', '#ff5a36', '#4f7cff', '#23c483', '#b79cff'];
           <p class="s-role">{founder.name} · {founder.role}</p>
           <blockquote>{founder.quote}</blockquote>
           <p>{founder.bio[1]}</p>
-          <div class="s-creds">{founder.credentials.map((c, i) => <span style={`--c:${bubbleColors[i % 5]}`}>{c}</span>)}</div>
+          <div class="s-creds">{founder.credentials.map((c, i) => <span style={`--c:${bubbleColors[i % 2]}`}>{c}</span>)}</div>
           <a href={u('/about')} class="s-btn s-btn-line">Read my story →</a>
         </div>
       </div>
@@ -217,16 +217,37 @@ const bubbleColors = ['#f8af3c', '#ff5a36', '#4f7cff', '#23c483', '#b79cff'];
       </div>
     </section>
 
-    <!-- pricing -->
+    <!-- pricing: early-bird ticket -->
     <section class="s-sec s-pricing" id="pricing">
       <div class="s-wrap">
-        <div class="s-price">
-          <span class="s-badge">Early bird · save ₹{pricing.regular - pricing.price}</span>
-          <h2>Everything for 21 days.</h2>
-          <div class="s-amount"><b>₹{pricing.price}</b><s>₹{pricing.regular}</s><small>one-time</small></div>
-          <ul>{pricing.includes.map(i => <li>{i}</li>)}</ul>
-          <a href={pricing.joinUrl} class="s-btn s-btn-sun s-wide">Start my streak — ₹{pricing.price}</a>
-          <p class="s-pay">Pay by UPI (GPay, PhonePe, Paytm) · next cohort starts <b data-next-monday>Monday</b></p>
+        <div class="s-head">
+          <span class="s-eyebrow">Early bird</span>
+          <h2>Your ticket to 6 AM.</h2>
+          <p>One seat in the next 21-day cohort. Everything included, paid once.</p>
+        </div>
+        <div class="s-ticket">
+          <div class="s-ticket-main">
+            <div class="s-ticket-top">
+              <span class="s-ticket-brand"><img src={u('/img/brand/mark-black.png')} alt="" width="215" height="256" />HABITRISE</span>
+              <span>Admit one · Cohort pass</span>
+            </div>
+            <h3>The 21-Day HabitRise Challenge</h3>
+            <dl class="s-ticket-meta">
+              <div><dt>Starts</dt><dd data-next-monday>Monday</dd></div>
+              <div><dt>Time</dt><dd>6:00 AM IST</dd></div>
+              <div><dt>Duration</dt><dd>21 days</dd></div>
+              <div><dt>Where</dt><dd>Zoom + Skool</dd></div>
+            </dl>
+            <ul class="s-ticket-incl">{pricing.includes.map(i => <li>{i}</li>)}</ul>
+          </div>
+          <div class="s-ticket-stub">
+            <span class="s-ticket-tag">Early bird · save ₹{pricing.regular - pricing.price}</span>
+            <div class="s-ticket-price"><b>₹{pricing.price}</b><s>₹{pricing.regular}</s></div>
+            <p>One-time payment</p>
+            <a href={pricing.joinUrl} class="s-btn s-btn-dark s-wide">Reserve my seat</a>
+            <p class="s-ticket-pay">UPI · GPay · PhonePe · Paytm</p>
+            <div class="s-ticket-code" aria-hidden="true"><i></i><span>No. HR-21 · 0699</span></div>
+          </div>
         </div>
       </div>
     </section>
