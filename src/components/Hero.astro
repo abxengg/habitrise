@@ -1,12 +1,14 @@
 ---
+// Design B "Sunrise": centered editorial hero with the founder in an arch.
 import Icon from './Icon.astro';
 import { testimonials, initials } from '../data/site';
 ---
-<section class="hero">
+<section class="hero hero-b">
+  <div class="sun" aria-hidden="true"></div>
   <div class="wrap">
-    <div class="reveal">
+    <div class="hero-copy reveal">
       <span class="pill"><span class="dot"></span>Live every morning at 6:00 AM IST</span>
-      <h1>Rise at 6.<br />Build the habits.<br /><em>Become changed.</em></h1>
+      <h1>One habit. One step.<br /><em>One life, changed.</em></h1>
       <p class="lead">The 21-day habit system that has helped 5,000+ students and professionals build discipline, find purpose and rise every single day — together.</p>
       <div class="hero-ctas">
         <a href="/#join" class="btn btn-primary">Start your 21 days <Icon name="arrow" /></a>
@@ -18,18 +20,13 @@ import { testimonials, initials } from '../data/site';
       </div>
     </div>
 
-    <div class="hero-visual reveal">
-      <div class="blob"></div>
-      <img class="founder" src="/img/founder-hero.webp" alt="Manikandan Rajendran, HabitRise founder" width="900" height="900" fetchpriority="high" />
+    <div class="arch-stage reveal">
+      <div class="arch">
+        <img src="/img/founder-hero.webp" alt="Manikandan Rajendran, HabitRise founder" width="900" height="900" fetchpriority="high" />
+      </div>
       <div class="float-card streak"><div class="flame">🔥</div><div><b>Day 14</b><small>Morning streak</small></div></div>
       <div class="float-card live"><span class="rec"></span> Live session · 6:00 AM</div>
-      <div class="float-card today">
-        <h4>Today's SAVERS <small>5 / 6</small></h4>
-        <ul>
-          {['Silence', 'Affirmations', 'Visualisation', 'Exercise', 'Reading · 10 pages'].map(h => <li class="done"><i></i><span>{h}</span></li>)}
-          <li><i></i><span>Scribing</span></li>
-        </ul>
-      </div>
+      <div class="float-card note"><b>6 habits</b><small>Silence · Affirmations · Visualisation · Exercise · Reading · Scribing</small></div>
     </div>
   </div>
 </section>
