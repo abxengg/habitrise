@@ -17,10 +17,16 @@ export function startMotion() {
   // reading progress bar
   const bar = document.querySelector<HTMLElement>('.s-progress i');
   // only the drawings that are actually shown (wide screens)
+  const wms = [...document.querySelectorAll<HTMLElement>('.s-wm')];
   const gis = matchMedia('(min-width: 1360px)').matches ? [...document.querySelectorAll<HTMLElement>('.s-gi')] : [];
   const onScroll = () => {
     const max = document.documentElement.scrollHeight - innerHeight;
     if (bar) bar.style.transform = `scaleX(${max > 0 ? Math.min(1, scrollY / max) : 0})`;
+    if (!reduce) wms.forEach(w => {
+      const r = w.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > innerHeight) return;
+      w.style.setProperty('--wx', `${(((r.top + r.height / 2 - innerHeight / 2) / (innerHeight + r.height)) * 140).toFixed(1)}px`);
+    });
     if (!reduce && gis.length) gis.forEach(g => {
       const sec = g.parentElement!.parentElement!.getBoundingClientRect();
       if (sec.bottom < -200 || sec.top > innerHeight + 200) return;

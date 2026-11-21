@@ -81,6 +81,7 @@ export function wireForms() {
             form.reset(); syncPlan(); form.dispatchEvent(new Event('input'));
           }
         } else {
+          form.dispatchEvent(new CustomEvent('hr:saved', { detail: data })); // lets the page celebrate (letter flies off, chat reply…)
           status(form, msgs.success ?? '', 'ok');
           form.reset();
         }

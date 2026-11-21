@@ -1,5 +1,6 @@
 ---
 import Brand from './Brand.astro';
+import { u } from '../../lib/url';
 import { settings, href, t } from '../../lib/content';
 const f = settings.footer;
 const nl = settings.newsletter;
@@ -12,13 +13,17 @@ const external = (h: string) => /^https?:/.test(h);
         <h2 id="newsTitle">{nl.title}</h2>
         <p>{t(nl.text)}</p>
       </div>
-      <form class="s-news-form" data-hr-form data-kind="newsletter" data-endpoint={settings.forms.endpoint}
+      <form class="s-news-form s-letter" data-hr-form data-kind="newsletter" data-endpoint={settings.forms.endpoint}
         data-msg-sending={nl.sending} data-msg-success={nl.success} data-msg-error={nl.error} data-msg-not-configured={nl.notConfigured}>
-        <label><span class="sr">{nl.nameLabel}</span><input name="name" autocomplete="given-name" maxlength="60" placeholder={nl.namePlaceholder} /></label>
-        <label><span class="sr">{nl.emailLabel}</span><input name="email" type="email" autocomplete="email" required maxlength="120" placeholder={nl.emailPlaceholder} /></label>
+        <span class="s-letter-stamp" aria-hidden="true"><img src={u('/img/brand/mark-black.png')} alt="" width="215" height="256" /><b>{nl.stamp}</b></span>
+        <span class="s-letter-post" aria-hidden="true">{nl.postmark}</span>
+        <label class="s-letter-row"><span>{nl.toLabel}</span><input name="name" autocomplete="given-name" maxlength="60" placeholder={nl.namePlaceholder} aria-label={nl.nameLabel} /></label>
+        <label class="s-letter-row"><span>{nl.emailLabel}</span><input name="email" type="email" autocomplete="email" required maxlength="120" placeholder={nl.emailPlaceholder} /></label>
         <label class="np-hp" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off" /></label>
-        <button type="submit" class="s-btn s-btn-sun">{nl.button}</button>
-        <p class="s-news-note">{nl.note}</p>
+        <div class="s-letter-foot">
+          <p class="s-news-note">{nl.note}</p>
+          <button type="submit" class="s-btn s-btn-dark">{nl.button} <span aria-hidden="true">✉</span></button>
+        </div>
         <p class="s-form-status" data-status hidden role="status" aria-live="polite"></p>
       </form>
     </section>
@@ -45,6 +50,11 @@ const external = (h: string) => /^https?:/.test(h);
   import { startMotion } from '../../scripts/motion';
   wireForms();
   startMotion();
+  // newsletter: the letter flies off when the signup is saved, then a fresh one slides in
+  const letter = document.querySelector<HTMLFormElement>('.s-letter');
+  letter?.addEventListener('hr:saved', () => {
+    letter.classList.remove('sent'); void letter.offsetWidth; letter.classList.add('sent');
+  });
 </script>
 
 <script define:vars={{ prefix: settings.dates.nextCohortPrefix }}>

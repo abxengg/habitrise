@@ -71,6 +71,9 @@ content:
           - { name: error, label: Error message, type: text }
           - { name: notConfigured, label: Message before the form is connected, type: text }
           - { name: note, label: Small note under the form, type: string }
+          - { name: toLabel, label: "'To' label on the letter", type: string }
+          - { name: stamp, label: Text on the stamp, type: string }
+          - { name: postmark, label: Text in the postmark circle, type: string }
       - name: contact
         label: Contact
         type: object
@@ -149,6 +152,24 @@ content:
         type: object
         fields:
           - { name: nextCohortPrefix, label: Text before the next-cohort date, type: string, description: "e.g. 'Monday, ' → Monday, 24 Nov" }
+      - name: watermarks
+        label: Watermarks (big faint words behind each section)
+        type: object
+        fields:
+          - { name: homeHero, label: "Home — top", type: string }
+          - { name: homeHow, label: "Home — How it works", type: string }
+          - { name: homeProgram, label: "Home — The program", type: string }
+          - { name: homeCommunity, label: "Home — Community", type: string }
+          - { name: homeFounder, label: "Home — Founder", type: string }
+          - { name: homeStories, label: "Home — Stories", type: string }
+          - { name: homePricing, label: "Home — Ticket", type: string }
+          - { name: homeFaq, label: "Home — FAQ", type: string }
+          - { name: aboutHero, label: "Founder page — top", type: string }
+          - { name: aboutStory, label: "Founder page — story", type: string }
+          - { name: aboutCoaching, label: "Founder page — coaching", type: string }
+          - { name: servicesHero, label: "Services — top", type: string }
+          - { name: servicesInterest, label: "Services — interest form", type: string }
+          - { name: registerHero, label: "Pricing & Register — top", type: string }
 
   # ─────────────────────────────── Home page ───────────────────────────────
   - name: home
@@ -480,6 +501,14 @@ content:
           - { name: success, label: Success message, type: text }
           - { name: error, label: Error message, type: text }
           - { name: notConfigured, label: Message before the form is connected, type: text }
+          - { name: previewTitle, label: Chat preview — title above it, type: string }
+          - { name: previewName, label: Chat preview — contact name, type: string }
+          - { name: previewStatus, label: Chat preview — status line, type: string }
+          - { name: previewHello, label: Chat preview — first line, type: string, description: "{name} = their name, {from} = the 'from' text below (only when they fill in college/company)" }
+          - { name: previewFrom, label: Chat preview — 'from' text, type: string, description: "{organisation} = their college/company" }
+          - { name: previewNameFallback, label: Chat preview — shown before a name is typed, type: string }
+          - { name: previewInterest, label: Chat preview — second line, type: string, description: "{service} = the service they picked" }
+          - { name: previewReply, label: Chat preview — reply after sending, type: string }
 
   # ───────────────────────────── Register page ─────────────────────────────
   - name: register
@@ -520,6 +549,8 @@ content:
           - { name: payNote, label: Payment note, type: string }
           - { name: serial, label: Ticket serial, type: string }
           - { name: tearHint, label: "'Tear here' hint (shows when the ticket is hovered)", type: string }
+          - { name: joinButton, label: Join button on the ticket, type: string }
+          - { name: joinNote, label: Small note beside the join button, type: string }
       - name: wizard
         label: Form steps
         type: object

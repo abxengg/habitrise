@@ -85,6 +85,14 @@
     "sending": "Sending…",
     "success": "Thank you! We've got your details and will reach out within 24 hours.",
     "error": "Something went wrong. Please try again, or message us on WhatsApp.",
-    "notConfigured": "The form isn't connected yet. Please message us on WhatsApp for now."
+    "notConfigured": "The form isn't connected yet. Please message us on WhatsApp for now.",
+    "previewTitle": "Your message to us",
+    "previewName": "HabitRise team",
+    "previewStatus": "usually replies within a day",
+    "previewHello": "Hi! I'm {name}{from}.",
+    "previewFrom": " from {organisation}",
+    "previewNameFallback": "…",
+    "previewInterest": "I'm interested in {service}.",
+    "previewReply": "Got it! 🙌 We'll reach out within 24 hours."
   }
 }

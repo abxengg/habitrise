@@ -34,7 +34,9 @@
     "chooseButton": "Choose",
     "payNote": "Secure payment via Razorpay · UPI · Cards",
     "serial": "No. HR-21 · 0699",
-    "tearHint": "Tear here"
+    "tearHint": "Tear here",
+    "joinButton": "Join the cohort",
+    "joinNote": "Takes 2 minutes · Pay on Razorpay"
   },
   "wizard": {
     "steps": [

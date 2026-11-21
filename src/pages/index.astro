@@ -9,7 +9,7 @@ import Gutter from '../components/streak/Gutter.astro';
 import Ticket from '../components/streak/Ticket.astro';
 import { streakFonts } from '../components/streak/fonts';
 import '../styles/streak.css';
-import { home as c, founder, t, initials, avatar } from '../lib/content';
+import { home as c, founder, settings, t, initials, avatar } from '../lib/content';
 
 const DONE = 14;
 const chipColors = ['#f8af3c', '#ff5a36', '#4f7cff', '#23c483', '#b79cff'];
@@ -20,13 +20,14 @@ const jsonLd = [
     mainEntity: c.faq.items.map(f => ({ '@type': 'Question', name: t(f.q), acceptedAnswer: { '@type': 'Answer', text: t(f.a) } })),
   },
 ];
+const wm = settings.watermarks;
 ---
 <Shell fonts={streakFonts} title={c.seo.title} fullTitle description={c.seo.description} jsonLd={jsonLd}>
   <Header />
 
   <main>
     <!-- HERO with live streak tracker -->
-    <section class="s-hero">
+    <section class="s-wm s-hero" data-wm={wm.homeHero}>
       <Gutter left={{ icon: "clock", top: "22%" }} right={{ icon: "sun", top: "12%" }} />
       <div class="s-wrap s-hero-grid">
         <div class="s-hero-copy">
@@ -76,7 +77,7 @@ const jsonLd = [
     </section>
 
     <!-- how a morning works -->
-    <section class="s-sec" id="how">
+    <section class="s-wm s-sec" id="how" data-wm={wm.homeHow}>
       <Gutter left={{ icon: "book", top: "38%" }} right={{ icon: "dumbbell", top: "62%" }} />
       <div class="s-wrap">
         <div class="s-head">
@@ -124,7 +125,7 @@ const jsonLd = [
     </section>
 
     <!-- program tabs -->
-    <section class="s-sec s-program" id="program">
+    <section class="s-wm s-sec s-program" id="program" data-wm={wm.homeProgram}>
       <Gutter left={{ icon: "calendar", top: "30%" }} right={{ icon: "flame", top: "58%" }} />
       <div class="s-wrap">
         <div class="s-head">
@@ -149,7 +150,7 @@ const jsonLd = [
     </section>
 
     <!-- community: Skool group card -->
-    <section class="s-sec" id="community">
+    <section class="s-wm s-sec" id="community" data-wm={wm.homeCommunity}>
       <Gutter left={{ icon: "chat", top: "56%" }} right={{ icon: "check", top: "26%" }} />
       <div class="s-wrap">
         <div class="s-head s-center">
@@ -181,7 +182,7 @@ const jsonLd = [
     </section>
 
     <!-- founder -->
-    <section class="s-sec s-founder" id="founder">
+    <section class="s-wm s-sec s-founder" id="founder" data-wm={wm.homeFounder}>
       <div class="s-wrap s-founder-card">
         <div class="s-founder-img"><img src={u('/img/founder-sitting.webp')} alt={founder.name} width="576" height="1024" loading="lazy" /></div>
         <div>
@@ -197,7 +198,7 @@ const jsonLd = [
     </section>
 
     <!-- stories as chat -->
-    <section class="s-sec" id="stories">
+    <section class="s-wm s-sec" id="stories" data-wm={wm.homeStories}>
       <Gutter right={{ icon: "quote", top: "18%" }} />
       <div class="s-wrap s-chat-grid">
         <div class="s-head">
@@ -218,7 +219,7 @@ const jsonLd = [
     </section>
 
     <!-- pricing: the ticket (tear the stub on hover) -->
-    <section class="s-sec s-pricing" id="pricing">
+    <section class="s-wm s-sec s-pricing" id="pricing" data-wm={wm.homePricing}>
       <Gutter right={{ icon: "scissors", top: "52%" }} />
       <div class="s-wrap">
         <div class="s-head">
@@ -231,7 +232,7 @@ const jsonLd = [
     </section>
 
     <!-- faq -->
-    <section class="s-sec" id="faq">
+    <section class="s-wm s-sec" id="faq" data-wm={wm.homeFaq}>
       <Gutter left={{ icon: "question", top: "34%" }} />
       <div class="s-wrap">
         <div class="s-head s-center"><span class="s-eyebrow">{c.faq.tag}</span><h2>{c.faq.title}</h2></div>

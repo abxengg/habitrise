@@ -52,7 +52,9 @@ section scrolls past and each has a small motion of its own. On smaller screens 
 
 The early-bird ticket (Home page and Pricing) tears its stub off along the perforation on hover; on touch screens it
 tears once as it scrolls into view. The registration form is three steps (plan → about you → contact) with a live
-ticket beside it that fills in as people type and gets a "Seat reserved" stamp on submit. As you scroll, sections and cards reveal in sequence, numbers count up, an
+ticket beside it that fills in as people type and gets a "Seat reserved" stamp on submit. Big faint outlined words sit behind each
+section (Site settings → Watermarks). The services interest form shows the message being written as a chat that gets
+a reply when sent, and the footer newsletter is a letter with an airmail border and stamp that flies off on signup. As you scroll, sections and cards reveal in sequence, numbers count up, an
 amber progress bar tracks the page, and the hero streak tracker builds itself day by day (`src/scripts/motion.ts`).
 All of it is switched off for visitors whose device asks for reduced motion, and pages are fully visible without JS.
 

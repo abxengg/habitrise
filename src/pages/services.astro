@@ -29,12 +29,13 @@ const jsonLd = [
     ],
   },
 ];
+const wm = settings.watermarks;
 ---
 <Shell fonts={streakFonts} title={c.seo.title} description={c.seo.description} jsonLd={jsonLd}>
   <Header />
 
   <main>
-    <section class="s-hero s-sv-hero">
+    <section class="s-wm s-hero s-sv-hero" data-wm={wm.servicesHero}>
       <Gutter left={{ icon: "check", top: "12%" }} right={{ icon: "chat", top: "8%" }} />
       <div class="s-wrap">
         <div class="s-head">
@@ -59,25 +60,52 @@ const jsonLd = [
       </div>
     </section>
 
-    <section class="s-sec s-program" id="interest">
+    <section class="s-wm s-sec s-program" id="interest" data-wm={wm.servicesInterest}>
       <div class="s-wrap">
         <div class="s-head">
           <span class="s-eyebrow">{f.tag}</span>
           <h2>{f.title}</h2>
           <p>{t(f.text)}</p>
         </div>
-        <form class="s-form" data-hr-form data-kind="interest" data-endpoint={settings.forms.endpoint}
-          data-msg-sending={f.sending} data-msg-success={f.success} data-msg-error={f.error} data-msg-not-configured={f.notConfigured}>
-          <label><span>{f.nameLabel}</span><input name="name" autocomplete="name" required maxlength="80" placeholder={f.namePlaceholder} /></label>
-          <label><span>{f.phoneLabel}</span><input name="phone" type="tel" autocomplete="tel" required pattern="[+0-9 ()-]{10,16}" placeholder={f.phonePlaceholder} /></label>
-          <label><span>{f.emailLabel}</span><input name="email" type="email" autocomplete="email" maxlength="120" placeholder={f.emailPlaceholder} /></label>
-          <label><span>{f.serviceLabel}</span><select name="service" id="serviceSelect" required>{c.services.map(s => <option>{s.title}</option>)}</select></label>
-          <label class="s-form-wide"><span>{f.organisationLabel}</span><input name="organisation" maxlength="120" placeholder={f.organisationPlaceholder} /></label>
-          <label class="s-form-wide"><span>{f.messageLabel}</span><textarea name="message" rows="4" maxlength="1000" placeholder={f.messagePlaceholder}></textarea></label>
-          <label class="np-hp" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off" /></label>
-          <button type="submit" class="s-btn s-btn-sun s-wide s-form-wide">{f.submit}</button>
-          <p class="s-form-status s-form-wide" data-status hidden role="status" aria-live="polite"></p>
-        </form>
+        <div class="s-ia">
+          <form class="s-form s-ia-form" data-hr-form data-kind="interest" data-endpoint={settings.forms.endpoint}
+            data-msg-sending={f.sending} data-msg-success={f.success} data-msg-error={f.error} data-msg-not-configured={f.notConfigured}>
+            <div class="s-form-wide s-chips s-chips-big" role="radiogroup" aria-label={f.serviceLabel}>
+              <span>{f.serviceLabel}</span>
+              <div>{c.services.map((sv, i) => <label><input type="radio" name="service" value={sv.title} required checked={i === 1} /><em>{sv.title}</em></label>)}</div>
+            </div>
+            <label><span>{f.nameLabel}</span><input name="name" autocomplete="name" required maxlength="80" placeholder={f.namePlaceholder} /></label>
+            <label><span>{f.phoneLabel}</span><input name="phone" type="tel" autocomplete="tel" required pattern="[+0-9 ()-]{10,16}" placeholder={f.phonePlaceholder} /></label>
+            <label><span>{f.emailLabel}</span><input name="email" type="email" autocomplete="email" maxlength="120" placeholder={f.emailPlaceholder} /></label>
+            <label><span>{f.organisationLabel}</span><input name="organisation" maxlength="120" placeholder={f.organisationPlaceholder} /></label>
+            <label class="s-form-wide"><span>{f.messageLabel}</span><textarea name="message" rows="3" maxlength="1000" placeholder={f.messagePlaceholder}></textarea></label>
+            <label class="np-hp" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off" /></label>
+            <button type="submit" class="s-btn s-btn-sun s-wide s-form-wide">{f.submit} <span aria-hidden="true">→</span></button>
+            <p class="s-form-status s-form-wide" data-status hidden role="status" aria-live="polite"></p>
+          </form>
+
+          <!-- live chat preview: the message builds as people type -->
+          <aside class="s-ia-side" aria-label={f.previewTitle}>
+            <span class="s-wz-side-title">{f.previewTitle}</span>
+            <div class="s-chatpv" data-chat
+              data-hello={f.previewHello} data-from={f.previewFrom} data-fallback={f.previewNameFallback} data-interest={f.previewInterest}>
+              <div class="s-chatpv-top">
+                <img src={u('/img/brand/mark-black.png')} alt="" width="215" height="256" />
+                <div><b>{f.previewName}</b><small>{f.previewStatus}</small></div>
+              </div>
+              <div class="s-chatpv-body">
+                <p class="s-bub out" data-line="hello"></p>
+                <p class="s-bub out" data-line="interest"></p>
+                <p class="s-bub out" data-line="message" hidden></p>
+                <span class="s-ticks" aria-hidden="true">✓✓</span>
+                <div class="s-bub-slot">
+                  <p class="s-bub in s-typing" aria-hidden="true"><i></i><i></i><i></i></p>
+                  <p class="s-bub in s-reply">{f.previewReply}</p>
+                </div>
+              </div>
+            </div>
+          </aside>
+        </div>
       </div>
     </section>
   </main>
@@ -87,10 +115,31 @@ const jsonLd = [
   <script>
     import { wireForms } from '../scripts/forms';
     wireForms();
-    // "I'm interested" buttons preselect their service in the form
-    const select = document.getElementById('serviceSelect') as HTMLSelectElement | null;
+    // "I'm interested" buttons preselect their service
     document.querySelectorAll<HTMLAnchorElement>('a[data-service]').forEach(a => a.addEventListener('click', () => {
-      if (select && a.getAttribute('href')?.startsWith('#')) select.value = a.dataset.service!;
+      const r = document.querySelector<HTMLInputElement>(`input[name="service"][value="${CSS.escape(a.dataset.service!)}"]`);
+      if (r && a.getAttribute('href')?.startsWith('#')) { r.checked = true; r.dispatchEvent(new Event('change', { bubbles: true })); }
     }));
+
+    // live chat preview
+    const form = document.querySelector<HTMLFormElement>('.s-ia-form');
+    const chat = document.querySelector<HTMLElement>('[data-chat]');
+    if (form && chat) {
+      const d = chat.dataset;
+      const val = (n: string) => ((form.elements.namedItem(n) as HTMLInputElement | null)?.value ?? '').trim();
+      const line = (k: string) => chat.querySelector<HTMLElement>(`[data-line="${k}"]`)!;
+      const paint = () => {
+        const org = val('organisation');
+        const service = (form.querySelector('input[name="service"]:checked') as HTMLInputElement | null)?.value ?? '';
+        line('hello').textContent = (d.hello || '').replace('{name}', val('name') || d.fallback || '').replace('{from}', org ? (d.from || '').replace('{organisation}', org) : '');
+        line('interest').textContent = (d.interest || '').replace('{service}', service);
+        const msg = val('message'); const m = line('message'); m.textContent = msg; m.hidden = !msg;
+        chat.classList.remove('sent');
+      };
+      form.addEventListener('input', paint);
+      form.addEventListener('change', paint);
+      form.addEventListener('hr:saved', () => chat.classList.add('sent')); // the sent message stays until they type again
+      paint();
+    }
   </script>
 </Shell>

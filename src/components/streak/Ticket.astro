@@ -20,6 +20,10 @@ const plans = [{ id: 'student', ...pr.student }, { id: 'others', ...pr.others }]
     <h3 class="s-ticket-name">{tk.programName}</h3>
     <dl class="s-ticket-meta">{tk.details.map(d => <div><dt>{d.label}</dt><dd set:html={rich(d.value)} /></div>)}</dl>
     <ul class="s-ticket-incl">{pr.includes.map(i => <li>{t(i)}</li>)}</ul>
+    <div class="s-ticket-join">
+      <a href={u('/register#register')} class="s-btn s-btn-dark">{tk.joinButton} <span aria-hidden="true">→</span></a>
+      <small>{tk.joinNote}</small>
+    </div>
   </div>
   <div class="s-ticket-stub">
     <span class="s-ticket-tag">{tk.stubTag}</span>

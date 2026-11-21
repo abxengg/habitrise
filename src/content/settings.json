@@ -45,7 +45,10 @@
     "success": "You're in! Look out for the next 6 AM letter.",
     "error": "Couldn't subscribe you right now. Please try again.",
     "notConfigured": "Newsletter signups open soon — follow us on Instagram meanwhile.",
-    "note": "Unsubscribe anytime with one click."
+    "note": "Unsubscribe anytime with one click.",
+    "toLabel": "To",
+    "stamp": "6:00 AM",
+    "postmark": "Every Monday"
   },
   "contact": {
     "email": "manimitit@gmail.com",
@@ -189,5 +192,21 @@
   },
   "dates": {
     "nextCohortPrefix": "Monday, "
+  },
+  "watermarks": {
+    "homeHero": "6:00 AM",
+    "homeHow": "S.A.V.E.R.S",
+    "homeProgram": "21 DAYS",
+    "homeCommunity": "STREAK",
+    "homeFounder": "COACH",
+    "homeStories": "RISE",
+    "homePricing": "ADMIT ONE",
+    "homeFaq": "ASK US",
+    "aboutHero": "MANI",
+    "aboutStory": "STORY",
+    "aboutCoaching": "GROW",
+    "servicesHero": "SERVICES",
+    "servicesInterest": "HELLO",
+    "registerHero": "YOUR SEAT"
   }
 }
