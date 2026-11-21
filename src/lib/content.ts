@@ -29,7 +29,7 @@ const esc = (s: string) => s.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt
 
 /** HTML-safe text with placeholders filled; {nextMonday} becomes a live date the browser fills in. */
 export const rich = (s = '') =>
-  esc(t(s.replace(/\{nextMonday\}/g, '\u0000'))).replace(/\u0000/g, '<span data-next-monday>Monday</span>');
+  esc(t(s.replace(/\{nextMonday\}/g, '\u0000'))).replace(/\u0000/g, `<span data-next-monday>${esc(settings.dates.fallbackDay)}</span>`);
 
 /** Internal links ("/about", "/#how") get the base path; external links and #anchors stay as they are. */
 export const href = (h = '#') => (h.startsWith('/') ? u(h) : h);

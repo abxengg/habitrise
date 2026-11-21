@@ -198,6 +198,15 @@
     "twitterHandle": ""
   },
   "dates": {
-    "nextCohortPrefix": "Monday, "
+    "nextCohortPrefix": "Monday, ",
+    "fallbackDay": "Monday"
+  },
+  "notFound": {
+    "title": "Page not found",
+    "description": "This page doesn't exist.",
+    "tag": "404",
+    "heading": "You're up early — but this page isn't.",
+    "text": "The page you're looking for doesn't exist or has moved.",
+    "button": "Back to HabitRise"
   }
 }

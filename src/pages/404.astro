@@ -5,16 +5,18 @@ import Header from '../components/streak/Header.astro';
 import Footer from '../components/streak/Footer.astro';
 import { streakFonts } from '../components/streak/fonts';
 import '../styles/streak.css';
+import { settings } from '../lib/content';
+const nf = settings.notFound;
 ---
-<Shell fonts={streakFonts} title="Page not found" description="This page doesn't exist." noindex>
+<Shell fonts={streakFonts} title={nf.title} description={nf.description} noindex>
   <Header />
   <main id="main" tabindex="-1" class="s-hero s-404">
     <div class="s-wrap">
       <div class="s-head">
-        <span class="s-eyebrow">404</span>
-        <h1>You're up early — but this page isn't.</h1>
-        <p>The page you're looking for doesn't exist or has moved.</p>
-        <p><a class="s-btn s-btn-dark" href={u('/')}>Back to HabitRise</a></p>
+        <span class="s-eyebrow">{nf.tag}</span>
+        <h1>{nf.heading}</h1>
+        <p>{nf.text}</p>
+        <p><a class="s-btn s-btn-dark" href={u('/')}>{nf.button}</a></p>
       </div>
     </div>
   </main>

@@ -166,6 +166,17 @@ content:
         type: object
         fields:
           - { name: nextCohortPrefix, label: Text before the next-cohort date, type: string, description: "e.g. 'Monday, ' → Monday, 24 Nov" }
+          - { name: fallbackDay, label: Shown for a moment before the date loads, type: string }
+      - name: notFound
+        label: "'Page not found' (404) page"
+        type: object
+        fields:
+          - { name: title, label: Browser-tab title, type: string }
+          - { name: description, label: Search description, type: string }
+          - { name: tag, label: Tag, type: string }
+          - { name: heading, label: Heading, type: string }
+          - { name: text, label: Paragraph, type: text }
+          - { name: button, label: Button text, type: string }
 
   # ─────────────────────────────── Home page ───────────────────────────────
   - name: home
@@ -563,6 +574,7 @@ content:
           - { name: namePlaceholder, label: Shown before a name is typed, type: string }
           - { name: planLabel, label: "'Plan' label", type: string }
           - { name: startsLabel, label: "'Starts' label", type: string }
+          - { name: startsTime, label: Start time shown after the date, type: string }
           - { name: fromLabel, label: "'From' label", type: string }
           - { name: fromPlaceholder, label: Shown before a city is typed, type: string }
           - { name: stamp, label: Stamp after submitting, type: string }

@@ -224,7 +224,7 @@ const jsonLd = [
         <div class="s-final-box">
           <img class="s-final-mark" src={u('/img/brand/mark-white.png')} alt="" width="215" height="256" />
           <div class="s-final-dots" aria-hidden="true">{Array.from({ length: 21 }, (_, i) => <i class:list={{ on: i === 0 }}></i>)}</div>
-          <h2>{c.final.title} <span data-next-monday>Monday</span>{c.final.titleEnd}</h2>
+          <h2>{c.final.title} <span data-next-monday>{settings.dates.fallbackDay}</span>{c.final.titleEnd}</h2>
           <p>{t(c.final.text)}</p>
           <a href={u('/register')} class="s-btn s-btn-dark">{c.final.button}</a>
         </div>

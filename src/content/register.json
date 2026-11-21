@@ -60,7 +60,8 @@
     "startsLabel": "Starts",
     "fromLabel": "From",
     "fromPlaceholder": "Your city",
-    "stamp": "Seat reserved"
+    "stamp": "Seat reserved",
+    "startsTime": "6 AM"
   },
   "form": {
     "planLabel": "Plan",

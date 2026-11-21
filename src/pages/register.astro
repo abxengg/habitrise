@@ -148,7 +148,7 @@ const jsonLd = [
               <small class="s-pv-prog">{tk.programName}</small>
               <dl>
                 <div><dt>{pv.planLabel}</dt><dd data-pv-out="plan">—</dd></div>
-                <div><dt>{pv.startsLabel}</dt><dd><span data-next-monday>Monday</span> · 6 AM</dd></div>
+                <div><dt>{pv.startsLabel}</dt><dd><span data-next-monday>{settings.dates.fallbackDay}</span> · {pv.startsTime}</dd></div>
                 <div><dt>{pv.fromLabel}</dt><dd data-pv-out="city" data-empty={pv.fromPlaceholder}>{pv.fromPlaceholder}</dd></div>
               </dl>
               <div class="s-pv-stub">
