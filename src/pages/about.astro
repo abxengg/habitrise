@@ -4,11 +4,9 @@ import { u } from '../lib/url';
 import Shell from '../layouts/Shell.astro';
 import Header from '../components/streak/Header.astro';
 import Footer from '../components/streak/Footer.astro';
-import Gutter from '../components/streak/Gutter.astro';
 import { streakFonts } from '../components/streak/fonts';
 import '../styles/streak.css';
 import { about as c, founder, home, settings, t } from '../lib/content';
-const wm = settings.watermarks;
 
 const tones = ['c-yellow', 'c-blue', 'c-mint', 'c-lilac'];
 const chipColors = ['#f8af3c', '#ff5a36', '#4f7cff', '#23c483', '#b79cff'];
@@ -44,8 +42,7 @@ const jsonLd = [
   <Header />
 
   <main>
-    <section class="s-wm s-hero s-ab-hero" data-wm={wm.aboutHero}>
-      <Gutter left={{ icon: "book", top: "70%" }} right={{ icon: "pen", top: "16%" }} />
+    <section class="s-hero s-ab-hero">
       <div class="s-wrap s-ab-grid">
         <div>
           <span class="s-badge">{c.hero.badge}</span>
@@ -64,7 +61,7 @@ const jsonLd = [
       </div>
     </section>
 
-    <section class="s-wm s-sec" id="story" data-wm={wm.aboutStory}>
+    <section class="s-sec" id="story">
       <div class="s-head s-wrap"><span class="s-eyebrow">{c.story.tag}</span><h2>{c.story.title}</h2></div>
       <div class="s-wrap s-ab-body">
         <div class="s-ab-story">
@@ -90,7 +87,7 @@ const jsonLd = [
       </div>
     </section>
 
-    <section class="s-wm s-sec s-program" id="coaching" data-wm={wm.aboutCoaching}>
+    <section class="s-sec s-program" id="coaching">
       <div class="s-wrap">
         <div class="s-head"><span class="s-eyebrow">{c.coaching.tag}</span><h2>{c.coaching.title}</h2></div>
         <div class="s-ab-coach">

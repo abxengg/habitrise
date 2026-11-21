@@ -45,10 +45,7 @@
     "success": "You're in! Look out for the next 6 AM letter.",
     "error": "Couldn't subscribe you right now. Please try again.",
     "notConfigured": "Newsletter signups open soon — follow us on Instagram meanwhile.",
-    "note": "Unsubscribe anytime with one click.",
-    "toLabel": "To",
-    "stamp": "6:00 AM",
-    "postmark": "Every Monday"
+    "note": "Unsubscribe anytime with one click."
   },
   "contact": {
     "email": "manimitit@gmail.com",
@@ -78,9 +75,13 @@
       {
         "label": "Founder",
         "href": "/about"
+      },
+      {
+        "label": "Pricing",
+        "href": "/#pricing"
       }
     ],
-    "button": "Join now",
+    "button": "Register",
     "buttonHref": "/register",
     "menuLabel": "Open menu"
   },
@@ -103,6 +104,10 @@
           },
           {
             "label": "Pricing",
+            "href": "/#pricing"
+          },
+          {
+            "label": "Register",
             "href": "/register"
           }
         ]
@@ -179,7 +184,7 @@
     "siteUrl": "https://habitrise.in",
     "defaultTitle": "HabitRise | Build the System — The 21-Day 6 AM Habit Challenge",
     "titleSuffix": " | HabitRise",
-    "defaultDescription": "Join HabitRise, India's 21-day live 6 AM habit challenge. Master the S.A.V.E.R.S morning routine with live Zoom sessions and a private Skool community.",
+    "defaultDescription": "Join HabitRise, India's 21-day live 6 AM habit challenge. Master the S.A.V.E.R.S morning routine with live Zoom sessions and a private Skool community. Students ₹399, others ₹699.",
     "keywords": "habit challenge, 6 AM routine, morning routine, S.A.V.E.R.S, miracle morning India, discipline course, habit coach Tamil Nadu, productivity for students, HabitRise",
     "ogImage": "/og-image.png",
     "ogImageAlt": "HabitRise — Build the system. The 21-day 6 AM habit challenge.",
@@ -192,21 +197,5 @@
   },
   "dates": {
     "nextCohortPrefix": "Monday, "
-  },
-  "watermarks": {
-    "homeHero": "6:00 AM",
-    "homeHow": "S.A.V.E.R.S",
-    "homeProgram": "21 DAYS",
-    "homeCommunity": "STREAK",
-    "homeFounder": "COACH",
-    "homeStories": "RISE",
-    "homePricing": "ADMIT ONE",
-    "homeFaq": "ASK US",
-    "aboutHero": "MANI",
-    "aboutStory": "STORY",
-    "aboutCoaching": "GROW",
-    "servicesHero": "SERVICES",
-    "servicesInterest": "HELLO",
-    "registerHero": "YOUR SEAT"
   }
 }

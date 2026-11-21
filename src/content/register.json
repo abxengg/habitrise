@@ -1,71 +1,24 @@
 {
   "seo": {
-    "title": "Pricing & Registration — The 21-Day 6 AM Challenge",
-    "description": "HabitRise pricing: students ₹399, everyone else ₹699 (regular ₹999), one-time for all 21 days. Choose your plan, fill in your details and pay securely via Razorpay."
+    "title": "Register — Join the Next 6 AM Cohort",
+    "description": "Register for the HabitRise 21-day 6 AM habit challenge. Students ₹399, everyone else ₹699 (regular ₹999). Fill in your details and pay securely via Razorpay."
   },
   "hero": {
-    "tag": "Join now",
-    "title": "Three steps to your 6 AM seat.",
-    "text": "Pick your plan, tell us a little about you, and your ticket fills in as you go. Payment happens securely on Razorpay."
-  },
-  "ticket": {
-    "ticketLabel": "Admit one · Cohort pass",
-    "programName": "The 21-Day HabitRise Challenge",
-    "details": [
-      {
-        "label": "Starts",
-        "value": "{nextMonday}"
-      },
-      {
-        "label": "Time",
-        "value": "6:00 AM IST"
-      },
-      {
-        "label": "Duration",
-        "value": "21 days"
-      },
-      {
-        "label": "Where",
-        "value": "Zoom + Skool"
-      }
-    ],
-    "stubTag": "Early bird pricing",
-    "regularLabel": "Regular",
-    "chooseButton": "Choose",
-    "payNote": "Secure payment via Razorpay · UPI · Cards",
-    "serial": "No. HR-21 · 0699",
-    "tearHint": "Tear here",
-    "joinButton": "Join the cohort",
-    "joinNote": "Takes 2 minutes · Pay on Razorpay"
-  },
-  "wizard": {
-    "steps": [
-      "Plan",
-      "About you",
-      "Contact"
-    ],
-    "next": "Next",
-    "back": "Back",
-    "stepOf": "Step {n} of {total}"
+    "tag": "Register",
+    "title": "Claim your seat for {nextMonday}.",
+    "text": "Pick your plan, fill in your details, and you'll go straight to secure payment. Your Skool invite follows by email."
   },
   "plans": {
     "title": "Choose your plan",
     "studentTag": "Student price",
     "othersTag": "Standard",
     "regularLabel": "Regular",
-    "perPerson": "one-time · all 21 days"
-  },
-  "preview": {
-    "title": "Your ticket",
-    "admit": "Admit one",
-    "namePlaceholder": "Your name here",
-    "planLabel": "Plan",
-    "startsLabel": "Starts",
-    "fromLabel": "From",
-    "fromPlaceholder": "Your city",
-    "stamp": "Seat reserved"
+    "perPerson": "one-time · all 21 days",
+    "includesTitle": "Every plan includes"
   },
   "form": {
+    "title": "Your details",
+    "subtitle": "Takes under a minute.",
     "planLabel": "Plan",
     "nameLabel": "Full name",
     "namePlaceholder": "As you'd like it on your certificate",
@@ -79,24 +32,9 @@
     "cityPlaceholder": "Where are you joining from?",
     "ageLabel": "Age",
     "occupationLabel": "You are a…",
-    "occupationOptions": [
-      "School student",
-      "College student",
-      "Working professional",
-      "Entrepreneur",
-      "Career switcher",
-      "Other"
-    ],
+    "occupationOptions": ["School student", "College student", "Working professional", "Entrepreneur", "Career switcher", "Other"],
     "sourceLabel": "How did you hear about us?",
-    "sourceOptions": [
-      "Instagram",
-      "YouTube",
-      "LinkedIn",
-      "WhatsApp",
-      "Friend or family",
-      "College event",
-      "Other"
-    ],
+    "sourceOptions": ["Instagram", "YouTube", "LinkedIn", "WhatsApp", "Friend or family", "College event", "Other"],
     "consent": "I agree to receive programme updates on WhatsApp and email.",
     "submit": "Continue to payment",
     "sending": "Saving your details…",
@@ -104,8 +42,6 @@
     "noPaymentLink": "Thanks! Your details are saved. We'll send your payment link on WhatsApp shortly.",
     "error": "We couldn't save your details. Please try again, or message us on WhatsApp.",
     "notConfigured": "Registration isn't connected yet. Please message us on WhatsApp to register.",
-    "secureNote": "🔒 Payments are processed by Razorpay. We never see your card or UPI details.",
-    "aboutTitle": "Tell us about you",
-    "contactTitle": "Where should we reach you?"
+    "secureNote": "🔒 Payments are processed by Razorpay. We never see your card or UPI details."
   }
 }

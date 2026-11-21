@@ -1,7 +1,7 @@
 {
   "seo": {
     "title": "HabitRise | Build the System — The 21-Day 6 AM Habit Challenge",
-    "description": "Rise at 6 and keep the streak. HabitRise is a 21-day live habit challenge with daily 6 AM Zoom sessions, the S.A.V.E.R.S morning routine and a private Skool community."
+    "description": "Rise at 6 and keep the streak. HabitRise is a 21-day live habit challenge with daily 6 AM Zoom sessions, the S.A.V.E.R.S routine and a private Skool community. Students ₹399 · Others ₹699."
   },
   "hero": {
     "badge": "🔥 5,000+ streaks started",
@@ -11,13 +11,9 @@
     "line3": "Change your",
     "line3Highlight": "life.",
     "text": "HabitRise is a 21-day live habit challenge. Show up at 6 AM, tick off your six morning habits, and let a community of early risers keep you honest.",
-    "primaryButton": "Join the next cohort",
+    "primaryButton": "Start from {currency}{studentPrice}",
     "secondaryButton": "See how it works",
-    "points": [
-      "Live on Zoom every morning",
-      "Private Skool community",
-      "Ages 12+"
-    ]
+    "points": ["Live on Zoom every morning", "Private Skool community", "Ages 12+"]
   },
   "tracker": {
     "stickerPoints": "+50 pts",
@@ -36,57 +32,24 @@
   },
   "audienceStrip": {
     "ariaLabel": "Who HabitRise is for",
-    "items": [
-      "Students",
-      "Professionals",
-      "Entrepreneurs",
-      "Career Builders",
-      "Early risers",
-      "Night owls who want out",
-      "Readers",
-      "Builders"
-    ]
+    "items": ["Students", "Professionals", "Entrepreneurs", "Career Builders", "Early risers", "Night owls who want out", "Readers", "Builders"]
   },
   "savers": [
-    {
-      "title": "Silence"
-    },
-    {
-      "title": "Affirmations"
-    },
-    {
-      "title": "Visualisation"
-    },
-    {
-      "title": "Exercise"
-    },
-    {
-      "title": "Reading"
-    },
-    {
-      "title": "Scribing"
-    }
+    { "title": "Silence" },
+    { "title": "Affirmations" },
+    { "title": "Visualisation" },
+    { "title": "Exercise" },
+    { "title": "Reading" },
+    { "title": "Scribing" }
   ],
   "how": {
     "tag": "How it works",
     "title": "One morning at HabitRise.",
     "text": "Three things happen every day for 21 days. That's the whole system.",
     "cards": [
-      {
-        "time": "6:00 AM",
-        "title": "Join the live session",
-        "text": "A focused 6 AM session with the founder — one topic a day, from purpose to deep work."
-      },
-      {
-        "time": "6:45 AM",
-        "title": "Do your six habits",
-        "text": "Silence, Affirmations, Visualisation, Exercise, Reading, Scribing — the S.A.V.E.R.S routine."
-      },
-      {
-        "time": "7:00 AM",
-        "title": "Check in with the crew",
-        "text": "Post your morning in the Skool community. Earn points, climb levels, get noticed."
-      }
+      { "time": "6:00 AM", "title": "Join the live session", "text": "A focused 6 AM session with the founder — one topic a day, from purpose to deep work." },
+      { "time": "6:45 AM", "title": "Do your six habits", "text": "Silence, Affirmations, Visualisation, Exercise, Reading, Scribing — the S.A.V.E.R.S routine." },
+      { "time": "7:00 AM", "title": "Check in with the crew", "text": "Post your morning in the Skool community. Earn points, climb levels, get noticed." }
     ],
     "liveTag": "● LIVE",
     "attendees": "+214 rising",
@@ -100,22 +63,10 @@
     }
   },
   "stats": [
-    {
-      "value": "5,000+",
-      "label": "Lives transformed"
-    },
-    {
-      "value": "4.9/5",
-      "label": "Average rating"
-    },
-    {
-      "value": "12+",
-      "label": "Years of leadership experience"
-    },
-    {
-      "value": "21",
-      "label": "Days to a new habit"
-    }
+    { "value": "5,000+", "label": "Lives transformed" },
+    { "value": "4.9/5", "label": "Average rating" },
+    { "value": "12+", "label": "Years of leadership experience" },
+    { "value": "21", "label": "Days to a new habit" }
   ],
   "program": {
     "tag": "The program",
@@ -128,43 +79,19 @@
         "days": "Days 1–7",
         "title": "Foundation",
         "text": "Discover your purpose, own your life and design your future from the ground up.",
-        "lessons": [
-          "Find your purpose — IKIGAI",
-          "Own your life 100%",
-          "Map your life (7 areas)",
-          "Bucket list creation",
-          "Vision board building",
-          "Affirmations system",
-          "Visualisation practice"
-        ]
+        "lessons": ["Find your purpose — IKIGAI", "Own your life 100%", "Map your life (7 areas)", "Bucket list creation", "Vision board building", "Affirmations system", "Visualisation practice"]
       },
       {
         "days": "Days 8–14",
         "title": "Build the System",
         "text": "Destroy fear, eliminate procrastination and install a daily power routine.",
-        "lessons": [
-          "Conquer fear forever",
-          "Defeat procrastination",
-          "Declutter your life",
-          "Shift to positivity",
-          "No more excuses",
-          "The S.A.V.E.R.S morning routine",
-          "Full integration day"
-        ]
+        "lessons": ["Conquer fear forever", "Defeat procrastination", "Declutter your life", "Shift to positivity", "No more excuses", "The S.A.V.E.R.S morning routine", "Full integration day"]
       },
       {
         "days": "Days 15–21",
         "title": "Complete Transformation",
         "text": "Master focus, communication and uniqueness — and celebrate your new self.",
-        "lessons": [
-          "Focus & deep work",
-          "Daily learning system",
-          "Failure as feedback",
-          "Communication mastery",
-          "Exercise & health",
-          "Own your uniqueness",
-          "The new you 🎉"
-        ]
+        "lessons": ["Focus & deep work", "Daily learning system", "Failure as feedback", "Communication mastery", "Exercise & health", "Own your uniqueness", "The new you 🎉"]
       }
     ]
   },
@@ -173,29 +100,17 @@
     "title": "Your 6 AM club lives on Skool.",
     "text": "Every member gets the private HabitRise group: daily check-ins, the classroom, the live calendar and a leaderboard.",
     "groupName": "HabitRise 6 AM Club",
-    "groupMeta": "🔒 Private · 5,000+ members · 21 live mornings",
+    "groupMeta": "🔒 Private · 5,000+ members · from {currency}{studentPrice} for 21 days",
     "groupText": "Build discipline with people who wake up when you do. Live sessions every morning at 6:00 AM IST, lessons and replays in the classroom, and a feed full of early risers.",
     "membersMore": "and 5,000+ more",
     "button": "Join the group",
     "leaderboardTitle": "Leaderboard · this week",
     "levelsTitle": "Levels",
     "levels": [
-      {
-        "level": "1",
-        "name": "Early Riser"
-      },
-      {
-        "level": "3",
-        "name": "Habit Builder"
-      },
-      {
-        "level": "5",
-        "name": "Disciplined"
-      },
-      {
-        "level": "9",
-        "name": "HabitRise Leader"
-      }
+      { "level": "1", "name": "Early Riser" },
+      { "level": "3", "name": "Habit Builder" },
+      { "level": "5", "name": "Disciplined" },
+      { "level": "9", "name": "HabitRise Leader" }
     ],
     "note": "Illustrative preview"
   },
@@ -211,83 +126,42 @@
     "chatTitle": "HabitRise Members",
     "chatMembers": "5,000+ members",
     "items": [
-      {
-        "name": "Praveen Kumar",
-        "role": "Engineering Student",
-        "place": "Coimbatore",
-        "result": "CGPA 6.8 → 8.4",
-        "quote": "I used to scroll till 2 AM and wake up at noon. After 21 days with HabitRise, I wake at 6 AM without an alarm. My CGPA went from 6.8 to 8.4 in one semester."
-      },
-      {
-        "name": "Divya Ramesh",
-        "role": "Software Professional",
-        "place": "Chennai",
-        "result": "Daily 6 AM routine locked in",
-        "quote": "The accountability is what changed everything. Knowing the group was showing up at 6 AM made me show up too. The SAVERS routine is now non-negotiable for me."
-      },
-      {
-        "name": "Arjun Nair",
-        "role": "Early-Stage Founder",
-        "place": "Bangalore",
-        "result": "Reclaimed mornings for deep work",
-        "quote": "As a founder I thought I had discipline. HabitRise showed me the difference between being busy and being intentional. My mornings now belong to me, not my inbox."
-      },
-      {
-        "name": "Sneha Patel",
-        "role": "School Teacher",
-        "place": "Madurai",
-        "result": "Launched a long-delayed project",
-        "quote": "I was stuck in procrastination for years. The visualisation and scribing habits gave me clarity I had never felt. I finally started the side project I kept postponing."
-      },
-      {
-        "name": "Karthik Subramanian",
-        "role": "Final-Year Student",
-        "place": "Trichy",
-        "result": "Completed all 21 days",
-        "quote": "The community kept me going on days I wanted to quit. By day 21 the habits felt automatic. This is the most practical self-improvement system I have tried."
-      },
-      {
-        "name": "Meera Iyer",
-        "role": "Marketing Manager",
-        "place": "Hyderabad",
-        "result": "First program ever finished",
-        "quote": "I have bought many courses that I never finished. HabitRise is the first one where the daily live sessions actually made me complete it. Worth every rupee."
-      }
+      { "name": "Praveen Kumar", "role": "Engineering Student", "place": "Coimbatore", "result": "CGPA 6.8 → 8.4", "quote": "I used to scroll till 2 AM and wake up at noon. After 21 days with HabitRise, I wake at 6 AM without an alarm. My CGPA went from 6.8 to 8.4 in one semester." },
+      { "name": "Divya Ramesh", "role": "Software Professional", "place": "Chennai", "result": "Daily 6 AM routine locked in", "quote": "The accountability is what changed everything. Knowing the group was showing up at 6 AM made me show up too. The SAVERS routine is now non-negotiable for me." },
+      { "name": "Arjun Nair", "role": "Early-Stage Founder", "place": "Bangalore", "result": "Reclaimed mornings for deep work", "quote": "As a founder I thought I had discipline. HabitRise showed me the difference between being busy and being intentional. My mornings now belong to me, not my inbox." },
+      { "name": "Sneha Patel", "role": "School Teacher", "place": "Madurai", "result": "Launched a long-delayed project", "quote": "I was stuck in procrastination for years. The visualisation and scribing habits gave me clarity I had never felt. I finally started the side project I kept postponing." },
+      { "name": "Karthik Subramanian", "role": "Final-Year Student", "place": "Trichy", "result": "Completed all 21 days", "quote": "The community kept me going on days I wanted to quit. By day 21 the habits felt automatic. This is the most practical self-improvement system I have tried." },
+      { "name": "Meera Iyer", "role": "Marketing Manager", "place": "Hyderabad", "result": "First program ever finished", "quote": "I have bought many courses that I never finished. HabitRise is the first one where the daily live sessions actually made me complete it. Worth every rupee." }
     ]
   },
   "pricing": {
     "tag": "Early bird",
     "title": "Your ticket to 6 AM.",
-    "text": "One seat in the next 21-day cohort. Everything included, paid once. Hover the ticket — then tear off your stub."
+    "text": "One seat in the next 21-day cohort. Everything included, paid once.",
+    "ticketLabel": "Admit one · Cohort pass",
+    "programName": "The 21-Day HabitRise Challenge",
+    "details": [
+      { "label": "Starts", "value": "{nextMonday}" },
+      { "label": "Time", "value": "6:00 AM IST" },
+      { "label": "Duration", "value": "21 days" },
+      { "label": "Where", "value": "Zoom + Skool" }
+    ],
+    "stubTag": "Early bird pricing",
+    "regularLabel": "Regular",
+    "button": "Reserve my seat",
+    "payNote": "Secure payment via Razorpay · UPI · Cards",
+    "serial": "No. HR-21 · 0699"
   },
   "faq": {
     "tag": "FAQ",
     "title": "Good questions.",
     "items": [
-      {
-        "q": "What time are the live sessions?",
-        "a": "Every day at 6:00 AM IST for all 21 days. Starting before the world wakes up is the whole point."
-      },
-      {
-        "q": "Who can join?",
-        "a": "Anyone aged 12 and above — students, working professionals, entrepreneurs and career switchers all go through the same system together."
-      },
-      {
-        "q": "How much does it cost?",
-        "a": "There's a special price for students and a standard price for everyone else — one-time, for all 21 days. See the Pricing page for the current early-bird prices."
-      },
-      {
-        "q": "How do I pay?",
-        "a": "Fill in the short registration form, then you'll be taken to a secure Razorpay page to pay by UPI, card or net banking."
-      },
-      {
-        "q": "When do I get access to the community?",
-        "a": "Once your payment is confirmed you'll receive an email with your Skool community link within 24–48 hours."
-      },
-      {
-        "q": "What is S.A.V.E.R.S?",
-        "a": "Six morning habits — Silence, Affirmations, Visualisation, Exercise, Reading and Scribing. You'll learn each one during the program and install the full routine by Day 13."
-      }
+      { "q": "What time are the live sessions?", "a": "Every day at 6:00 AM IST for all 21 days. Starting before the world wakes up is the whole point." },
+      { "q": "Who can join?", "a": "Anyone aged 12 and above — students, working professionals, entrepreneurs and career switchers all go through the same system together." },
+      { "q": "How much does it cost?", "a": "Students pay {currency}{studentPrice} and everyone else pays {currency}{othersPrice} (regular price {currency}{originalPrice}). It's a one-time payment for all 21 days." },
+      { "q": "How do I pay?", "a": "Fill in the short registration form, then you'll be taken to a secure Razorpay page to pay by UPI, card or net banking." },
+      { "q": "When do I get access to the community?", "a": "Once your payment is confirmed you'll receive an email with your Skool community link within 24–48 hours." },
+      { "q": "What is S.A.V.E.R.S?", "a": "Six morning habits — Silence, Affirmations, Visualisation, Exercise, Reading and Scribing. You'll learn each one during the program and install the full routine by Day 13." }
     ]
   },
   "final": {
