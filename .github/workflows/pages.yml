@@ -1,12 +1,17 @@
 name: Deploy to GitHub Pages
-# Every push to main (including each save in Pages CMS) builds and deploys the site, then tags the
-# deployed commit with the next patch version: v1.0.0 → v1.0.1 → v1.0.2 …
+# The site goes live ONLY when someone presses "Redeploy site" in Pages CMS (or runs this workflow by
+# hand from the Actions tab). Saving in the CMS just stores the change; edits pile up until Redeploy.
+# Each deploy tags the deployed commit with the next patch version (v1.0.1 → v1.0.2 …) and the tag
+# message lists every change since the previous version. A Redeploy with no new changes adds no version.
 # For a bigger jump (v1.1.0, v2.0.0), push that tag by hand; the count continues from there.
 
 on:
-  push:
-    branches: [main]
   workflow_dispatch:
+    inputs:
+      payload:
+        description: Sent by Pages CMS (who pressed Redeploy, which branch). Leave empty when running by hand.
+        required: false
+        type: string
 
 permissions:
   contents: read
@@ -57,8 +62,6 @@ jobs:
         with:
           fetch-depth: 0
       - name: Tag this deploy
-        env:
-          MESSAGE: ${{ github.event.head_commit.message }}
         run: |
           # a re-run or manual redeploy of an already-tagged commit gets no new version
           if git tag --points-at "$GITHUB_SHA" | grep -qE '^v[0-9]+\.[0-9]+\.[0-9]+$'; then
@@ -69,6 +72,8 @@ jobs:
           next="${major}.${minor}.$((patch + 1))"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git tag -a "$next" -m "${MESSAGE:-Deploy ${GITHUB_SHA::7}}" "$GITHUB_SHA"
+          # the tag message lists every change since the previous version
+          changes=$(git log --no-merges --format='- %s' "${last:+$last..}$GITHUB_SHA" | head -n 50)
+          git tag -a "$next" -m "Deployed by $GITHUB_ACTOR" -m "${changes:-- Redeploy}" "$GITHUB_SHA"
           git push origin "$next"
-          echo "### Deployed $next" >> "$GITHUB_STEP_SUMMARY"
+          { echo "### Deployed $next"; echo; echo "$changes"; } >> "$GITHUB_STEP_SUMMARY"

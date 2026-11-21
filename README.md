@@ -21,10 +21,11 @@ the site and it is live in about a minute.
    **Sign in with GitHub**, install the Pages CMS app on `abxengg/habitrise` when asked, and pick the repo.
 2. **Edit.** The sidebar lists: ⚙️ Site settings, prices & payment · 🏠 Home page · 👤 Founder · 📖 Founder page ·
    🧭 Services page · 💳 Pricing & Register page. The newsletter signup (bottom of every page) is under Site settings. Change any field → **Save**.
-3. **It goes live by itself.** Each save rebuilds the site; it's live in about a minute. If a build fails, the
-   previous version stays live.
-   Every successful deploy is tagged with the next patch version (v1.0.1, v1.0.2 …), so the repo's **Tags** list
-   is a history of what went live and when; the tag message is the change (e.g. the CMS save's description).
+3. **Publish with Redeploy.** Saving only stores your change, so you can make many edits safely. When you're ready,
+   press **Redeploy site** (sidebar → Actions in Pages CMS) and everything saved so far goes live in about a minute.
+   If a build fails, the previous version stays live. Developers can also run the *Deploy to GitHub Pages* workflow
+   from the repo's Actions tab. Each deploy is tagged with the next patch version (v1.0.1, v1.0.2 …), and the tag
+   lists the changes it published, so the repo's **Tags** list is a history of what went live.
 
 Text can use placeholders that fill in automatically, so prices only ever change in one place:
 `{currency}` `{studentPrice}` `{othersPrice}` `{originalPrice}` `{year}` `{nextMonday}` (the next cohort date).

@@ -1,10 +1,22 @@
 # Content Management for HabitRise — Pages CMS (https://app.pagescms.org)
 # Every word on the website lives in src/content/*.json. Editing a field here and pressing
-# Save commits to the repo; GitHub Actions rebuilds the site and it is live in ~1 minute.
-# Progress is visible in the repo's Actions tab.
+# Save stores the change in the repo. Nothing goes live until someone presses "Redeploy site"
+# (sidebar → Actions); then GitHub Actions builds the site and it is live in ~1 minute.
 #
 # Text can use these placeholders, filled in automatically:
 #   {currency} {studentPrice} {othersPrice} {originalPrice} {year} {nextMonday}
+
+# Buttons that run a GitHub workflow (.github/workflows/)
+actions:
+  - name: redeploy
+    label: Redeploy site
+    workflow: pages.yml
+    ref: current
+    cancelable: false
+    confirm:
+      title: Publish your changes?
+      message: Everything saved so far goes live on the website in about a minute.
+      button: Redeploy
 
 media:
   input: public/img
