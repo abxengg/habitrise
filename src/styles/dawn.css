@@ -58,7 +58,7 @@ p { margin: 0; }
 .d-hero {
   position: relative; min-height: max(820px, 100vh); overflow: hidden; text-align: center;
   background: radial-gradient(120% 70% at 50% 100%, #3b2559 0%, #141a48 45%, var(--night) 80%);
-  display: flex; flex-direction: column; align-items: center; padding: 150px 24px 0;
+  display: flex; flex-direction: column; align-items: center; padding: 140px 24px 250px;
 }
 .d-stars i { position: absolute; border-radius: 50%; background: #fff; opacity: .7; animation: twinkle 3.4s ease-in-out infinite; }
 @keyframes twinkle { 50% { opacity: .15; } }
@@ -73,7 +73,7 @@ p { margin: 0; }
 .d-next { font-size: 14px !important; color: rgba(238,240,255,.6) !important; }
 .d-next b { color: #fff; font-weight: 600; }
 .d-sun {
-  position: absolute; z-index: 1; left: 50%; bottom: -330px; width: 640px; height: 640px; border-radius: 50%;
+  position: absolute; z-index: 1; left: 50%; bottom: -430px; width: 640px; height: 640px; border-radius: 50%;
   transform: translateX(-50%) translateY(120px);
   background: radial-gradient(circle, #fff2c6 0%, #ffd27a 30%, #ff9a3d 60%, #ff6a3d 100%);
   box-shadow: 0 0 120px 60px rgba(255, 140, 60, .35), 0 0 300px 160px rgba(255, 110, 80, .18);
@@ -270,7 +270,7 @@ p { margin: 0; }
   .d-nav nav.open a { padding: 14px 4px; border-bottom: 1px solid rgba(255,255,255,.08); }
   .d-nav nav.open .d-pill { margin-top: 12px; text-align: center; border: 0; }
   .d-menu { display: flex; }
-  .d-hero { padding-top: 120px; min-height: 760px; }
+  .d-hero { padding: 110px 16px 200px; min-height: 760px; }
   .d-sun { width: 440px; height: 440px; bottom: -280px; }
   .d-stats-row { grid-template-columns: 1fr 1fr; }
   .d-stats-row div:nth-child(3) { border-left: 0; }
