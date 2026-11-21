@@ -45,8 +45,14 @@ Registration, Interest and Newsletter submissions are saved to a Google Sheet **
 
 ## Motion
 
-Floating shapes from the logo (amber stair steps, a staircase, diamonds, a sun) drift in each page's top section
-(`src/components/streak/Floaters.astro`). As you scroll, sections and cards reveal in sequence, numbers count up, an
+On wide screens (1360px+) small drawings sit in the empty side margins, each tied to its section: an alarm clock
+and rising sun by the hero, a book and dumbbell by the habits, a Day-21 calendar and streak flame by the programme,
+scissors by the ticket, a question mark by the FAQ (`src/components/streak/Gutter.astro`). They drift as their
+section scrolls past and each has a small motion of its own. On smaller screens they are hidden.
+
+The early-bird ticket (Home page and Pricing) tears its stub off along the perforation on hover; on touch screens it
+tears once as it scrolls into view. The registration form is three steps (plan → about you → contact) with a live
+ticket beside it that fills in as people type and gets a "Seat reserved" stamp on submit. As you scroll, sections and cards reveal in sequence, numbers count up, an
 amber progress bar tracks the page, and the hero streak tracker builds itself day by day (`src/scripts/motion.ts`).
 All of it is switched off for visitors whose device asks for reduced motion, and pages are fully visible without JS.
 

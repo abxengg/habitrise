@@ -306,6 +306,13 @@ content:
               - { name: place, label: City, type: string }
               - { name: result, label: Result tag, type: string }
               - { name: quote, label: Story, type: text }
+      - name: pricing
+        label: Pricing (the ticket; its text is on the Pricing & Register page)
+        type: object
+        fields:
+          - { name: tag, label: Section tag, type: string }
+          - { name: title, label: Heading, type: string }
+          - { name: text, label: Paragraph, type: text }
       - name: faq
         label: FAQ
         type: object
@@ -495,7 +502,7 @@ content:
           - { name: title, label: Heading, type: string, description: "{nextMonday} shows the next cohort date" }
           - { name: text, label: Paragraph, type: text }
       - name: ticket
-        label: Pricing ticket (prices are in Site settings)
+        label: Ticket (shown on the Home page and here; prices are in Site settings)
         type: object
         fields:
           - { name: ticketLabel, label: Ticket top label, type: string }
@@ -512,6 +519,15 @@ content:
           - { name: chooseButton, label: Plan button text, type: string }
           - { name: payNote, label: Payment note, type: string }
           - { name: serial, label: Ticket serial, type: string }
+          - { name: tearHint, label: "'Tear here' hint (shows when the ticket is hovered)", type: string }
+      - name: wizard
+        label: Form steps
+        type: object
+        fields:
+          - { name: steps, label: Step names (plan, about you, contact), type: string, list: { min: 3, max: 3 } }
+          - { name: next, label: Next button, type: string }
+          - { name: back, label: Back button, type: string }
+          - { name: stepOf, label: Step counter, type: string, description: "{n} = current step, {total} = number of steps" }
       - name: plans
         label: Plan cards (names, prices and notes are in Site settings)
         type: object
@@ -521,12 +537,24 @@ content:
           - { name: othersTag, label: Everyone-else card tag, type: string }
           - { name: regularLabel, label: "'Regular' word", type: string }
           - { name: perPerson, label: Price note, type: string }
+      - name: preview
+        label: Live ticket beside the form
+        type: object
+        fields:
+          - { name: title, label: Title above it, type: string }
+          - { name: admit, label: Top-right label, type: string }
+          - { name: namePlaceholder, label: Shown before a name is typed, type: string }
+          - { name: planLabel, label: "'Plan' label", type: string }
+          - { name: startsLabel, label: "'Starts' label", type: string }
+          - { name: fromLabel, label: "'From' label", type: string }
+          - { name: fromPlaceholder, label: Shown before a city is typed, type: string }
+          - { name: stamp, label: Stamp after submitting, type: string }
       - name: form
         label: Registration form
         type: object
         fields:
-          - { name: title, label: Form title, type: string }
-          - { name: subtitle, label: Form subtitle, type: string }
+          - { name: aboutTitle, label: Step 2 heading, type: string }
+          - { name: contactTitle, label: Step 3 heading, type: string }
           - { name: planLabel, label: Plan label, type: string }
           - { name: nameLabel, label: Name label, type: string }
           - { name: namePlaceholder, label: Name placeholder, type: string }

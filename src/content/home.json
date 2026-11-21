@@ -255,6 +255,11 @@
       }
     ]
   },
+  "pricing": {
+    "tag": "Early bird",
+    "title": "Your ticket to 6 AM.",
+    "text": "One seat in the next 21-day cohort. Everything included, paid once. Hover the ticket — then tear off your stub."
+  },
   "faq": {
     "tag": "FAQ",
     "title": "Good questions.",

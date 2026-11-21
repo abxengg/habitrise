@@ -1,14 +1,14 @@
 // Page motion — the scroll "story". Loaded on every page (from the footer).
 //   • sections and cards reveal in sequence as they scroll into view
 //   • an amber reading-progress bar along the top
-//   • floating logo shapes drift at different depths (parallax)
+//   • the side-margin drawings (Gutter.astro) drift against their section as it scrolls past
 //   • numbers count up when they appear
 // Everything is skipped for visitors who ask their device for reduced motion.
 
 const REVEAL = [
   '.s-hero-copy > *', '.s-tracker-wrap', '.s-head', '.s-card', '.s-stat', '.s-tabs', '.s-panel.on',
   '.s-group', '.s-board', '.s-founder-img', '.s-founder-card > div:last-child', '.s-msg', '.s-ticket',
-  '.s-form', '.s-faq details', '.s-final-box', '.s-ab-photo', '.s-ab-chapter', '.s-ab-card', '.s-ab-journey li', '.s-news',
+  '.s-form', '.s-faq details', '.s-final-box', '.s-ab-photo', '.s-ab-chapter', '.s-ab-card', '.s-ab-journey li', '.s-news', '.s-gi',
 ].join(',');
 
 export function startMotion() {
@@ -16,10 +16,18 @@ export function startMotion() {
 
   // reading progress bar
   const bar = document.querySelector<HTMLElement>('.s-progress i');
+  // only the drawings that are actually shown (wide screens)
+  const gis = matchMedia('(min-width: 1360px)').matches ? [...document.querySelectorAll<HTMLElement>('.s-gi')] : [];
   const onScroll = () => {
     const max = document.documentElement.scrollHeight - innerHeight;
     if (bar) bar.style.transform = `scaleX(${max > 0 ? Math.min(1, scrollY / max) : 0})`;
-    if (!reduce) document.querySelectorAll<HTMLElement>('.s-floaters').forEach(f => f.style.setProperty('--scrollY', `${scrollY}px`));
+    if (!reduce && gis.length) gis.forEach(g => {
+      const sec = g.parentElement!.parentElement!.getBoundingClientRect();
+      if (sec.bottom < -200 || sec.top > innerHeight + 200) return;
+      // -1 … 1 as the section passes through the viewport; right-side drawings move a little more
+      const p = (sec.top + sec.height / 2 - innerHeight / 2) / (innerHeight + sec.height);
+      g.querySelector<HTMLElement>('i')!.style.setProperty('--py', `${(p * (g.classList.contains('s-gi-right') ? 160 : 110)).toFixed(1)}px`);
+    });
   };
   addEventListener('scroll', () => requestAnimationFrame(onScroll), { passive: true });
   onScroll();

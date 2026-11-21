@@ -4,7 +4,7 @@ import { u } from '../lib/url';
 import Shell from '../layouts/Shell.astro';
 import Header from '../components/streak/Header.astro';
 import Footer from '../components/streak/Footer.astro';
-import Floaters from '../components/streak/Floaters.astro';
+import Gutter from '../components/streak/Gutter.astro';
 import { streakFonts } from '../components/streak/fonts';
 import '../styles/streak.css';
 import { services as c, settings, founder, t, href } from '../lib/content';
@@ -35,7 +35,7 @@ const jsonLd = [
 
   <main>
     <section class="s-hero s-sv-hero">
-      <Floaters />
+      <Gutter left={{ icon: "check", top: "12%" }} right={{ icon: "chat", top: "8%" }} />
       <div class="s-wrap">
         <div class="s-head">
           <span class="s-eyebrow">{c.hero.tag}</span>

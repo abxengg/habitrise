@@ -1,11 +1,12 @@
 ---
 // Homepage — "The Habit App" design. Every word comes from src/content/home.json
-// (plus founder.json for the coach), edited in Pages CMS. Prices appear only on /register.
+// (plus founder.json for the coach; the ticket text is shared with /register), edited in Pages CMS.
 import { u } from '../lib/url';
 import Shell from '../layouts/Shell.astro';
 import Header from '../components/streak/Header.astro';
 import Footer from '../components/streak/Footer.astro';
-import Floaters from '../components/streak/Floaters.astro';
+import Gutter from '../components/streak/Gutter.astro';
+import Ticket from '../components/streak/Ticket.astro';
 import { streakFonts } from '../components/streak/fonts';
 import '../styles/streak.css';
 import { home as c, founder, t, initials, avatar } from '../lib/content';
@@ -26,7 +27,7 @@ const jsonLd = [
   <main>
     <!-- HERO with live streak tracker -->
     <section class="s-hero">
-      <Floaters set="hero" />
+      <Gutter left={{ icon: "clock", top: "22%" }} right={{ icon: "sun", top: "12%" }} />
       <div class="s-wrap s-hero-grid">
         <div class="s-hero-copy">
           <span class="s-badge">{t(c.hero.badge)}</span>
@@ -76,6 +77,7 @@ const jsonLd = [
 
     <!-- how a morning works -->
     <section class="s-sec" id="how">
+      <Gutter left={{ icon: "book", top: "38%" }} right={{ icon: "dumbbell", top: "62%" }} />
       <div class="s-wrap">
         <div class="s-head">
           <span class="s-eyebrow">{c.how.tag}</span>
@@ -123,6 +125,7 @@ const jsonLd = [
 
     <!-- program tabs -->
     <section class="s-sec s-program" id="program">
+      <Gutter left={{ icon: "calendar", top: "30%" }} right={{ icon: "flame", top: "58%" }} />
       <div class="s-wrap">
         <div class="s-head">
           <span class="s-eyebrow">{c.program.tag}</span>
@@ -147,6 +150,7 @@ const jsonLd = [
 
     <!-- community: Skool group card -->
     <section class="s-sec" id="community">
+      <Gutter left={{ icon: "chat", top: "56%" }} right={{ icon: "check", top: "26%" }} />
       <div class="s-wrap">
         <div class="s-head s-center">
           <span class="s-eyebrow">{c.community.tag}</span>
@@ -194,6 +198,7 @@ const jsonLd = [
 
     <!-- stories as chat -->
     <section class="s-sec" id="stories">
+      <Gutter right={{ icon: "quote", top: "18%" }} />
       <div class="s-wrap s-chat-grid">
         <div class="s-head">
           <span class="s-eyebrow">{c.stories.tag}</span>
@@ -212,8 +217,22 @@ const jsonLd = [
       </div>
     </section>
 
+    <!-- pricing: the ticket (tear the stub on hover) -->
+    <section class="s-sec s-pricing" id="pricing">
+      <Gutter right={{ icon: "scissors", top: "52%" }} />
+      <div class="s-wrap">
+        <div class="s-head">
+          <span class="s-eyebrow">{c.pricing.tag}</span>
+          <h2>{c.pricing.title}</h2>
+          <p>{t(c.pricing.text)}</p>
+        </div>
+        <Ticket />
+      </div>
+    </section>
+
     <!-- faq -->
     <section class="s-sec" id="faq">
+      <Gutter left={{ icon: "question", top: "34%" }} />
       <div class="s-wrap">
         <div class="s-head s-center"><span class="s-eyebrow">{c.faq.tag}</span><h2>{c.faq.title}</h2></div>
         <div class="s-faq">{c.faq.items.map(f => <details><summary>{t(f.q)}</summary><p>{t(f.a)}</p></details>)}</div>
