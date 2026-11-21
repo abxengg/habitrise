@@ -1,0 +1,32 @@
+---
+import { audiences, beforeAfter } from '../data/site';
+import Icon from './Icon.astro';
+---
+<section id="who">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span class="eyebrow">Who this is for</span>
+      <h2>Built for anyone ready to stop <em>drifting.</em></h2>
+      <p>From a 12-year-old student to a senior professional — if you are tired of starting over every Monday, this is your system.</p>
+    </div>
+    <div class="who-grid">
+      {audiences.map(a => (
+        <article class="who reveal">
+          <div class="ico"><Icon name={a.icon} /></div>
+          <h3>{a.title}</h3>
+          <p>{a.text}</p>
+        </article>
+      ))}
+    </div>
+    <div class="ba">
+      <div class="ba-col ba-before reveal">
+        <h3>Before HabitRise</h3><small>The cost of inaction</small>
+        <ul>{beforeAfter.before.map(t => <li>{t}</li>)}</ul>
+      </div>
+      <div class="ba-col ba-after reveal">
+        <h3>After 21 Days</h3><small>Your new identity</small>
+        <ul>{beforeAfter.after.map(t => <li>{t}</li>)}</ul>
+      </div>
+    </div>
+  </div>
+</section>

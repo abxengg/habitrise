@@ -1,0 +1,21 @@
+---
+import { savers } from '../data/site';
+---
+<section class="savers" id="savers">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <span class="eyebrow">The daily system</span>
+      <h2>Six habits. <em>Every morning.</em></h2>
+      <p>The S.A.V.E.R.S method is the engine of your transformation. Minimum six minutes, done daily for 21 days.</p>
+    </div>
+    <div class="savers-grid reveal">
+      {savers.map((s, i) => (
+        <div class="saver"><span class="step">Step 0{i + 1}</span><span class="letter">{s.letter}</span><h3>{s.title}</h3><p>{s.text}</p></div>
+      ))}
+    </div>
+    <div class="savers-note reveal">
+      <span class="chip">Why it works</span>
+      <span><b>6 habits × 6 minutes × 21 days</b> — small enough to start tomorrow, big enough to change who you are.</span>
+    </div>
+  </div>
+</section>

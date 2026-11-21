@@ -1,0 +1,84 @@
+---
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import FinalCta from '../components/FinalCta.astro';
+import Footer from '../components/Footer.astro';
+import Icon from '../components/Icon.astro';
+import { founder, socials, stats } from '../data/site';
+---
+<Base
+  title={`${founder.name} | Founder of HabitRise`}
+  description={`The story behind HabitRise: ${founder.name}, PMP-certified delivery lead and habit coach who has trained 5,000+ students across India.`}
+>
+  <Nav />
+  <main id="top" class="profile">
+    <section class="profile-hero">
+      <div class="wrap">
+        <a href="/#founder" class="back"><Icon name="arrow" /> Back to HabitRise</a>
+        <div class="profile-head">
+          <img src="/img/founder-about.webp" alt={founder.name} width="640" height="800" />
+          <div>
+            <span class="eyebrow">Founder story</span>
+            <h1>{founder.name}</h1>
+            <p class="role">{founder.role}</p>
+            <blockquote>{founder.quote}</blockquote>
+            <div class="profile-stats">
+              {stats.slice(0, 3).map(s => <div><b>{s.value.toLocaleString('en-IN')}{s.suffix}</b><small>{s.label}</small></div>)}
+            </div>
+            <div class="socials">
+              {Object.entries(socials).map(([k, url]) => (
+                <a href={url} target="_blank" rel="noopener noreferrer" aria-label={k}><Icon name={k} /></a>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="profile-body">
+      <div class="wrap">
+        <article class="story">
+          {founder.story.map((ch, i) => (
+            <div class="chapter reveal">
+              <span class="num">0{i + 1}</span>
+              <div>
+                <h2>{ch.heading}</h2>
+                {ch.paras.map(p => <p>{p}</p>)}
+              </div>
+            </div>
+          ))}
+        </article>
+
+        <aside class="profile-side">
+          <div class="side-card reveal">
+            <h3>Experience</h3>
+            <div class="bio">{founder.bio.map(p => <p>{p}</p>)}</div>
+          </div>
+          <div class="side-card reveal">
+            <h3>Education & credentials</h3>
+            <ul>{founder.education.map(e => <li>{e}</li>)}</ul>
+            <div class="creds">{founder.credentials.map(c => <span>{c}</span>)}</div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="coaching">
+      <div class="wrap">
+        <div class="section-head">
+          <span class="eyebrow">How I can help</span>
+          <h2>Coaching areas</h2>
+        </div>
+        <div class="coach-grid">
+          {founder.coaching.map(c => <div class="reveal"><h4>{c.title}</h4><p>{c.text}</p></div>)}
+        </div>
+        <div class="journey">
+          {founder.journey.map(j => <div class="reveal"><h4>{j.title}</h4><p>{j.text}</p></div>)}
+        </div>
+      </div>
+    </section>
+
+    <FinalCta />
+  </main>
+  <Footer />
+</Base>

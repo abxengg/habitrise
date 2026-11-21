@@ -1,0 +1,24 @@
+---
+import { testimonials, initials } from '../data/site';
+---
+<section class="stories" id="stories">
+  <div class="wrap">
+    <div class="section-head center reveal">
+      <span class="eyebrow">Success stories</span>
+      <h2>Real people. <em>Real mornings.</em></h2>
+      <p>Thousands have rebuilt their mornings — and their lives — through the 21-day HabitRise system.</p>
+    </div>
+    <div class="t-grid">
+      {testimonials.map(t => (
+        <figure class="t-card reveal">
+          <span class="result">{t.result}</span>
+          <p>“{t.quote}”</p>
+          <figcaption class="t-who">
+            <div class="av" style={`background:${t.color}`}>{initials(t.name)}</div>
+            <div><b>{t.name}</b><small>{t.role}</small></div>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>

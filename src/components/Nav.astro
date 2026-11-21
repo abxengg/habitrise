@@ -1,0 +1,19 @@
+---
+import { nav, pricing } from '../data/site';
+import Icon from './Icon.astro';
+---
+<div class="announce">
+  <b>Early bird:</b> ₹{pricing.price} instead of ₹{pricing.regular} · Next cohort starts <span data-next-monday>Monday</span>
+  <a href="/#join">Save my spot</a>
+</div>
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a href="/" class="brand"><img src="/img/logo.webp" alt="" width="36" height="36" /><span>Habit<em>Rise</em></span></a>
+    <nav class="nav-links" id="navLinks">
+      {nav.map(l => <a href={l.href}>{l.label}</a>)}
+      <a href="/#join" class="btn btn-primary mobile-cta">Join for ₹{pricing.price}</a>
+    </nav>
+    <a href="/#join" class="btn btn-primary cta-desktop">Join for ₹{pricing.price}</a>
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false"><Icon name="menu" /></button>
+  </div>
+</header>

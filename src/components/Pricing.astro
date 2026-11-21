@@ -1,0 +1,23 @@
+---
+import { pricing } from '../data/site';
+---
+<section id="join">
+  <div class="wrap">
+    <div class="price-card reveal">
+      <div class="price-left">
+        <span class="eyebrow">Invest in your identity</span>
+        <h2>The 21-Day HabitRise Challenge</h2>
+        <p>Everything you need to build a morning you're proud of — and the people to keep you there.</p>
+        <ul class="incl">{pricing.includes.map(i => <li>{i}</li>)}</ul>
+      </div>
+      <div class="price-right">
+        <span class="chip">Early bird · save ₹{pricing.regular - pricing.price}</span>
+        <div class="amount"><b>₹{pricing.price}</b><s>₹{pricing.regular}</s></div>
+        <div class="per">One-time payment · 21 days of transformation</div>
+        <div class="cohort">Next cohort starts <b data-next-monday>Monday</b>.<br />Live sessions every day at 6:00 AM IST.</div>
+        <a href={pricing.joinUrl} class="btn btn-gold">Reserve my spot →</a>
+        <div class="secure">🔒 Secure payment via UPI · GPay, PhonePe, Paytm</div>
+      </div>
+    </div>
+  </div>
+</section>
