@@ -11,7 +11,7 @@ import '../styles/streak.css';
 import { pricing, stats, audiences, savers, weeks, founder, testimonials, faqs, contact, socials, initials } from '../data/site';
 
 const DONE = 14;
-const bubbleColors = ['#f8af3c', '#121212']; // brand: amber + ink, alternating
+const bubbleColors = ['#f8af3c', '#ff5a36', '#4f7cff', '#23c483', '#b79cff'];
 ---
 <Shell fonts={streakFonts} themeColor="#ffffff">
   <Header />
@@ -65,8 +65,8 @@ const bubbleColors = ['#f8af3c', '#121212']; // brand: amber + ink, alternating
     <section class="s-strip">
       <div class="s-marquee" aria-label="Who HabitRise is for">
         <div class="s-marquee-track">
-          {[0, 1].map(() => audiences.map((a, i) => <span style={`--c:${bubbleColors[i % 2]}`}>{a.title}</span>))}
-          {[0, 1].map(() => ['Early risers', 'Night owls who want out', 'Readers', 'Builders'].map((t, i) => <span style={`--c:${bubbleColors[(i + 1) % 2]}`}>{t}</span>))}
+          {[0, 1].map(() => audiences.map((a, i) => <span style={`--c:${bubbleColors[i]}`}>{a.title}</span>))}
+          {[0, 1].map(() => ['Early risers', 'Night owls who want out', 'Readers', 'Builders'].map((t, i) => <span style={`--c:${bubbleColors[(i + 4) % 5]}`}>{t}</span>))}
         </div>
       </div>
     </section>
@@ -191,7 +191,7 @@ const bubbleColors = ['#f8af3c', '#121212']; // brand: amber + ink, alternating
           <p class="s-role">{founder.name} · {founder.role}</p>
           <blockquote>{founder.quote}</blockquote>
           <p>{founder.bio[1]}</p>
-          <div class="s-creds">{founder.credentials.map((c, i) => <span style={`--c:${bubbleColors[i % 2]}`}>{c}</span>)}</div>
+          <div class="s-creds">{founder.credentials.map((c, i) => <span style={`--c:${bubbleColors[i % 5]}`}>{c}</span>)}</div>
           <a href={u('/about')} class="s-btn s-btn-line">Read my story →</a>
         </div>
       </div>
