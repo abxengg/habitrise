@@ -1,35 +1,246 @@
 ---
-import Base from '../layouts/Base.astro';
-import Nav from '../components/Nav.astro';
-import Hero from '../components/Hero.astro';
-import Stats from '../components/Stats.astro';
-import Audience from '../components/Audience.astro';
-import Savers from '../components/Savers.astro';
-import Program from '../components/Program.astro';
-import Community from '../components/Community.astro';
-import Founder from '../components/Founder.astro';
-import Stories from '../components/Stories.astro';
-import Steps from '../components/Steps.astro';
-import Pricing from '../components/Pricing.astro';
-import Faq from '../components/Faq.astro';
-import FinalCta from '../components/FinalCta.astro';
-import Footer from '../components/Footer.astro';
+// REDESIGN 3 — "Rise with Mani"
+// Founder-led editorial (sivaspeaks / Internet Lifestyle Hub / WomenLift):
+// split-screen portrait hero, giant HABIT/RISE wordmark, a manifesto,
+// a horizontal 21-day rail and a single big testimonial at a time.
+import Shell from '../layouts/Shell.astro';
+import '../styles/founder.css';
+import { pricing, stats, audiences, beforeAfter, savers, weeks, founder, testimonials, faqs, contact, socials } from '../data/site';
+
+const fonts = 'https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Figtree:wght@400;500;600;700&display=swap';
+const days = weeks.flatMap((w, wi) => w.lessons.map((l, li) => ({ n: wi * 7 + li + 1, week: w.title, wi, lesson: l })));
+const ticker = ['PMP Certified', '12+ years in IT', 'PhD scholar · AI', 'Toastmaster', '5,000+ students trained', '15+ entrepreneurs mentored', 'Live at 6 AM, every day'];
 ---
-<Base>
-  <Nav />
-  <main id="top">
-    <Hero />
-    <Stats />
-    <Audience />
-    <Savers />
-    <Program />
-    <Community />
-    <Founder />
-    <Stories />
-    <Steps />
-    <Pricing />
-    <Faq />
-    <FinalCta />
+<Shell fonts={fonts} themeColor="#0e0e0e" title="HabitRise | Rise with Manikandan Rajendran">
+  <header class="f-nav" id="nav">
+    <a href="/" class="f-word">HABITRISE<sup>®</sup></a>
+    <nav id="navLinks">
+      <a href="#manifesto">Manifesto</a>
+      <a href="#method">Method</a>
+      <a href="#days">21 days</a>
+      <a href="#club">The club</a>
+      <a href="#voices">Voices</a>
+      <a href="#join" class="f-nav-cta">Join — ₹{pricing.price} ↗</a>
+    </nav>
+    <button class="f-menu" id="navToggle" aria-label="Open menu" aria-expanded="false">Menu</button>
+  </header>
+
+  <main>
+    <!-- split hero -->
+    <section class="f-hero">
+      <div class="f-hero-photo">
+        <img src="/img/founder-join.webp" alt={founder.name} width="574" height="1024" fetchpriority="high" />
+        <div class="f-caption"><b>{founder.name}</b><span>Founder · Habit coach · PMP</span></div>
+        <div class="f-badge" aria-hidden="true">
+          <svg viewBox="0 0 200 200"><defs><path id="circ" d="M100,100 m-78,0 a78,78 0 1,1 156,0 a78,78 0 1,1 -156,0" /></defs>
+            <text><textPath href="#circ">RISE AT 6 AM ✺ 21 DAYS ✺ HABITRISE ✺ BUILD · GROW · INSPIRE ✺</textPath></text></svg>
+          <span>☀</span>
+        </div>
+      </div>
+      <div class="f-hero-copy">
+        <p class="f-kicker">A 21-day movement by {founder.name}</p>
+        <h1 class="f-mega"><span>Habit</span><span class="f-rise">Rise</span></h1>
+        <p class="f-statement">True growth doesn't happen in the boardroom. It happens in the hours <em>before the world wakes up.</em></p>
+        <div class="f-ctas">
+          <a href="#join" class="f-btn f-btn-red">Start the 21 days ↗</a>
+          <a href="#manifesto" class="f-btn f-btn-line">Read the manifesto</a>
+        </div>
+        <dl class="f-stats">
+          {stats.map(s => <div><dt>{s.value.toLocaleString('en-IN')}{s.suffix}</dt><dd>{s.label}</dd></div>)}
+        </dl>
+      </div>
+    </section>
+
+    <!-- ticker -->
+    <div class="f-ticker" aria-hidden="true">
+      <div class="f-ticker-track">{[0, 1].map(() => ticker.map(t => <span>{t} <i>✺</i></span>))}</div>
+    </div>
+
+    <!-- manifesto -->
+    <section class="f-sec" id="manifesto">
+      <div class="f-wrap">
+        <p class="f-label">(01) — Manifesto</p>
+        <p class="f-manifesto">
+          I spent years climbing the corporate ladder. The highest performers I met all shared <mark>one thing</mark>: a non-negotiable morning.
+          HabitRise isn't another course. It's a movement for people tired of restarting every Monday — and ready to <mark>wake up at 6 AM and execute.</mark>
+        </p>
+        <p class="f-sign">— Mani, founder</p>
+        <div class="f-journey">
+          {founder.journey.map((j, i) => <div><span>0{i + 1}</span><h3>{j.title}</h3><p>{j.text}</p></div>)}
+        </div>
+      </div>
+    </section>
+
+    <!-- from / to -->
+    <section class="f-sec f-fromto">
+      <div class="f-wrap">
+        <p class="f-label">(02) — Who it's for</p>
+        <h2 class="f-h2">From drifting<br />to <em>deliberate.</em></h2>
+        <div class="f-for">{audiences.map(a => <span>{a.title}</span>)}</div>
+        <div class="f-table">
+          <div class="f-row f-row-head"><span>Before</span><span></span><span>After 21 days</span></div>
+          {beforeAfter.before.map((b, i) => (
+            <div class="f-row"><span>{b}</span><i>→</i><span>{beforeAfter.after[i]}</span></div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- SAVERS rows -->
+    <section class="f-sec f-method" id="method">
+      <div class="f-wrap">
+        <p class="f-label">(03) — The method</p>
+        <h2 class="f-h2">S.A.V.E.R.S</h2>
+        <p class="f-sub">Six habits, done every morning before the world needs you.</p>
+      </div>
+      <ol class="f-rows">
+        {savers.map((s, i) => (
+          <li>
+            <div class="f-wrap f-row-inner">
+              <span class="f-big">{s.letter}</span>
+              <h3>{s.title}</h3>
+              <p>{s.text}</p>
+              <span class="f-num">0{i + 1}</span>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <!-- 21-day rail -->
+    <section class="f-sec f-days" id="days">
+      <div class="f-wrap f-days-head">
+        <div>
+          <p class="f-label">(04) — The programme</p>
+          <h2 class="f-h2">Twenty-one<br />mornings.</h2>
+        </div>
+        <div class="f-rail-btns">
+          <button id="prev" aria-label="Scroll back">←</button>
+          <button id="next" aria-label="Scroll forward">→</button>
+        </div>
+      </div>
+      <div class="f-rail" id="rail">
+        {days.map(d => (
+          <article class:list={['f-day', `w${d.wi}`]}>
+            <span class="f-day-n">{String(d.n).padStart(2, '0')}</span>
+            <small>Week {d.wi + 1} · {d.week}</small>
+            <h3>{d.lesson}</h3>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <!-- the club -->
+    <section class="f-sec f-club" id="club">
+      <div class="f-wrap f-club-grid">
+        <div>
+          <p class="f-label">(05) — The club</p>
+          <h2 class="f-h2">The 6 AM<br /><em>Club.</em></h2>
+          <p class="f-sub">Membership includes the private HabitRise community on Skool — where the early risers check in, learn and hold each other to it.</p>
+          <ol class="f-club-list">
+            <li><b>Daily check-ins</b>Post your SAVERS. Get nudged when you slip.</li>
+            <li><b>Classroom</b>Every lesson, worksheet and replay.</li>
+            <li><b>Live calendar</b>6 AM sessions and founder Q&amp;A.</li>
+            <li><b>Leaderboard</b>Points and levels for showing up.</li>
+          </ol>
+        </div>
+        <div class="f-club-card" role="img" aria-label="Preview of the HabitRise community on Skool">
+          <div class="f-cc-top"><img src="/img/logo.webp" alt="" width="44" height="44" /><div><b>HabitRise 6 AM Club</b><small>Private community · Skool</small></div></div>
+          <div class="f-cc-post"><small>Praveen · 5:58 AM · Day 14</small><p>All six SAVERS done before 6:30. Two weeks without missing a morning.</p></div>
+          <div class="f-cc-post"><small>Divya · 6:12 AM · Day 9</small><p>Finished my first book in years thanks to the 10-pages rule.</p></div>
+          <div class="f-cc-post f-cc-mani"><small>Manikandan · Founder · 6:45 AM</small><p>Tomorrow is Day 15: Focus &amp; Deep Work. Bring one task you've been avoiding.</p></div>
+          <p class="f-cc-note">Illustrative preview</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- voices: single quote slider -->
+    <section class="f-sec f-voices" id="voices">
+      <div class="f-wrap">
+        <div class="f-voices-head">
+          <p class="f-label">(06) — Voices</p>
+          <div class="f-rail-btns"><span id="vcount">01 / {String(testimonials.length).padStart(2, '0')}</span><button id="vprev" aria-label="Previous story">←</button><button id="vnext" aria-label="Next story">→</button></div>
+        </div>
+        {testimonials.map((t, i) => (
+          <figure class:list={['f-quote', { on: i === 0 }]} data-i={i}>
+            <span class="f-result">{t.result}</span>
+            <blockquote>“{t.quote}”</blockquote>
+            <figcaption><b>{t.name}</b> — {t.role}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </section>
+
+    <!-- pricing -->
+    <section class="f-join" id="join">
+      <div class="f-wrap f-join-grid">
+        <div>
+          <span class="f-sticker">Early bird</span>
+          <p class="f-label">(07) — Join</p>
+          <div class="f-price"><span>₹</span>{pricing.price}</div>
+          <p class="f-was">Regular ₹{pricing.regular} · one-time · UPI</p>
+        </div>
+        <div>
+          <h2>The 21-Day HabitRise Challenge</h2>
+          <ul>{pricing.includes.map(i => <li>{i}</li>)}</ul>
+          <a href={pricing.joinUrl} class="f-btn f-btn-red f-wide">Reserve my spot ↗</a>
+          <p class="f-next">Next cohort starts <b data-next-monday>Monday</b> · 6:00 AM IST</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- faq -->
+    <section class="f-sec" id="faq">
+      <div class="f-wrap f-faq-grid">
+        <div><p class="f-label">(08) — FAQ</p><h2 class="f-h2">Asked<br />often.</h2></div>
+        <div class="f-faq">{faqs.map((f, i) => <details><summary><span>0{i + 1}</span>{f.q}</summary><p>{f.a}</p></details>)}</div>
+      </div>
+    </section>
   </main>
-  <Footer />
-</Base>
+
+  <footer class="f-foot">
+    <div class="f-wrap">
+      <div class="f-foot-top">
+        <p>Your next 21 days can change your next 21 years.</p>
+        <a href="#join" class="f-btn f-btn-red">Start now ↗</a>
+      </div>
+      <div class="f-foot-links">
+        <a href={socials.instagram}>Instagram</a><a href={socials.youtube}>YouTube</a><a href={socials.linkedin}>LinkedIn</a><a href={socials.facebook}>Facebook</a>
+        <a href={`mailto:${contact.email}`}>Email</a><a href={contact.whatsapp}>WhatsApp</a><a href="https://habitrise.in/terms">Terms</a><a href="https://habitrise.in/privacy">Privacy</a>
+      </div>
+    </div>
+    <div class="f-foot-word" aria-hidden="true">HABITRISE</div>
+    <div class="f-wrap f-foot-bottom"><small>© {new Date().getFullYear()} HabitRise · Build • Grow • Inspire</small><small>Made for early risers</small></div>
+  </footer>
+
+  <script>
+    const $ = (s: string) => document.querySelector(s) as HTMLElement;
+    const $$ = (s: string) => [...document.querySelectorAll(s)] as HTMLElement[];
+    // rail arrows
+    const rail = $('#rail');
+    $('#prev').addEventListener('click', () => rail.scrollBy({ left: -rail.clientWidth * 0.8, behavior: 'smooth' }));
+    $('#next').addEventListener('click', () => rail.scrollBy({ left: rail.clientWidth * 0.8, behavior: 'smooth' }));
+    // quote slider
+    const quotes = $$('.f-quote');
+    let qi = 0;
+    const show = (n: number) => {
+      qi = (n + quotes.length) % quotes.length;
+      quotes.forEach((q, i) => q.classList.toggle('on', i === qi));
+      $('#vcount').textContent = `${String(qi + 1).padStart(2, '0')} / ${String(quotes.length).padStart(2, '0')}`;
+    };
+    $('#vprev').addEventListener('click', () => show(qi - 1));
+    $('#vnext').addEventListener('click', () => show(qi + 1));
+    // nav
+    $('#navToggle').addEventListener('click', () => {
+      const open = $('#navLinks').classList.toggle('open');
+      $('#navToggle').setAttribute('aria-expanded', String(open));
+      $('#navToggle').textContent = open ? 'Close' : 'Menu';
+    });
+    $$('#navLinks a').forEach(a => a.addEventListener('click', () => { $('#navLinks').classList.remove('open'); $('#navToggle').textContent = 'Menu'; }));
+    // next Monday (IST)
+    const now = new Date();
+    const ist = new Date(now.getTime() + (now.getTimezoneOffset() + 330) * 60000);
+    const mon = new Date(ist); mon.setDate(ist.getDate() + (((8 - ist.getDay()) % 7) || 7));
+    $$('[data-next-monday]').forEach(el => (el.textContent = 'Monday, ' + mon.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })));
+  </script>
+</Shell>
