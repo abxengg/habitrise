@@ -1,84 +1,94 @@
 ---
-import Base from '../layouts/Base.astro';
-import Nav from '../components/Nav.astro';
-import FinalCta from '../components/FinalCta.astro';
-import Footer from '../components/Footer.astro';
-import Icon from '../components/Icon.astro';
-import { founder, socials, stats } from '../data/site';
+// Founder story, in the HabitRise ("Habit App") design.
+import Shell from '../layouts/Shell.astro';
+import Header from '../components/streak/Header.astro';
+import Footer from '../components/streak/Footer.astro';
+import { streakFonts } from '../components/streak/fonts';
+import '../styles/streak.css';
+import { founder, stats, pricing } from '../data/site';
+
+const tones = ['c-yellow', 'c-blue', 'c-mint', 'c-lilac'];
+const chipColors = ['#f8af3c', '#ff5a36', '#4f7cff', '#23c483', '#b79cff'];
 ---
-<Base
+<Shell
+  fonts={streakFonts}
+  themeColor="#ffffff"
   title={`${founder.name} | Founder of HabitRise`}
   description={`The story behind HabitRise: ${founder.name}, PMP-certified delivery lead and habit coach who has trained 5,000+ students across India.`}
 >
-  <Nav />
-  <main id="top" class="profile">
-    <section class="profile-hero">
-      <div class="wrap">
-        <a href="/#founder" class="back"><Icon name="arrow" /> Back to HabitRise</a>
-        <div class="profile-head">
-          <img src="/img/founder-about.webp" alt={founder.name} width="640" height="800" />
-          <div>
-            <span class="eyebrow">Founder story</span>
-            <h1>{founder.name}</h1>
-            <p class="role">{founder.role}</p>
-            <blockquote>{founder.quote}</blockquote>
-            <div class="profile-stats">
-              {stats.slice(0, 3).map(s => <div><b>{s.value.toLocaleString('en-IN')}{s.suffix}</b><small>{s.label}</small></div>)}
-            </div>
-            <div class="socials">
-              {Object.entries(socials).map(([k, url]) => (
-                <a href={url} target="_blank" rel="noopener noreferrer" aria-label={k}><Icon name={k} /></a>
-              ))}
-            </div>
+  <Header />
+
+  <main>
+    <section class="s-hero s-ab-hero">
+      <div class="s-wrap s-ab-grid">
+        <div>
+          <span class="s-badge">Founder story</span>
+          <h1>Hi, I'm <mark class="y">Mani.</mark></h1>
+          <p class="s-role">{founder.name} · {founder.role}</p>
+          <blockquote class="s-ab-quote">{founder.quote}</blockquote>
+          <div class="s-ab-stats">
+            {stats.slice(0, 3).map((s, i) => (
+              <div class={`s-stat t${i + 1}`}><b>{s.value.toLocaleString('en-IN')}{s.suffix}</b><span>{s.label}</span></div>
+            ))}
           </div>
+        </div>
+        <div class="s-ab-photo">
+          <img src="/img/founder-about.webp" alt={founder.name} width="574" height="1024" fetchpriority="high" />
+          <span class="s-sticker s1">PMP certified</span>
+          <span class="s-sticker s3">PhD scholar · AI</span>
         </div>
       </div>
     </section>
 
-    <section class="profile-body">
-      <div class="wrap">
-        <article class="story">
+    <section class="s-sec">
+      <div class="s-wrap s-ab-body">
+        <div class="s-ab-story">
+          <div class="s-head"><span class="s-eyebrow">The story</span><h2>From the boardroom to 6 AM.</h2></div>
           {founder.story.map((ch, i) => (
-            <div class="chapter reveal">
-              <span class="num">0{i + 1}</span>
-              <div>
-                <h2>{ch.heading}</h2>
-                {ch.paras.map(p => <p>{p}</p>)}
-              </div>
-            </div>
+            <article class="s-ab-chapter">
+              <span class="s-step">Chapter {i + 1}</span>
+              <h3>{ch.heading.charAt(0).toUpperCase() + ch.heading.slice(1)}</h3>
+              {ch.paras.map(p => <p>{p}</p>)}
+            </article>
           ))}
-        </article>
-
-        <aside class="profile-side">
-          <div class="side-card reveal">
-            <h3>Experience</h3>
-            <div class="bio">{founder.bio.map(p => <p>{p}</p>)}</div>
+        </div>
+        <aside class="s-ab-side">
+          <div class="s-ab-card">
+            <h4>Experience</h4>
+            {founder.bio.map(p => <p>{p}</p>)}
           </div>
-          <div class="side-card reveal">
-            <h3>Education & credentials</h3>
+          <div class="s-ab-card">
+            <h4>Education & credentials</h4>
             <ul>{founder.education.map(e => <li>{e}</li>)}</ul>
-            <div class="creds">{founder.credentials.map(c => <span>{c}</span>)}</div>
+            <div class="s-creds">{founder.credentials.map((c, i) => <span style={`--c:${chipColors[i % 5]}`}>{c}</span>)}</div>
           </div>
         </aside>
       </div>
     </section>
 
-    <section class="coaching">
-      <div class="wrap">
-        <div class="section-head">
-          <span class="eyebrow">How I can help</span>
-          <h2>Coaching areas</h2>
+    <section class="s-sec s-program">
+      <div class="s-wrap">
+        <div class="s-head"><span class="s-eyebrow">How I can help</span><h2>Coaching areas.</h2></div>
+        <div class="s-ab-coach">
+          {founder.coaching.map((c, i) => <article class={`s-card ${tones[i % 4]}`}><h3>{c.title}</h3><p>{c.text}</p></article>)}
         </div>
-        <div class="coach-grid">
-          {founder.coaching.map(c => <div class="reveal"><h4>{c.title}</h4><p>{c.text}</p></div>)}
-        </div>
-        <div class="journey">
-          {founder.journey.map(j => <div class="reveal"><h4>{j.title}</h4><p>{j.text}</p></div>)}
-        </div>
+        <ol class="s-ab-journey">
+          {founder.journey.map((j, i) => <li><span>0{i + 1}</span><div><h4>{j.title}</h4><p>{j.text}</p></div></li>)}
+        </ol>
       </div>
     </section>
 
-    <FinalCta />
+    <section class="s-final">
+      <div class="s-wrap">
+        <div class="s-final-box">
+          <img class="s-final-mark" src="/img/brand/mark-white.png" alt="" width="215" height="256" />
+          <h2>Rise with me at <span>6 AM.</span></h2>
+          <p>21 live mornings, the S.A.V.E.R.S routine and the 6 AM crew. Build the system.</p>
+          <a href="/#pricing" class="s-btn s-btn-dark">Start my streak — ₹{pricing.price}</a>
+        </div>
+      </div>
+    </section>
   </main>
+
   <Footer />
-</Base>
+</Shell>

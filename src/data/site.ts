@@ -5,10 +5,10 @@
 
 export const site = {
   name: 'HabitRise',
-  title: 'HabitRise | Build • Grow • Inspire',
+  title: 'HabitRise | Build the System — The 21-Day 6 AM Habit Challenge',
   description:
     "Build the habits that change your life. Join India's most disciplined morning accountability community and master the 6 AM routine in 21 days.",
-  tagline: 'Build • Grow • Inspire',
+  tagline: 'Build the system',
 };
 
 export const pricing = {

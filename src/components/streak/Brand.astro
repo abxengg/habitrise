@@ -1,0 +1,13 @@
+---
+// HabitRise lockup: the stair "H" mark + the condensed HABITRISE wordmark.
+// tone="dark" for light backgrounds (black H), tone="light" for dark backgrounds (white H).
+interface Props { tone?: 'dark' | 'light'; tagline?: boolean; class?: string }
+const { tone = 'dark', tagline = false, class: cls } = Astro.props;
+---
+<a href="/" class:list={['s-brand', `s-brand-${tone}`, cls]} aria-label="HabitRise home">
+  <img src={`/img/brand/mark-${tone === 'dark' ? 'black' : 'white'}.png`} alt="" width="215" height="256" />
+  <span class="s-word">
+    <span>HABITRISE</span>
+    {tagline && <small>BUILD THE SYSTEM</small>}
+  </span>
+</a>

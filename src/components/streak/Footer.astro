@@ -1,0 +1,32 @@
+---
+import Brand from './Brand.astro';
+import { contact, socials } from '../../data/site';
+---
+<footer class="s-foot">
+  <div class="s-wrap">
+    <div class="s-foot-top">
+      <Brand tone="light" tagline class="s-brand-big" />
+      <div class="s-foot-cols">
+        <div><h4>Program</h4><a href="/#how">How it works</a><a href="/#program">21 days</a><a href="/#community">Community</a><a href="/#pricing">Pricing</a></div>
+        <div><h4>About</h4><a href="/about">Founder story</a><a href="/#stories">Stories</a><a href="/#faq">FAQ</a></div>
+        <div><h4>Follow</h4><a href={socials.instagram}>Instagram</a><a href={socials.youtube}>YouTube</a><a href={socials.linkedin}>LinkedIn</a><a href={socials.facebook}>Facebook</a></div>
+        <div><h4>Contact</h4><a href={`mailto:${contact.email}`}>Email</a><a href={contact.whatsapp}>WhatsApp</a></div>
+      </div>
+    </div>
+    <div class="s-foot-bottom">
+      <small>© {new Date().getFullYear()} HabitRise · Build the system.</small>
+      <small><a href="https://habitrise.in/privacy">Privacy</a> · <a href="https://habitrise.in/terms">Terms</a></small>
+    </div>
+  </div>
+</footer>
+<a class="s-wa" href={contact.whatsapp} target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.3-.5.1-1 .1-3.3-.8-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg>
+</a>
+
+<script>
+  // next cohort = next Monday (IST)
+  const now = new Date();
+  const ist = new Date(now.getTime() + (now.getTimezoneOffset() + 330) * 60000);
+  const mon = new Date(ist); mon.setDate(ist.getDate() + (((8 - ist.getDay()) % 7) || 7));
+  document.querySelectorAll('[data-next-monday]').forEach(el => (el.textContent = 'Monday, ' + mon.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })));
+</script>

@@ -3,26 +3,17 @@
 // Bright, playful, product-style (habitcoach.ai + Skool). The hero is a working
 // 21-day streak tracker; the community is presented like a Skool group card.
 import Shell from '../layouts/Shell.astro';
+import Header from '../components/streak/Header.astro';
+import Footer from '../components/streak/Footer.astro';
+import { streakFonts } from '../components/streak/fonts';
 import '../styles/streak.css';
 import { pricing, stats, audiences, savers, weeks, founder, testimonials, faqs, contact, socials, initials } from '../data/site';
 
-const fonts = 'https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap';
 const DONE = 14;
-const bubbleColors = ['#ffc83d', '#ff5a36', '#4f7cff', '#23c483', '#b79cff'];
+const bubbleColors = ['#f8af3c', '#ff5a36', '#4f7cff', '#23c483', '#b79cff'];
 ---
-<Shell fonts={fonts} themeColor="#ffffff">
-  <header class="s-nav" id="nav">
-    <a href="/" class="s-brand"><img src="/img/logo.webp" alt="" width="32" height="32" />HabitRise</a>
-    <nav id="navLinks">
-      <a href="#how">How it works</a>
-      <a href="#program">Program</a>
-      <a href="#community">Community</a>
-      <a href="#stories">Stories</a>
-      <a href="#pricing">Pricing</a>
-    </nav>
-    <a href="#pricing" class="s-btn s-btn-dark s-nav-cta">Start my streak</a>
-    <button class="s-menu" id="navToggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
-  </header>
+<Shell fonts={streakFonts} themeColor="#ffffff">
+  <Header />
 
   <main>
     <!-- HERO with live streak tracker -->
@@ -47,7 +38,7 @@ const bubbleColors = ['#ffc83d', '#ff5a36', '#4f7cff', '#23c483', '#b79cff'];
           <div class="s-sticker s3">⭐ 4.9/5</div>
           <div class="s-tracker" id="tracker">
             <div class="s-tr-head">
-              <img src="/img/logo.webp" alt="" width="40" height="40" />
+              <span class="s-tr-mark"><img src="/img/brand/mark-black.png" alt="" width="215" height="256" /></span>
               <div><small>Good morning ☀️</small><b>Your 21-day streak</b></div>
               <svg class="s-ring" viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="18" /><circle id="ring" cx="22" cy="22" r="18" /></svg>
             </div>
@@ -164,9 +155,9 @@ const bubbleColors = ['#ffc83d', '#ff5a36', '#4f7cff', '#23c483', '#b79cff'];
         </div>
         <div class="s-skool">
           <article class="s-group">
-            <div class="s-cover"><span>☀</span></div>
+            <div class="s-cover"><img src="/img/brand/mark-white.png" alt="" width="215" height="256" /></div>
             <div class="s-group-body">
-              <img src="/img/logo.webp" alt="" width="64" height="64" />
+              <span class="s-group-icon"><img src="/img/brand/mark-black.png" alt="" width="215" height="256" /></span>
               <h3>HabitRise 6 AM Club</h3>
               <p class="s-meta">🔒 Private · 5,000+ members · ₹{pricing.price} for 21 days</p>
               <p>Build discipline with people who wake up when you do. Live sessions every morning at 6:00 AM IST, lessons and replays in the classroom, and a feed full of early risers.</p>
@@ -251,25 +242,17 @@ const bubbleColors = ['#ffc83d', '#ff5a36', '#4f7cff', '#23c483', '#b79cff'];
     <section class="s-final">
       <div class="s-wrap">
         <div class="s-final-box">
+          <img class="s-final-mark" src="/img/brand/mark-white.png" alt="" width="215" height="256" />
           <div class="s-final-dots" aria-hidden="true">{Array.from({ length: 21 }, (_, i) => <i class:list={{ on: i === 0 }}></i>)}</div>
           <h2>Day 1 starts <span data-next-monday>Monday</span>.</h2>
-          <p>Your streak is one tap away.</p>
+          <p>Your streak is one tap away. Build the system.</p>
           <a href="#pricing" class="s-btn s-btn-dark">Start my streak</a>
         </div>
       </div>
     </section>
   </main>
 
-  <footer class="s-foot">
-    <div class="s-wrap">
-      <a href="/" class="s-brand"><img src="/img/logo.webp" alt="" width="28" height="28" />HabitRise</a>
-      <nav><a href={socials.instagram}>Instagram</a><a href={socials.youtube}>YouTube</a><a href={socials.linkedin}>LinkedIn</a><a href={`mailto:${contact.email}`}>Email</a><a href="https://habitrise.in/terms">Terms</a><a href="https://habitrise.in/privacy">Privacy</a></nav>
-      <small>© {new Date().getFullYear()} HabitRise · Build • Grow • Inspire</small>
-    </div>
-  </footer>
-  <a class="s-wa" href={contact.whatsapp} target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
-    <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.3-.5.1-1 .1-3.3-.8-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg>
-  </a>
+  <Footer />
 
   <script>
     const $ = (s: string) => document.querySelector(s) as HTMLElement;
@@ -297,18 +280,5 @@ const bubbleColors = ['#ffc83d', '#ff5a36', '#4f7cff', '#23c483', '#b79cff'];
       $$('.s-tab').forEach(x => { x.classList.toggle('on', x === t); x.setAttribute('aria-selected', String(x === t)); });
       $$('.s-panel').forEach(p => p.classList.toggle('on', p.dataset.panel === t.dataset.tab));
     }));
-    // nav
-    const nav = $('#nav');
-    addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 20), { passive: true });
-    $('#navToggle').addEventListener('click', () => {
-      const open = $('#navLinks').classList.toggle('open');
-      $('#navToggle').setAttribute('aria-expanded', String(open));
-    });
-    $$('#navLinks a').forEach(a => a.addEventListener('click', () => $('#navLinks').classList.remove('open')));
-    // next Monday (IST)
-    const now = new Date();
-    const ist = new Date(now.getTime() + (now.getTimezoneOffset() + 330) * 60000);
-    const mon = new Date(ist); mon.setDate(ist.getDate() + (((8 - ist.getDay()) % 7) || 7));
-    $$('[data-next-monday]').forEach(el => (el.textContent = 'Monday, ' + mon.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })));
   </script>
 </Shell>
