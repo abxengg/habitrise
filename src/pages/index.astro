@@ -1,35 +1,277 @@
 ---
-import Base from '../layouts/Base.astro';
-import Nav from '../components/Nav.astro';
-import Hero from '../components/Hero.astro';
-import Stats from '../components/Stats.astro';
-import Audience from '../components/Audience.astro';
-import Savers from '../components/Savers.astro';
-import Program from '../components/Program.astro';
-import Community from '../components/Community.astro';
-import Founder from '../components/Founder.astro';
-import Stories from '../components/Stories.astro';
-import Steps from '../components/Steps.astro';
-import Pricing from '../components/Pricing.astro';
-import Faq from '../components/Faq.astro';
-import FinalCta from '../components/FinalCta.astro';
-import Footer from '../components/Footer.astro';
+// REDESIGN 1 — "The Sunrise Journey"
+// The page is one long sunrise: it opens on a 5:59 AM night sky and scrolls
+// through dawn into full daylight, the same way the 21 days take you from
+// night owl to early riser.
+import Shell from '../layouts/Shell.astro';
+import '../styles/dawn.css';
+import { pricing, stats, audiences, beforeAfter, savers, weeks, founder, testimonials, faqs, contact, socials, initials } from '../data/site';
+
+const fonts = 'https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600&display=swap';
+const stars = Array.from({ length: 70 }, (_, i) => ({
+  x: (i * 37.7) % 100, y: (i * 53.3) % 62, s: (i % 3) + 1, d: (i % 7) * 0.6,
+}));
 ---
-<Base>
-  <Nav />
-  <main id="top">
-    <Hero />
-    <Stats />
-    <Audience />
-    <Savers />
-    <Program />
-    <Community />
-    <Founder />
-    <Stories />
-    <Steps />
-    <Pricing />
-    <Faq />
-    <FinalCta />
+<Shell fonts={fonts} themeColor="#050816">
+  <header class="d-nav" id="nav">
+    <a href="/" class="d-brand"><img src="/img/logo.webp" alt="" width="34" height="34" />HabitRise</a>
+    <nav id="navLinks">
+      <a href="#savers">The method</a>
+      <a href="#sunrises">21 sunrises</a>
+      <a href="#community">Community</a>
+      <a href="#founder">Founder</a>
+      <a href="#ticket" class="d-pill">Join for ₹{pricing.price}</a>
+    </nav>
+    <button class="d-menu" id="navToggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
+  </header>
+
+  <main>
+    <!-- 05:59 — night ------------------------------------------------------ -->
+    <section class="d-hero">
+      <div class="d-stars" aria-hidden="true">
+        {stars.map(s => <i style={`left:${s.x}%;top:${s.y}%;width:${s.s}px;height:${s.s}px;animation-delay:${s.d}s`}></i>)}
+      </div>
+      <div class="d-hero-copy">
+        <div class="d-clock" aria-label="6:00 AM"><span id="clock">05:59</span><small>AM · IST</small></div>
+        <h1>The world sleeps.<br />You <em>rise.</em></h1>
+        <p>A 21-day live programme that takes you from night owl to early riser — with the S.A.V.E.R.S morning method, a founder who shows up at 6 AM every day, and 5,000+ people rising with you.</p>
+        <div class="d-ctas">
+          <a href="#ticket" class="d-btn d-btn-sun">Catch the next sunrise</a>
+          <a href="#sunrises" class="d-btn d-btn-glass">See the 21 days</a>
+        </div>
+        <p class="d-next">Next sunrise: <b data-next-monday>Monday</b>, 6:00 AM IST · Live on Zoom + Skool</p>
+      </div>
+      <div class="d-sun" aria-hidden="true"></div>
+      <div class="d-horizon" aria-hidden="true">
+        <svg viewBox="0 0 1440 160" preserveAspectRatio="none"><path d="M0 110 C 220 60 380 70 560 96 S 900 140 1080 92 S 1320 60 1440 84 V160 H0Z" /></svg>
+      </div>
+    </section>
+
+    <!-- stats -->
+    <section class="d-stats">
+      <div class="d-wrap d-stats-row">
+        {stats.map(s => <div><b>{s.value.toLocaleString('en-IN')}{s.suffix}</b><span>{s.label}</span></div>)}
+      </div>
+    </section>
+
+    <!-- 2 AM you vs 6 AM you -->
+    <section class="d-sec d-versus">
+      <div class="d-wrap">
+        <p class="d-kicker">Two versions of you</p>
+        <h2>Which one wakes up<br />tomorrow?</h2>
+        <div class="d-vs">
+          <article class="d-vs-night">
+            <span class="d-time">2:00 AM</span>
+            <h3>The night-owl you</h3>
+            <ul>{beforeAfter.before.map(t => <li>{t}</li>)}</ul>
+          </article>
+          <div class="d-vs-arrow" aria-hidden="true">→</div>
+          <article class="d-vs-day">
+            <span class="d-time">6:00 AM</span>
+            <h3>The HabitRise you</h3>
+            <ul>{beforeAfter.after.map(t => <li>{t}</li>)}</ul>
+          </article>
+        </div>
+        <div class="d-who">
+          <p>Built for</p>
+          {audiences.map(a => <span title={a.text}>{a.title}</span>)}
+        </div>
+      </div>
+    </section>
+
+    <!-- SAVERS on the sun's path -->
+    <section class="d-sec d-savers" id="savers">
+      <div class="d-wrap">
+        <p class="d-kicker">The method</p>
+        <h2>Six habits before the sun is fully up.</h2>
+        <p class="d-lead">S.A.V.E.R.S — the morning routine you install across the 21 days. Tap a habit on the sun's path.</p>
+        <div class="d-arc">
+          <div class="d-arc-line" aria-hidden="true"></div>
+          {savers.map((s, i) => (
+            <button class:list={['d-arc-dot', { on: i === 0 }]} style={`--i:${i}`} data-i={i} aria-label={s.title}>{s.letter}</button>
+          ))}
+          <div class="d-arc-panel">
+            {savers.map((s, i) => (
+              <div class:list={['d-arc-text', { on: i === 0 }]} data-i={i}>
+                <small>Habit {i + 1} of 6</small><h3>{s.title}</h3><p>{s.text}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+        <ol class="d-savers-list">
+          {savers.map(s => <li><b>{s.letter}</b><div><h3>{s.title}</h3><p>{s.text}</p></div></li>)}
+        </ol>
+      </div>
+    </section>
+
+    <!-- 21 sunrises -->
+    <section class="d-sec d-sunrises" id="sunrises">
+      <div class="d-wrap">
+        <p class="d-kicker">The programme</p>
+        <h2>21 sunrises.<br />One new you.</h2>
+        <p class="d-lead">Every day is a live 6 AM session with a single focus. Open to everyone aged 12 and above.</p>
+        {weeks.map((w, wi) => (
+          <div class="d-week">
+            <div class="d-week-head"><span>{w.days}</span><h3>{w.title}</h3><p>{w.text}</p></div>
+            <ol>
+              {w.lessons.map((l, li) => (
+                <li style={`--k:${wi * 7 + li}`}><i>{wi * 7 + li + 1}</i><span>{l}</span></li>
+              ))}
+            </ol>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- community -->
+    <section class="d-sec d-community" id="community">
+      <div class="d-wrap d-split">
+        <div>
+          <p class="d-kicker">The community</p>
+          <h2>Nobody rises alone.</h2>
+          <p class="d-lead">Your private HabitRise group on Skool is where the 6 AM crew checks in, learns and keeps each other honest.</p>
+          <ul class="d-feats">
+            <li><b>Daily check-ins</b> Post your SAVERS every morning and get nudged when you slip.</li>
+            <li><b>Classroom</b> All 21 lessons, worksheets and replays — any day, any time.</li>
+            <li><b>Live calendar</b> Every 6 AM session plus direct Q&amp;A with the founder.</li>
+            <li><b>Leaderboard</b> Points and levels for showing up. Consistency becomes a game.</li>
+          </ul>
+        </div>
+        <div class="d-feed" role="img" aria-label="Preview of the HabitRise community on Skool">
+          <div class="d-feed-top"><img src="/img/logo.webp" alt="" width="30" height="30" /><div><b>HabitRise 6 AM Club</b><small>Private · Skool</small></div><span class="d-live">● 6:00 AM live</span></div>
+          <div class="d-post"><i style="background:#2d9e5f">PK</i><div><b>Praveen <small>5:58 AM · Day 14</small></b><p>All six SAVERS done before 6:30 ✅ Two weeks without missing a morning.</p><small>👍 42 · 💬 9</small></div></div>
+          <div class="d-post"><i style="background:#c08a1a">DR</i><div><b>Divya <small>6:12 AM · Day 9</small></b><p>Finished my first book in years thanks to the 10-pages rule 📚</p><small>👍 27 · 💬 6</small></div></div>
+          <div class="d-post"><i style="background:#1b2350">MR</i><div><b>Manikandan <small>Founder · 6:45 AM</small></b><p>Tomorrow is Day 15: Focus &amp; Deep Work. Bring one task you've been avoiding.</p></div></div>
+          <p class="d-note">Illustrative preview</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- founder -->
+    <section class="d-sec d-founder" id="founder">
+      <div class="d-wrap d-split">
+        <div class="d-founder-art">
+          <div class="d-founder-sun" aria-hidden="true"></div>
+          <img src="/img/founder-hero.webp" alt={founder.name} width="900" height="900" loading="lazy" />
+        </div>
+        <div>
+          <p class="d-kicker">Your 6 AM coach</p>
+          <h2>{founder.name}</h2>
+          <p class="d-role">{founder.role}</p>
+          <blockquote>{founder.quote}</blockquote>
+          {founder.bio.map(p => <p class="d-body">{p}</p>)}
+          <div class="d-tags">{founder.credentials.map(c => <span>{c}</span>)}</div>
+          <a href="/about" class="d-btn d-btn-dark">Read his story</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- stories -->
+    <section class="d-sec d-stories" id="stories">
+      <div class="d-wrap">
+        <p class="d-kicker">Mornings, rewritten</p>
+        <h2>They used to hit snooze.</h2>
+      </div>
+      <div class="d-rail">
+        {testimonials.map(t => (
+          <figure>
+            <span class="d-result">{t.result}</span>
+            <blockquote>“{t.quote}”</blockquote>
+            <figcaption><i style={`background:${t.color}`}>{initials(t.name)}</i><div><b>{t.name}</b><small>{t.role}</small></div></figcaption>
+          </figure>
+        ))}
+      </div>
+    </section>
+
+    <!-- boarding pass -->
+    <section class="d-sec d-pricing" id="ticket">
+      <div class="d-wrap">
+        <p class="d-kicker">Your ticket</p>
+        <h2>One seat at the next sunrise.</h2>
+        <div class="d-ticket">
+          <div class="d-ticket-main">
+            <div class="d-ticket-top"><span>BOARDING PASS</span><span>HabitRise · Cohort 21</span></div>
+            <div class="d-route">
+              <div><small>From</small><b>Night owl</b></div>
+              <div class="d-route-line" aria-hidden="true"><span>☀</span></div>
+              <div><small>To</small><b>Early riser</b></div>
+            </div>
+            <div class="d-ticket-meta">
+              <div><small>Departs</small><b data-next-monday>Monday</b></div>
+              <div><small>Time</small><b>06:00 IST</b></div>
+              <div><small>Duration</small><b>21 days</b></div>
+              <div><small>Gate</small><b>Skool</b></div>
+            </div>
+            <ul>{pricing.includes.map(i => <li>{i}</li>)}</ul>
+          </div>
+          <div class="d-ticket-stub">
+            <small>Early bird fare</small>
+            <div class="d-price"><b>₹{pricing.price}</b><s>₹{pricing.regular}</s></div>
+            <p>One-time · UPI (GPay, PhonePe, Paytm)</p>
+            <a href={pricing.joinUrl} class="d-btn d-btn-sun">Reserve my seat</a>
+            <div class="d-barcode" aria-hidden="true"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="d-sec d-faq" id="faq">
+      <div class="d-wrap d-faq-grid">
+        <div>
+          <p class="d-kicker">Before you set the alarm</p>
+          <h2>Questions.</h2>
+          <p class="d-lead">Still unsure? <a href={contact.whatsapp}>Message us on WhatsApp</a>.</p>
+        </div>
+        <div>{faqs.map(f => <details><summary>{f.q}</summary><p>{f.a}</p></details>)}</div>
+      </div>
+    </section>
+
+    <!-- final -->
+    <section class="d-final">
+      <div class="d-final-sun" aria-hidden="true"></div>
+      <h2>Tomorrow's sunrise is at 6:00.<br /><em>Will you be up for it?</em></h2>
+      <a href="#ticket" class="d-btn d-btn-dark">Start my 21 days</a>
+    </section>
   </main>
-  <Footer />
-</Base>
+
+  <footer class="d-foot">
+    <div class="d-wrap">
+      <a href="/" class="d-brand"><img src="/img/logo.webp" alt="" width="30" height="30" />HabitRise</a>
+      <nav>
+        <a href={socials.instagram}>Instagram</a><a href={socials.youtube}>YouTube</a><a href={socials.linkedin}>LinkedIn</a>
+        <a href={`mailto:${contact.email}`}>Email</a><a href="https://habitrise.in/terms">Terms</a><a href="https://habitrise.in/privacy">Privacy</a>
+      </nav>
+      <small>© {new Date().getFullYear()} HabitRise · Build • Grow • Inspire</small>
+    </div>
+  </footer>
+  <a class="d-wa" href={contact.whatsapp} target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+    <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.3-.5.1-1 .1-3.3-.8-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg>
+  </a>
+
+  <script>
+    const $ = (s: string) => document.querySelector(s) as HTMLElement;
+    const $$ = (s: string) => [...document.querySelectorAll(s)] as HTMLElement[];
+    // clock ticks 05:59 → 06:00 and the sun "rises"
+    setTimeout(() => { $('#clock').textContent = '06:00'; document.body.classList.add('risen'); }, 1400);
+    // nav background once scrolled
+    const nav = $('#nav');
+    const onScroll = () => nav.classList.toggle('solid', scrollY > 40);
+    onScroll(); addEventListener('scroll', onScroll, { passive: true });
+    // mobile menu
+    $('#navToggle').addEventListener('click', () => {
+      const open = $('#navLinks').classList.toggle('open');
+      $('#navToggle').setAttribute('aria-expanded', String(open));
+    });
+    $$('#navLinks a').forEach(a => a.addEventListener('click', () => $('#navLinks').classList.remove('open')));
+    // next Monday (IST)
+    const now = new Date();
+    const ist = new Date(now.getTime() + (now.getTimezoneOffset() + 330) * 60000);
+    const mon = new Date(ist); mon.setDate(ist.getDate() + (((8 - ist.getDay()) % 7) || 7));
+    $$('[data-next-monday]').forEach(el => (el.textContent = 'Mon, ' + mon.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })));
+    // SAVERS arc
+    $$('.d-arc-dot').forEach(dot => dot.addEventListener('click', () => {
+      $$('.d-arc-dot, .d-arc-text').forEach(el => el.classList.toggle('on', el.dataset.i === dot.dataset.i));
+    }));
+  </script>
+</Shell>
