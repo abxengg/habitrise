@@ -11,14 +11,12 @@
     "student": {
       "label": "Students",
       "price": 399,
-      "note": "School & college students. You'll be asked for your college or school name.",
-      "paymentUrl": ""
+      "note": "School & college students. You'll be asked for your college or school name."
     },
     "others": {
       "label": "Everyone else",
       "price": 699,
-      "note": "Working professionals, entrepreneurs, career builders.",
-      "paymentUrl": ""
+      "note": "Working professionals, entrepreneurs, career builders."
     },
     "includes": [
       "21 days of LIVE 6 AM sessions",
@@ -31,7 +29,7 @@
     ]
   },
   "forms": {
-    "endpoint": ""
+    "endpoint": "https://script.google.com/macros/s/AKfycbwycBNb95mkUjUvM55Bp_BWUfcaAxO-xzfPdwr3oS8wEtmtPSzwKm6ThCnV979LGg3Y/exec"
   },
   "newsletter": {
     "title": "The 6 AM letter",
@@ -46,12 +44,12 @@
     "error": "Couldn't subscribe you right now. Please try again.",
     "notConfigured": "Newsletter signups open soon — follow us on Instagram meanwhile.",
     "note": "Unsubscribe anytime with one click.",
-    "toLabel": "To",
-    "stamp": "6:00 AM",
-    "postmark": "Every Monday",
     "subscribedAs": "Subscribed as",
     "thanks": "Thank you! Your first 6 AM letter arrives next Monday.",
-    "another": "Subscribe another email"
+    "another": "Subscribe another email",
+    "toLabel": "To",
+    "stamp": "6:00 AM",
+    "postmark": "Every Monday"
   },
   "contact": {
     "email": "manimitit@gmail.com",
@@ -92,8 +90,8 @@
     "button": "Join now",
     "buttonHref": "/register",
     "menuLabel": "Open menu",
-    "skipLabel": "Skip to content",
-    "tabJoin": "Join"
+    "tabJoin": "Join",
+    "skipLabel": "Skip to content"
   },
   "footer": {
     "columns": [
@@ -194,8 +192,7 @@
     "keywords": "habit challenge, 6 AM routine, morning routine, S.A.V.E.R.S, miracle morning India, discipline course, habit coach Tamil Nadu, productivity for students, HabitRise",
     "ogImage": "/og-image.png",
     "ogImageAlt": "HabitRise — Build the system. The 21-day 6 AM habit challenge.",
-    "locale": "en_IN",
-    "twitterHandle": ""
+    "locale": "en_IN"
   },
   "dates": {
     "nextCohortPrefix": "Monday, ",
