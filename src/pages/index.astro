@@ -1,35 +1,263 @@
 ---
-import Base from '../layouts/Base.astro';
-import Nav from '../components/Nav.astro';
-import Hero from '../components/Hero.astro';
-import Stats from '../components/Stats.astro';
-import Audience from '../components/Audience.astro';
-import Savers from '../components/Savers.astro';
-import Program from '../components/Program.astro';
-import Community from '../components/Community.astro';
-import Founder from '../components/Founder.astro';
-import Stories from '../components/Stories.astro';
-import Steps from '../components/Steps.astro';
-import Pricing from '../components/Pricing.astro';
-import Faq from '../components/Faq.astro';
-import FinalCta from '../components/FinalCta.astro';
-import Footer from '../components/Footer.astro';
+// REDESIGN 4 — "Minimal"
+// Corporate, Apple/Notion-grade restraint: system type, generous white space,
+// light-grey panels, hairline borders, one accent used sparingly.
+import Shell from '../layouts/Shell.astro';
+import '../styles/minimal.css';
+import { pricing, stats, audiences, savers, weeks, founder, testimonials, faqs, contact, socials, initials } from '../data/site';
+
+const fonts = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap';
+const icons = ['🤫', '💬', '🎯', '🏃', '📖', '✍️'];
 ---
-<Base>
-  <Nav />
-  <main id="top">
-    <Hero />
-    <Stats />
-    <Audience />
-    <Savers />
-    <Program />
-    <Community />
-    <Founder />
-    <Stories />
-    <Steps />
-    <Pricing />
-    <Faq />
-    <FinalCta />
+<Shell fonts={fonts} themeColor="#ffffff">
+  <header class="m-nav" id="nav">
+    <div class="m-wrap m-nav-in">
+      <a href="/" class="m-brand"><img src="/img/logo.webp" alt="" width="24" height="24" />HabitRise</a>
+      <nav id="navLinks">
+        <a href="#overview">Overview</a>
+        <a href="#method">Method</a>
+        <a href="#programme">Programme</a>
+        <a href="#founder">Founder</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+      </nav>
+      <a href="#pricing" class="m-btn m-btn-dark m-btn-sm m-nav-cta">Join</a>
+      <button class="m-menu" id="navToggle" aria-label="Open menu" aria-expanded="false"><span></span><span></span></button>
+    </div>
+  </header>
+
+  <main>
+    <!-- hero -->
+    <section class="m-hero">
+      <div class="m-wrap m-center">
+        <p class="m-eyebrow reveal">HabitRise · The 21-Day Programme</p>
+        <h1 class="reveal">Rise at six.<br /><span>Change everything after.</span></h1>
+        <p class="m-lead reveal">Live 6 AM sessions, a proven morning method and a community that shows up with you — for 21 days.</p>
+        <div class="m-ctas reveal">
+          <a href="#pricing" class="m-btn m-btn-dark">Join for ₹{pricing.price}</a>
+          <a href="#overview" class="m-link">Learn more <span aria-hidden="true">›</span></a>
+        </div>
+      </div>
+      <div class="m-wrap">
+        <figure class="m-hero-media reveal">
+          <div class="m-glow" aria-hidden="true"></div>
+          <img src="/img/founder-hero.webp" alt={`${founder.name}, founder of HabitRise`} width="900" height="900" fetchpriority="high" />
+          <figcaption>
+            <span><b>06:00</b> IST · Live every morning</span>
+            <span>Next cohort · <b data-next-monday>Monday</b></span>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- stats -->
+    <section class="m-stats">
+      <div class="m-wrap m-stats-row">
+        {stats.map(s => <div class="reveal"><b>{s.value.toLocaleString('en-IN')}{s.suffix}</b><span>{s.label}</span></div>)}
+      </div>
+    </section>
+
+    <!-- overview bento -->
+    <section class="m-sec" id="overview">
+      <div class="m-wrap">
+        <div class="m-head m-center reveal">
+          <h2>Designed around your morning.</h2>
+          <p>Everything in HabitRise exists to make one thing easy: showing up at 6 AM, every day, for 21 days.</p>
+        </div>
+        <div class="m-bento">
+          <article class="m-tile m-t-live reveal">
+            <p class="m-tile-k">Live sessions</p>
+            <div class="m-clock">6:00</div>
+            <h3>One focused session every morning.</h3>
+            <p>Join the founder live on Zoom. One topic a day — from purpose to deep work.</p>
+          </article>
+          <article class="m-tile m-t-savers reveal">
+            <p class="m-tile-k">The method</p>
+            <div class="m-letters">{savers.map(s => <span>{s.letter}</span>)}</div>
+            <h3>Six habits. Every morning.</h3>
+          </article>
+          <article class="m-tile m-t-days reveal">
+            <p class="m-tile-k">Duration</p>
+            <div class="m-big">21 <small>days</small></div>
+            <div class="m-progress" aria-hidden="true"><i></i></div>
+            <p>Three weeks, three phases.</p>
+          </article>
+          <article class="m-tile m-t-skool reveal">
+            <p class="m-tile-k">Community</p>
+            <h3>A private group on Skool.</h3>
+            <p>Daily check-ins, a classroom with every replay, a live calendar and a leaderboard.</p>
+            <div class="m-faces">{testimonials.slice(0, 5).map(t => <i style={`background:${t.color}`}>{initials(t.name)}</i>)}<span>5,000+ members</span></div>
+          </article>
+          <article class="m-tile m-t-who reveal">
+            <p class="m-tile-k">Built for</p>
+            <ul>{audiences.map(a => <li>{a.title}</li>)}</ul>
+            <p>Anyone aged 12 and above.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- method: notion-style doc -->
+    <section class="m-sec m-grey" id="method">
+      <div class="m-wrap m-split">
+        <div class="reveal">
+          <p class="m-eyebrow">The method</p>
+          <h2>S.A.V.E.R.S, one page a day.</h2>
+          <p class="m-body">Six small habits, completed before the day starts. Members track them every morning — simple enough to start tomorrow, consistent enough to change who you are.</p>
+          <dl class="m-defs">
+            {savers.map((s, i) => <div><dt>{icons[i]} {s.title}</dt><dd>{s.text}</dd></div>)}
+          </dl>
+        </div>
+        <div class="m-doc reveal" role="img" aria-label="Example of a member's daily habit page">
+          <div class="m-doc-bar"><i></i><i></i><i></i><span>HabitRise / Mornings / Day 14</span></div>
+          <div class="m-doc-body">
+            <div class="m-doc-icon">☀️</div>
+            <h3>Day 14 — Morning</h3>
+            <div class="m-props">
+              <div><span>Status</span><b class="m-tag m-tag-green">On track</b></div>
+              <div><span>Streak</span><b>14 days</b></div>
+              <div><span>Session</span><b>Full integration day</b></div>
+              <div><span>Woke up</span><b>5:52 AM</b></div>
+            </div>
+            <ul class="m-checks">
+              {savers.map((s, i) => (
+                <li><label><input type="checkbox" checked={i < 5} /><span>{icons[i]} {s.title}</span></label></li>
+              ))}
+            </ul>
+            <p class="m-doc-note">Illustrative example</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- programme -->
+    <section class="m-sec" id="programme">
+      <div class="m-wrap">
+        <div class="m-head m-center reveal">
+          <h2>Three weeks. Three phases.</h2>
+          <p>Every day is a live 6 AM session with a single focus.</p>
+        </div>
+        <div class="m-weeks">
+          {weeks.map((w, wi) => (
+            <article class="reveal">
+              <p class="m-tile-k">Week {wi + 1} · {w.days}</p>
+              <h3>{w.title}</h3>
+              <p>{w.text}</p>
+              <ol>{w.lessons.map((l, li) => <li><span>{wi * 7 + li + 1}</span>{l}</li>)}</ol>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- founder -->
+    <section class="m-sec m-grey" id="founder">
+      <div class="m-wrap m-center m-founder">
+        <img class="reveal" src="/img/founder-portrait.webp" alt={founder.name} width="576" height="1024" loading="lazy" />
+        <blockquote class="reveal">{founder.quote}</blockquote>
+        <p class="m-who reveal"><b>{founder.name}</b><span>{founder.role}</span></p>
+        <ul class="m-creds reveal">{founder.credentials.map(c => <li>{c}</li>)}</ul>
+        <a href="/about" class="m-link reveal">Read his story <span aria-hidden="true">›</span></a>
+      </div>
+    </section>
+
+    <!-- stories -->
+    <section class="m-sec" id="stories">
+      <div class="m-wrap">
+        <div class="m-head m-center reveal">
+          <h2>Mornings, changed.</h2>
+          <p>What members say after 21 days.</p>
+        </div>
+        <div class="m-quotes">
+          {testimonials.map(t => (
+            <figure class="reveal">
+              <p class="m-result">{t.result}</p>
+              <blockquote>{t.quote}</blockquote>
+              <figcaption><i style={`background:${t.color}`}>{initials(t.name)}</i><div><b>{t.name}</b><span>{t.role}</span></div></figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- pricing -->
+    <section class="m-sec m-grey" id="pricing">
+      <div class="m-wrap">
+        <div class="m-head m-center reveal">
+          <h2>One programme. One price.</h2>
+          <p>Early-bird pricing for the next cohort.</p>
+        </div>
+        <div class="m-price reveal">
+          <div class="m-price-top">
+            <div>
+              <h3>The 21-Day HabitRise Challenge</h3>
+              <p>Starts <span data-next-monday>Monday</span> · 6:00 AM IST</p>
+            </div>
+            <div class="m-amount"><b>₹{pricing.price}</b><s>₹{pricing.regular}</s></div>
+          </div>
+          <ul>{pricing.includes.map(i => <li>{i}</li>)}</ul>
+          <a href={pricing.joinUrl} class="m-btn m-btn-dark m-btn-block">Reserve my spot</a>
+          <p class="m-fine">One-time payment via UPI — GPay, PhonePe or Paytm. Payments are verified within 24 hours and your Skool invite follows by email.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- faq -->
+    <section class="m-sec" id="faq">
+      <div class="m-wrap m-faq-wrap">
+        <h2 class="reveal">Frequently asked questions.</h2>
+        <div class="m-faq">{faqs.map(f => <details class="reveal"><summary>{f.q}</summary><p>{f.a}</p></details>)}</div>
+      </div>
+    </section>
+
+    <!-- final -->
+    <section class="m-final">
+      <div class="m-wrap m-center reveal">
+        <h2>Tomorrow starts at six.</h2>
+        <p>Join the next cohort and build the morning you keep promising yourself.</p>
+        <div class="m-ctas">
+          <a href="#pricing" class="m-btn m-btn-dark">Join for ₹{pricing.price}</a>
+          <a href={contact.whatsapp} class="m-link">Talk to us on WhatsApp <span aria-hidden="true">›</span></a>
+        </div>
+      </div>
+    </section>
   </main>
-  <Footer />
-</Base>
+
+  <footer class="m-foot">
+    <div class="m-wrap">
+      <p class="m-fineprint">Session times are in Indian Standard Time. Results described by members are individual experiences. The community preview and daily page shown on this site are illustrative.</p>
+      <div class="m-foot-cols">
+        <div><h4>Programme</h4><a href="#overview">Overview</a><a href="#method">Method</a><a href="#programme">21 days</a><a href="#pricing">Pricing</a></div>
+        <div><h4>About</h4><a href="/about">Founder story</a><a href="#stories">Stories</a><a href="#faq">FAQ</a></div>
+        <div><h4>Follow</h4><a href={socials.instagram}>Instagram</a><a href={socials.youtube}>YouTube</a><a href={socials.linkedin}>LinkedIn</a><a href={socials.facebook}>Facebook</a></div>
+        <div><h4>Contact</h4><a href={`mailto:${contact.email}`}>Email</a><a href={contact.whatsapp}>WhatsApp</a></div>
+      </div>
+      <div class="m-foot-bottom">
+        <span>Copyright © {new Date().getFullYear()} HabitRise. All rights reserved.</span>
+        <span><a href="https://habitrise.in/privacy">Privacy Policy</a> | <a href="https://habitrise.in/terms">Terms of Service</a></span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const $ = (s: string) => document.querySelector(s) as HTMLElement;
+    const $$ = (s: string) => [...document.querySelectorAll(s)] as HTMLElement[];
+    // menu
+    $('#navToggle').addEventListener('click', () => {
+      const open = document.body.classList.toggle('menu-open');
+      $('#navToggle').setAttribute('aria-expanded', String(open));
+    });
+    $$('#navLinks a').forEach(a => a.addEventListener('click', () => document.body.classList.remove('menu-open')));
+    // next Monday (IST)
+    const now = new Date();
+    const ist = new Date(now.getTime() + (now.getTimezoneOffset() + 330) * 60000);
+    const mon = new Date(ist); mon.setDate(ist.getDate() + (((8 - ist.getDay()) % 7) || 7));
+    $$('[data-next-monday]').forEach(el => (el.textContent = 'Monday, ' + mon.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' })));
+    // quiet fade-in on scroll
+    if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.classList.add('js-reveal');
+      const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
+      $$('.reveal').forEach(el => io.observe(el));
+    }
+  </script>
+</Shell>
