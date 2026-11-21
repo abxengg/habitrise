@@ -100,7 +100,10 @@ const jsonLd = [
                 <label class="s-form-wide"><span>{f.nameLabel}</span><input name="name" autocomplete="name" required maxlength="80" placeholder={f.namePlaceholder} data-pv="name" /></label>
                 <div class="s-form-wide s-chips" role="radiogroup" aria-label={f.occupationLabel}>
                   <span>{f.occupationLabel}</span>
-                  <div>{f.occupationOptions.map(o => <label><input type="radio" name="occupation" value={o} required /><em>{o}</em></label>)}</div>
+                  <div>
+                    {f.occupationStudent.map(o => <label data-for="student"><input type="radio" name="occupation" value={o} required /><em>{o}</em></label>)}
+                    {f.occupationOthers.map(o => <label data-for="others"><input type="radio" name="occupation" value={o} required /><em>{o}</em></label>)}
+                  </div>
                 </div>
                 <label class="s-form-wide" data-college hidden><span>{f.collegeLabel}</span><input name="college" maxlength="120" placeholder={f.collegePlaceholder} /></label>
                 <label><span>{f.cityLabel}</span><input name="city" autocomplete="address-level2" maxlength="60" placeholder={f.cityPlaceholder} data-pv="city" /></label>
@@ -234,6 +237,21 @@ const jsonLd = [
       };
       form.addEventListener('input', paint);
       form.addEventListener('change', paint);
+
+      // occupation choices follow the plan: student plan → school/college only; everyone else → the rest
+      const syncOccupation = () => {
+        const plan = form.querySelector<HTMLInputElement>('input[name="plan"]:checked')?.value ?? 'others';
+        form.querySelectorAll<HTMLElement>('[data-for]').forEach(l => {
+          const show = l.dataset.for === plan;
+          l.hidden = !show;
+          const r = l.querySelector('input')!;
+          r.disabled = !show;
+          if (!show) r.checked = false;
+        });
+      };
+      form.querySelectorAll('input[name="plan"]').forEach(r => r.addEventListener('change', syncOccupation));
+      form.addEventListener('reset', () => setTimeout(syncOccupation));
+      syncOccupation();
       form.addEventListener('hr:saved', () => preview?.classList.add('stamped'));
       paint();
       show(0, false);

@@ -51,7 +51,11 @@ The forms each have their own touch:
 - **Register** (`/register`, the only page with prices) is one rectangular ticket: a 3-step form (plan → about you →
   contact) on the left and a stub on the right that fills in as people type, then gets a "Seat reserved" stamp.
 - **Services interest form** shows the message being written as a chat, which gets a reply when it's sent.
-- **Newsletter** (footer, every page) is a letter with an airmail border and stamp that flies off on signup.
+- **Newsletter** (footer, every page) is a letter with an airmail border and stamp. On signup it flies off and comes
+  back showing "Subscribed as you@…" with a thank-you.
+
+On phones the menu is an app-style tab bar at the bottom (How · Program · **Join** · Services · Founder). Instagram,
+LinkedIn and WhatsApp buttons float bottom-right on every page (links in Site settings → Social links).
 
 All motion is switched off for visitors whose device asks for reduced motion, and pages are fully visible without JS.
 

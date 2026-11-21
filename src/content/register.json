@@ -76,12 +76,15 @@
     "cityPlaceholder": "Where are you joining from?",
     "ageLabel": "Age",
     "occupationLabel": "You are a…",
-    "occupationOptions": [
+    "occupationStudent": [
       "School student",
-      "College student",
+      "College student"
+    ],
+    "occupationOthers": [
       "Working professional",
       "Entrepreneur",
       "Career switcher",
+      "Homemaker",
       "Other"
     ],
     "sourceLabel": "How did you hear about us?",

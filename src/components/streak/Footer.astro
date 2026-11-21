@@ -25,6 +25,14 @@ const external = (h: string) => /^https?:/.test(h);
           <button type="submit" class="s-btn s-btn-dark">{nl.button} <span aria-hidden="true">✉</span></button>
         </div>
         <p class="s-form-status" data-status hidden role="status" aria-live="polite"></p>
+        <!-- after signing up: the fields go away and the letter shows who's subscribed -->
+        <div class="s-letter-done" role="status" aria-live="polite">
+          <span class="s-letter-check" aria-hidden="true">✓</span>
+          <small>{nl.subscribedAs}</small>
+          <b data-sub-email></b>
+          <p>{nl.thanks}</p>
+          <button type="button" class="s-letter-again" data-again>{nl.another}</button>
+        </div>
       </form>
     </section>
     <div class="s-foot-top">
@@ -41,9 +49,18 @@ const external = (h: string) => /^https?:/.test(h);
     </div>
   </div>
 </footer>
-<a class="s-wa" href={settings.contact.whatsapp} target="_blank" rel="noopener" aria-label={settings.contact.whatsappLabel}>
+<!-- floating contact buttons: Instagram, LinkedIn, WhatsApp -->
+<div class="s-float">
+  <a class="s-float-btn s-float-ig" href={settings.socials.instagram} target="_blank" rel="noopener" aria-label={settings.contact.instagramLabel}>
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+  </a>
+  <a class="s-float-btn s-float-in" href={settings.socials.linkedin} target="_blank" rel="noopener" aria-label={settings.contact.linkedinLabel}>
+    <svg viewBox="0 0 24 24" width="19" height="19" fill="currentColor" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9.75h4v11H3zM9.5 9.75h3.8v1.6h.06c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.77 2.6 4.77 6v5.45h-4v-4.83c0-1.15-.02-2.63-1.6-2.63-1.6 0-1.85 1.25-1.85 2.55v4.91h-4z"/></svg>
+  </a>
+  <a class="s-wa" href={settings.contact.whatsapp} target="_blank" rel="noopener" aria-label={settings.contact.whatsappLabel}>
   <svg viewBox="0 0 24 24" width="26" height="26" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm5.3 14.1c-.2.6-1.3 1.2-1.8 1.3-.5.1-1 .1-3.3-.8-2.8-1.1-4.5-3.9-4.7-4.1-.1-.2-1.1-1.5-1.1-2.8s.7-2 1-2.3c.2-.3.5-.3.7-.3h.5c.2 0 .4 0 .6.5l.8 2c.1.2.1.4 0 .5l-.4.6-.4.4c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.3 2.4 1.5.3.1.5.1.6-.1l.9-1c.2-.3.4-.2.6-.1l1.9.9c.3.1.5.2.5.3.1.2.1.7-.1 1.3z"/></svg>
 </a>
+</div>
 
 <script>
   import { wireForms } from '../../scripts/forms';
@@ -52,8 +69,16 @@ const external = (h: string) => /^https?:/.test(h);
   startMotion();
   // newsletter: the letter flies off when the signup is saved, then a fresh one slides in
   const letter = document.querySelector<HTMLFormElement>('.s-letter');
-  letter?.addEventListener('hr:saved', () => {
-    letter.classList.remove('sent'); void letter.offsetWidth; letter.classList.add('sent');
+  letter?.addEventListener('hr:saved', e => {
+    const email = (e as CustomEvent).detail?.email ?? '';
+    letter.querySelector<HTMLElement>('[data-sub-email]')!.textContent = email;
+    letter.classList.remove('sent', 'done'); void letter.offsetWidth; letter.classList.add('sent');
+    setTimeout(() => letter.classList.add('done'), 650); // swap to the "subscribed" view while the letter is out of sight
+  });
+  letter?.querySelector('[data-again]')?.addEventListener('click', () => {
+    letter.classList.remove('done', 'sent');
+    letter.querySelector<HTMLElement>('[data-status]')!.hidden = true;
+    letter.querySelector<HTMLInputElement>('input[name="email"]')?.focus();
   });
 </script>
 

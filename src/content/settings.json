@@ -48,12 +48,17 @@
     "note": "Unsubscribe anytime with one click.",
     "toLabel": "To",
     "stamp": "6:00 AM",
-    "postmark": "Every Monday"
+    "postmark": "Every Monday",
+    "subscribedAs": "Subscribed as",
+    "thanks": "Thank you! Your first 6 AM letter arrives next Monday.",
+    "another": "Subscribe another email"
   },
   "contact": {
     "email": "manimitit@gmail.com",
     "whatsapp": "https://wa.me/918695866684",
-    "whatsappLabel": "Chat on WhatsApp"
+    "whatsappLabel": "Chat on WhatsApp",
+    "instagramLabel": "HabitRise on Instagram",
+    "linkedinLabel": "Mani on LinkedIn"
   },
   "socials": {
     "instagram": "https://www.instagram.com/habitrise.in",
@@ -65,25 +70,30 @@
     "links": [
       {
         "label": "How it works",
-        "href": "/#how"
+        "href": "/#how",
+        "short": "How"
       },
       {
         "label": "Program",
-        "href": "/#program"
+        "href": "/#program",
+        "short": "Program"
       },
       {
         "label": "Services",
-        "href": "/services"
+        "href": "/services",
+        "short": "Services"
       },
       {
         "label": "Founder",
-        "href": "/about"
+        "href": "/about",
+        "short": "Founder"
       }
     ],
     "button": "Join now",
     "buttonHref": "/register",
     "menuLabel": "Open menu",
-    "skipLabel": "Skip to content"
+    "skipLabel": "Skip to content",
+    "tabJoin": "Join"
   },
   "footer": {
     "columns": [
