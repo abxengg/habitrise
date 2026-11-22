@@ -13,8 +13,8 @@ row in a Google Sheet **first**, then an email is sent. The last column, **Email
    - Who has access: **Anyone**
    Click **Deploy**, approve the permissions (Sheets + send email as you), and copy the
    **Web app URL** (it ends in `/exec`).
-4. **Paste the URL into the CMS.** Content Management → **Site settings** → *Form receiver URL*
-   → paste → **Save**. The site redeploys in about a minute and all the forms start working.
+4. **Paste the URL into the CMS.** Pages CMS → **Site settings** → *Forms* → *Form receiver URL*
+   → paste → **Save**, then press **Redeploy site** (sidebar → Actions). About a minute later all the forms work.
 5. **Test.** Submit the Interest form on /services. A row should appear in the "Interest" tab and
    an email should arrive.
 
