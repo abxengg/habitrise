@@ -30,6 +30,7 @@
   },
   "forms": {
     "endpoint": "https://script.google.com/macros/s/AKfycbwycBNb95mkUjUvM55Bp_BWUfcaAxO-xzfPdwr3oS8wEtmtPSzwKm6ThCnV979LGg3Y/exec",
+    "notifyEmail": "abixnash@gmail.com",
     "countryCode": "+91"
   },
   "newsletter": {

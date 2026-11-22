@@ -1,0 +1,88 @@
+name: Deploy form receiver (Google Apps Script)
+# When scripts/google-apps-script/ changes on main (or when run by hand from the Actions tab), this uploads
+# Code.gs + appsscript.json to the Apps Script project and updates the existing web-app deployment, so the
+# /exec URL the website uses never changes.
+#
+# Repo secrets (Settings → Secrets and variables → Actions):
+#   CLASPRC_JSON          contents of ~/.clasprc.json after `npx @google/clasp login` (the Sheet owner's account)
+#   APPS_SCRIPT_ID        Apps Script editor → Project Settings → Script ID
+#   APPS_SCRIPT_DEPLOYMENT_ID  the long id inside the /exec URL (Deploy → Manage deployments)
+# The notification email comes from the CMS (Site settings → Forms → notifyEmail). A NOTIFY_EMAIL script
+# property in the Apps Script project, if set, wins over it.
+
+on:
+  push:
+    branches: [main]
+    paths: ['scripts/google-apps-script/**', 'src/content/settings.json']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: apps-script
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: Check the secrets are set
+        env:
+          CLASPRC_JSON: ${{ secrets.CLASPRC_JSON }}
+          APPS_SCRIPT_ID: ${{ secrets.APPS_SCRIPT_ID }}
+          APPS_SCRIPT_DEPLOYMENT_ID: ${{ secrets.APPS_SCRIPT_DEPLOYMENT_ID }}
+        run: |
+          missing=""
+          [ -n "$CLASPRC_JSON" ] || missing="$missing CLASPRC_JSON"
+          [ -n "$APPS_SCRIPT_ID" ] || missing="$missing APPS_SCRIPT_ID"
+          [ -n "$APPS_SCRIPT_DEPLOYMENT_ID" ] || missing="$missing APPS_SCRIPT_DEPLOYMENT_ID"
+          if [ -n "$missing" ]; then echo "::error::Missing repo secrets:$missing"; exit 1; fi
+
+      - name: Sign in and point clasp at the script
+        env:
+          CLASPRC_JSON: ${{ secrets.CLASPRC_JSON }}
+          APPS_SCRIPT_ID: ${{ secrets.APPS_SCRIPT_ID }}
+        run: |
+          umask 077
+          printf '%s' "$CLASPRC_JSON" > "$HOME/.clasprc.json"
+          printf '{"scriptId":"%s","rootDir":"scripts/google-apps-script"}' "$APPS_SCRIPT_ID" > .clasp.json
+
+      - name: Fill in the notification email from the CMS
+        run: |
+          node -e "
+            const fs = require('fs');
+            const email = String(JSON.parse(fs.readFileSync('src/content/settings.json', 'utf8')).forms.notifyEmail || '').trim();
+            const ok = email && email.split(',').every(e => /^[^\\s@<>\"']+@[^\\s@<>\"']+\\.[A-Za-z]{2,}$/.test(e.trim()));
+            if (!ok) { console.log('::warning::No valid notifyEmail in the CMS; keeping the address in Code.gs'); process.exit(0); }
+            const f = 'scripts/google-apps-script/Code.gs';
+            fs.writeFileSync(f, fs.readFileSync(f, 'utf8').replace(/const DEFAULT_NOTIFY_EMAIL = '[^']*';/, 'const DEFAULT_NOTIFY_EMAIL = ' + JSON.stringify(email) + ';'));
+            console.log('Notifications go to the CMS address');
+          "
+
+      - name: Upload the code
+        run: npx --yes @google/clasp@3.4.1 push --force
+
+      - name: Update the live web app (same URL)
+        env:
+          APPS_SCRIPT_DEPLOYMENT_ID: ${{ secrets.APPS_SCRIPT_DEPLOYMENT_ID }}
+        run: |
+          npx --yes @google/clasp@3.4.1 update-deployment "$APPS_SCRIPT_DEPLOYMENT_ID" --description "GitHub ${GITHUB_SHA::7} · $(date -u +%Y-%m-%dT%H:%MZ)"
+          echo "### Form receiver deployed (${GITHUB_SHA::7})" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Check it answers
+        env:
+          APPS_SCRIPT_DEPLOYMENT_ID: ${{ secrets.APPS_SCRIPT_DEPLOYMENT_ID }}
+        run: |
+          out=$(curl -sL --max-time 30 "https://script.google.com/macros/s/$APPS_SCRIPT_DEPLOYMENT_ID/exec")
+          echo "$out"
+          echo "$out" | grep -q '"ok":true' || { echo "::error::The web app did not answer as expected"; exit 1; }
+
+      - name: Remove the sign-in file
+        if: always()
+        run: rm -f "$HOME/.clasprc.json" .clasp.json

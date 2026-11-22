@@ -146,10 +146,25 @@ Full steps are in [`scripts/google-apps-script/SETUP.md`](scripts/google-apps-sc
 2. **Deploy → New deployment → Web app**, with **Execute as: Me** and **Who has access: Anyone**. Copy the `/exec` URL.
 3. Paste the URL into the CMS (*Site settings → Forms*), Save, and press **Redeploy site**.
 
+### Automatic deploys of the form receiver
+
+The **Deploy form receiver** workflow ([`.github/workflows/apps-script.yml`](.github/workflows/apps-script.yml)) uses
+Google's `clasp` to upload `Code.gs` + `appsscript.json` and update the existing web-app deployment, so the `/exec`
+URL never changes. It runs when anything in `scripts/google-apps-script/` changes on `main`, when Site settings are
+saved in the CMS (so a new notification email goes live), or by hand from the Actions tab. It ends by checking the
+web app still answers.
+
+- **Notification email:** *Site settings → Forms → Email that receives every form submission* in the CMS. (A
+  `NOTIFY_EMAIL` script property in Apps Script, if you set one, overrides it.)
+- **Secrets** (repo Settings → Secrets and variables → Actions): `CLASPRC_JSON` (the Sheet owner's
+  `~/.clasprc.json` after `npx @google/clasp login`), `APPS_SCRIPT_ID`, `APPS_SCRIPT_DEPLOYMENT_ID`.
+- The repo is now the source of truth: edits made directly in the Apps Script editor are replaced on the next deploy.
+- To revoke access: Google Account → Security → Third-party access → clasp, then delete the `CLASPRC_JSON` secret.
+
 ### Good to know
 
-- **After any change to `Code.gs`** (for example a new `NOTIFY_EMAIL`), go to **Deploy → Manage deployments → ✏️ →
-  Version: New version → Deploy**. Saving in the editor alone doesn't change the live script. The URL stays the same.
+- **Deploying by hand** (only if the automation is off): **Deploy → Manage deployments → ✏️ → Version: New version →
+  Deploy**. Saving in the editor alone doesn't change the live script. The URL stays the same.
 - **Emails are sent from the Google account that deployed the script.** To send from a domain address, deploy from
   that Google Workspace account, or add the address as a Gmail "Send mail as" alias and switch to `GmailApp` with `from:`.
 - **Daily limit:** about 100 emails a day on free Gmail, or 1,500 on Google Workspace. Past that, rows still save and the
@@ -268,7 +283,7 @@ workflow and set the custom domain in the repo's **Settings → Pages**.
 
 - [x] Every word editable in Pages CMS; publishing via **Redeploy site** with automatic releases
 - [x] Forms connected to the Google Sheet with email notifications
-- [ ] Update the Google Apps Script with the latest `Code.gs` (keep your own `NOTIFY_EMAIL`) and deploy a **New version**. Adds the Rise & Read tab and the security checks
+- [x] Form receiver deploys automatically from the repo (adds the Rise & Read tab and the security checks on first run)
 - [ ] Rise & Read: confirm prices (Free / ₹199 / ₹499), the first book, the vision-board session date and the weekly live-session time
 - [ ] Paste both **Razorpay payment links** (Site settings → Prices & payment links), then Redeploy
 - [ ] Give the client access to Pages CMS

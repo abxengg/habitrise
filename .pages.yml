@@ -67,6 +67,7 @@ content:
         type: object
         fields:
           - { name: endpoint, label: Form receiver URL (Google Apps Script), type: string, description: "The Web app URL ending in /exec. See scripts/google-apps-script/SETUP.md." }
+          - { name: notifyEmail, label: Email that receives every form submission, type: string, description: "Comma-separate several. Saving this updates the form receiver automatically (Actions → Deploy form receiver)." }
           - { name: countryCode, label: Phone country code, type: string, description: "Shown before every phone field, e.g. +91" }
       - name: newsletter
         label: Newsletter signup (bottom of every page)

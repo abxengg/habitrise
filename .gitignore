@@ -5,3 +5,7 @@ dist/
 .env
 screenshots/
 .claude/
+
+# clasp (Apps Script deploy) — written by the workflow, never committed
+.clasp.json
+.clasprc.json

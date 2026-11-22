@@ -17,7 +17,10 @@ const EMAIL_RE = /^[^\s@<>"']{1,64}@[^\s@<>"']{1,190}\.[A-Za-z]{2,24}$/;
 const PHONE_RE = /^\+?[0-9][0-9 ()-]{6,18}$/;
 
 // Who gets an email for every submission (comma-separate several addresses).
-const NOTIFY_EMAIL = 'manimitit@gmail.com';
+// Set it in Apps Script → Project Settings → Script properties → NOTIFY_EMAIL, or let the GitHub deploy
+// fill in DEFAULT_NOTIFY_EMAIL from its NOTIFY_EMAIL secret. Either way your address stays out of the public repo.
+const DEFAULT_NOTIFY_EMAIL = 'manimitit@gmail.com';
+const NOTIFY_EMAIL = PropertiesService.getScriptProperties().getProperty('NOTIFY_EMAIL') || DEFAULT_NOTIFY_EMAIL;
 
 // Sheet tabs and their columns. "Timestamp" is added first and "Email status" last, automatically.
 const FORMS = {
