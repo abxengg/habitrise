@@ -17,7 +17,28 @@ function status(form: HTMLFormElement, text: string, kind: 'info' | 'ok' | 'err'
   el.hidden = false;
 }
 
+// strip control characters and cap the length of anything typed into a form
+const clean = (v: string, max = 1000) => v.replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, '').trim().slice(0, max);
+
+// phone fields (🇮🇳 +91 prefix): keep digits only; a pasted "+91 …" or leading 0 is removed
+function wirePhones(root: ParentNode) {
+  root.querySelectorAll<HTMLInputElement>('input[data-tel]').forEach(input => {
+    if (input.dataset.telWired) return;
+    input.dataset.telWired = '1';
+    input.addEventListener('input', () => {
+      let d = input.value.replace(/\D/g, '');
+      if (d.length > 10 && d.startsWith('91')) d = d.slice(2);
+      if (d.length > 10 && d.startsWith('0')) d = d.slice(1);
+      input.value = d.slice(0, 10);
+    });
+  });
+}
+
+// only send people to a real https payment page (never javascript: or other schemes)
+const safeUrl = (u?: string) => { try { const x = new URL(u || ''); return x.protocol === 'https:' ? x.href : ''; } catch { return ''; } };
+
 export function wireForms() {
+  wirePhones(document);
   document.querySelectorAll<HTMLFormElement>('form[data-hr-form]').forEach(form => {
     if (form.dataset.wired) return; // safe to call more than once per page
     form.dataset.wired = '1';
@@ -54,7 +75,9 @@ export function wireForms() {
       e.preventDefault();
       if (!form.reportValidity()) return;
       const data: Record<string, string> = {};
-      new FormData(form).forEach((v, k) => (data[k] = String(v).trim()));
+      new FormData(form).forEach((v, k) => (data[k] = clean(String(v), k === 'message' ? 1000 : 200)));
+      // phone numbers are sent with their country code: "+91 9876543210"
+      form.querySelectorAll<HTMLInputElement>('input[data-tel]').forEach(i => { if (data[i.name]) data[i.name] = `${i.dataset.cc || ''} ${data[i.name]}`.trim(); });
       if (data.website) return; // honeypot: bots fill hidden fields
       delete data.website;
       if (!d.endpoint) { status(form, msgs.notConfigured, 'err'); return; }
@@ -77,7 +100,7 @@ export function wireForms() {
         if (!out.ok) throw new Error(out.error || 'save failed');
 
         if (d.kind === 'register') {
-          const link = data.plan === 'student' ? d.payStudent : d.payOthers;
+          const link = safeUrl(data.plan === 'student' ? d.payStudent : d.payOthers);
           form.dispatchEvent(new CustomEvent('hr:saved')); // the live ticket gets its "Seat reserved" stamp
           if (link) {
             status(form, msgs.redirecting ?? msgs.sending, 'ok');

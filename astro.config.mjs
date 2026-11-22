@@ -1,5 +1,6 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import csp from './integrations/csp.mjs';
 
 // Static output: `npm run build` writes plain HTML/CSS/JS to dist/.
 // Defaults target habitrise.in (site root). The GitHub Pages workflow builds with
@@ -7,4 +8,5 @@ import { defineConfig } from 'astro/config';
 export default defineConfig({
   site: process.env.SITE_URL ?? 'https://habitrise.in',
   base: process.env.BASE_PATH ?? '/',
+  integrations: [csp()],
 });

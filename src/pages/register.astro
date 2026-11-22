@@ -9,6 +9,7 @@ import Shell from '../layouts/Shell.astro';
 import Header from '../components/streak/Header.astro';
 import Footer from '../components/streak/Footer.astro';
 import { streakFonts } from '../components/streak/fonts';
+import Phone from '../components/streak/Phone.astro';
 import '../styles/streak.css';
 import { register as c, riseread as rr, settings, founder, t, rich, money } from '../lib/content';
 
@@ -132,7 +133,7 @@ const jsonLd = [
               <legend>{f.contactTitle}</legend>
               <div class="s-wz-grid">
                 <label><span>{f.emailLabel}</span><input name="email" type="email" autocomplete="email" required maxlength="120" placeholder={f.emailPlaceholder} /></label>
-                <label><span>{f.phoneLabel}</span><input name="phone" type="tel" autocomplete="tel" required pattern="[0-9+ \(\)\-]{10,16}" placeholder={f.phonePlaceholder} /></label>
+                <Phone label={f.phoneLabel} placeholder={f.phonePlaceholder} />
                 <div class="s-form-wide s-chips" role="radiogroup" aria-label={f.sourceLabel}>
                   <span>{f.sourceLabel}</span>
                   <div>{f.sourceOptions.map(o => <label><input type="radio" name="source" value={o} /><em>{o}</em></label>)}</div>
@@ -204,7 +205,7 @@ const jsonLd = [
                 <legend>{rj.detailsTitle}</legend>
                 <div class="s-wz-grid">
                   <label class="s-form-wide"><span>{rf.nameLabel}</span><input name="name" autocomplete="name" required maxlength="80" placeholder={rf.namePlaceholder} /></label>
-                  <label><span>{rf.phoneLabel}</span><input name="phone" type="tel" autocomplete="tel" required pattern="[0-9+ \(\)\-]{10,16}" placeholder={rf.phonePlaceholder} /></label>
+                  <Phone label={rf.phoneLabel} placeholder={rf.phonePlaceholder} />
                   <label><span>{rf.emailLabel}</span><input name="email" type="email" autocomplete="email" required maxlength="120" placeholder={rf.emailPlaceholder} /></label>
                   <div class="s-form-wide s-chips" role="radiogroup" aria-label={rf.iAmLabel}>
                     <span>{rf.iAmLabel}</span>

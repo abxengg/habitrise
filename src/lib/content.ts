@@ -33,8 +33,15 @@ const esc = (s: string) => s.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt
 export const rich = (s = '') =>
   esc(t(s.replace(/\{nextMonday\}/g, '\u0000'))).replace(/\u0000/g, `<span data-next-monday>${esc(settings.dates.fallbackDay)}</span>`);
 
-/** Internal links ("/about", "/#how") get the base path; external links and #anchors stay as they are. */
-export const href = (h = '#') => (h.startsWith('/') ? u(h) : h);
+/** Internal links ("/about", "/#how") get the base path; external links and #anchors stay as they are.
+ *  Anything that isn't a site path, #anchor, http(s), mailto: or tel: link (e.g. "javascript:…") becomes "#",
+ *  so nothing typed into the CMS can run code on the site. */
+export const href = (h = '#') => {
+  const v = String(h).trim();
+  if (v.startsWith('/') && !v.startsWith('//')) return u(v);
+  if (v.startsWith('#') || /^(https?:|mailto:|tel:)/i.test(v)) return v;
+  return '#';
+};
 
 export const initials = (name: string) =>
   name.split(' ').map(w => w[0]).slice(0, 2).join('').toUpperCase();

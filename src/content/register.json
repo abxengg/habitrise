@@ -81,7 +81,7 @@
     "emailLabel": "Email",
     "emailPlaceholder": "you@example.com",
     "phoneLabel": "WhatsApp number",
-    "phonePlaceholder": "+91 98765 43210",
+    "phonePlaceholder": "98765 43210",
     "collegeLabel": "College / school name",
     "collegePlaceholder": "Required for the student price",
     "cityLabel": "City",

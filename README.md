@@ -32,7 +32,7 @@ that land in a Google Sheet, and payments handed off to Razorpay.
 | `/privacy`, `/terms` | Privacy Policy and Terms of Use, with a sticky contents list (text in the CMS under ⚖️ Privacy & Terms) |
 | `404` | Friendly "page not found" |
 
-**On every page:** the menu marks the page you're on with an amber ✱; the footer shows the live release number (e.g. `v1.0.6`)
+**On every page:** the menu marks the page you're on with a small amber ✱ (the phone tab bar lights it up); the footer shows the live release number (e.g. `v1.0.6`)
 and the maker's credit; a newsletter signup styled as a letter (footer), floating Instagram / LinkedIn / WhatsApp buttons,
 and on phones an app-style tab bar at the bottom with **Join** in the middle. On phones the tab bar and top header slide away while
 you scroll down (and return when you scroll up), and the three contact buttons fold into one small button.
@@ -159,6 +159,32 @@ Full steps are in [`scripts/google-apps-script/SETUP.md`](scripts/google-apps-sc
 
 ---
 
+## Security
+
+The site is static (no server or database to break into), and the parts that take input are hardened:
+
+- **Content Security Policy** on every page, written at build time by
+  [`integrations/csp.mjs`](integrations/csp.mjs). Only the site's own scripts can run (each inline script is
+  fingerprinted), so injected `<script>` tags, `onerror=` style handlers and scripts from other sites are blocked.
+  Forms can only send data to the Google Apps Script receiver, and plugins, `<base>` tricks and plain-http loads are
+  blocked too. GitHub Pages can't send security headers, so the policy is a `<meta>` tag; `frame-ancestors` (anti-
+  framing) needs the habitrise.in host or a proxy to add it as a header.
+- **No raw HTML from content:** all CMS text is escaped when rendered; live previews use `textContent`.
+- **Safe links:** any CMS link that isn't a site path, `#anchor`, `http(s)`, `mailto:` or `tel:` becomes `#`
+  (`href()` in `src/lib/content.ts`), and the payment redirect only follows `https://` links.
+- **Forms (browser):** control characters stripped, lengths capped, strict email and Indian-mobile formats, a
+  hidden spam-trap field.
+- **Form receiver (Google Apps Script):** rejects oversized or malformed requests and unknown forms; keeps only
+  the fields each form expects; validates email and phone; strips control characters and caps lengths; stores
+  anything starting with `= + - @` as text (no spreadsheet formula injection); escapes everything in the email;
+  keeps the subject on one line (no header injection); ignores double-clicks; limits floods to 30 a minute; drops
+  spam-trap submissions silently; and never returns internal error details.
+
+Tested against script injection, outside scripts, inline handlers, data exfiltration, harmful CMS links, HTML in
+names, formula injection, header injection, prototype tricks, oversized and malformed requests, floods and duplicates.
+
+---
+
 ## Prices & payment (Razorpay)
 
 Set in *Site settings → Prices & payment links*:
@@ -242,7 +268,7 @@ workflow and set the custom domain in the repo's **Settings → Pages**.
 
 - [x] Every word editable in Pages CMS; publishing via **Redeploy site** with automatic releases
 - [x] Forms connected to the Google Sheet with email notifications
-- [ ] Update the Google Apps Script with the latest `Code.gs` and deploy a **New version** (adds the Rise & Read tab)
+- [ ] Update the Google Apps Script with the latest `Code.gs` (keep your own `NOTIFY_EMAIL`) and deploy a **New version**. Adds the Rise & Read tab and the security checks
 - [ ] Rise & Read: confirm prices (Free / ₹199 / ₹499), the first book, the vision-board session date and the weekly live-session time
 - [ ] Paste both **Razorpay payment links** (Site settings → Prices & payment links), then Redeploy
 - [ ] Give the client access to Pages CMS

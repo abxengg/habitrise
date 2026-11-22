@@ -6,7 +6,7 @@ import Header from './Header.astro';
 import Footer from './Footer.astro';
 import { streakFonts } from './fonts';
 import '../../styles/streak.css';
-import { legal, settings, t } from '../../lib/content';
+import { legal, settings, t, href } from '../../lib/content';
 
 interface Props { doc: 'privacy' | 'terms' }
 const d = legal[Astro.props.doc];
@@ -47,7 +47,7 @@ const jsonLd = [{
           <aside class="s-legal-contact">
             <h3>{legal.contactTitle}</h3>
             <p>{before}<a href={`mailto:${settings.contact.email}`}>{settings.contact.email}</a>{after}</p>
-            <a class="s-btn s-btn-dark" href={settings.contact.whatsapp} target="_blank" rel="noopener">{legal.contactButton} →</a>
+            <a class="s-btn s-btn-dark" href={href(settings.contact.whatsapp)} target="_blank" rel="noopener">{legal.contactButton} →</a>
           </aside>
         </article>
       </div>

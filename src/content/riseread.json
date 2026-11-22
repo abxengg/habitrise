@@ -153,7 +153,7 @@
     "nameLabel": "Name",
     "namePlaceholder": "Your name",
     "phoneLabel": "WhatsApp number",
-    "phonePlaceholder": "+91 98765 43210",
+    "phonePlaceholder": "98765 43210",
     "emailLabel": "Email",
     "emailPlaceholder": "you@example.com",
     "iAmLabel": "I am a",

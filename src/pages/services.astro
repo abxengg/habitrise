@@ -5,6 +5,7 @@ import Shell from '../layouts/Shell.astro';
 import Header from '../components/streak/Header.astro';
 import Footer from '../components/streak/Footer.astro';
 import { streakFonts } from '../components/streak/fonts';
+import Phone from '../components/streak/Phone.astro';
 import '../styles/streak.css';
 import { services as c, settings, founder, t, href } from '../lib/content';
 
@@ -104,7 +105,7 @@ const jsonLd = [
               <div>{c.services.map(sv => <label><input type="radio" name="service" value={sv.title} required checked={sv.id === 'coaching'} /><em>{sv.title}</em></label>)}</div>
             </div>
             <label><span>{f.nameLabel}</span><input name="name" autocomplete="name" required maxlength="80" placeholder={f.namePlaceholder} /></label>
-            <label><span>{f.phoneLabel}</span><input name="phone" type="tel" autocomplete="tel" required pattern="[0-9+ \(\)\-]{10,16}" placeholder={f.phonePlaceholder} /></label>
+            <Phone label={f.phoneLabel} placeholder={f.phonePlaceholder} />
             <label><span>{f.emailLabel}</span><input name="email" type="email" autocomplete="email" maxlength="120" placeholder={f.emailPlaceholder} /></label>
             <label><span>{f.organisationLabel}</span><input name="organisation" maxlength="120" placeholder={f.organisationPlaceholder} /></label>
             <label class="s-form-wide"><span>{f.messageLabel}</span><textarea name="message" rows="3" maxlength="1000" placeholder={f.messagePlaceholder}></textarea></label>

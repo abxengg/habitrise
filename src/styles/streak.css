@@ -1088,15 +1088,13 @@ main:focus { outline: none; }
 
 /* the page you're on: ✱ in the menu */
 .s-nav nav a { position: relative; padding: 6px 0; }
-.s-nav nav a::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; border-radius: 2px; background: var(--sun); transform: scaleX(0); transform-origin: left; transition: transform .35s var(--ease-out); }
-.s-nav nav a:hover::after, .s-nav nav a.on::after { transform: scaleX(1); }
-.s-nav nav a.on { color: var(--ink); }
-.s-nav nav a.on::before { content: "✱"; position: absolute; left: -14px; top: 50%; translate: 0 -54%; font-size: 12px; color: var(--sun-deep); animation: star-in .5s var(--ease-out); }
+.s-nav nav a { transition: color .25s; }
+.s-nav nav a:hover, .s-nav nav a.on { color: var(--ink); }
+.s-nav nav a.on { font-weight: 700; }
+.s-nav nav a.on::after { content: "✱"; position: absolute; top: -2px; right: -11px; font-size: 11px; line-height: 1; font-weight: 800; color: var(--sun-deep); animation: star-in .5s var(--ease-out); }
 @keyframes star-in { from { opacity: 0; transform: rotate(-90deg) scale(.4); } to { opacity: 1; transform: none; } }
-.s-nav-cta.on { background: var(--sun); color: var(--ink); }
-.s-nav-cta.on::before { content: "✱ "; }
-.s-tabbar a.on span::before { content: "✱ "; color: var(--sun); }
-.s-tab-join.on span::before { content: ""; }
+.s-nav-cta { position: relative; }
+.s-nav-cta.on::after { content: "✱"; position: absolute; top: -9px; right: -7px; display: grid; place-items: center; width: 18px; height: 18px; border-radius: 50%; background: var(--sun); color: var(--ink); font-size: 11px; font-weight: 800; border: 2px solid var(--ink); animation: star-in .5s var(--ease-out); }
 
 /* buttons: arrows nudge, press sinks */
 .s-btn span[aria-hidden="true"] { display: inline-block; transition: translate .3s var(--ease-out); }
@@ -1142,6 +1140,29 @@ main:focus { outline: none; }
   .s-rr-list li:active, .s-panel li:active { background: var(--soft); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .s-nav nav a.on::before, .s-abx:hover i { animation: none; }
+  .s-nav nav a.on::after, .s-nav-cta.on::after, .s-abx:hover i { animation: none; }
   .s-btn:hover span[aria-hidden="true"] { translate: none; }
 }
+
+/* chip groups inside forms: label above, chips below (the hero tracker's .s-chips is a row) */
+.s-form .s-chips { display: block; }
+.s-form .s-chips > span { display: block; margin-bottom: 10px; }
+.s-book-form .s-chips > span { font-size: 12.5px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-3); }
+
+/* phone field: fixed 🇮🇳 +91 prefix */
+.s-tel { display: flex; align-items: stretch; background: var(--soft); border: 2px solid transparent; border-radius: 14px; overflow: hidden; transition: border-color .3s var(--ease-out), background-color .3s var(--ease-out), box-shadow .3s var(--ease-out); }
+.s-tel:focus-within { border-color: var(--ink); background: #fff; box-shadow: 0 0 0 4px rgba(248,175,60,.25); }
+.s-form .s-tel-cc { display: inline-flex; align-items: center; gap: 7px; padding: 0 10px 0 12px; font-size: 16px; font-weight: 700; color: var(--ink); border-right: 2px solid var(--line); flex: none; }
+.s-tel-cc svg { border-radius: 2px; box-shadow: 0 0 0 1px rgba(18,18,18,.12); }
+.s-form .s-tel input { flex: 1; border: 0 !important; background: transparent !important; box-shadow: none !important; border-radius: 0; letter-spacing: .02em; }
+.s-book-form .s-tel { background: transparent; border: 0; border-bottom: 2px solid rgba(18,18,18,.2); border-radius: 0; }
+.s-book-form .s-tel:focus-within { border-color: var(--sun-deep); box-shadow: 0 2px 0 var(--sun); }
+.s-book-form .s-tel-cc { padding-left: 2px; border-right-color: rgba(18,18,18,.12); }
+
+/* floating contact buttons in the site's language: ink outline, hard shadow, amber */
+.s-float a, .s-float-toggle { background: #fff !important; color: var(--ink) !important; border: 2px solid var(--ink); box-shadow: 3px 3px 0 var(--ink) !important; transition: transform .35s var(--ease-out), box-shadow .35s var(--ease-out), background-color .25s; }
+.s-float .s-wa { background: var(--sun) !important; }
+.s-float a:hover, .s-float-toggle:hover { background: var(--sun) !important; transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--ink) !important; }
+.s-float a:active, .s-float-toggle:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--ink) !important; }
+.s-float-toggle { background: var(--sun) !important; }
+.s-float.open .s-float-toggle { background: var(--ink) !important; color: #fff !important; transform: rotate(90deg); }

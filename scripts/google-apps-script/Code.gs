@@ -9,6 +9,13 @@
  * Setup (once): see scripts/google-apps-script/SETUP.md in the website repo.
  */
 
+// Safety limits
+const MAX_BODY = 10000;                 // characters per submission
+const MAX_PER_MINUTE = 30;              // submissions per minute, across the whole site
+const DUPLICATE_WINDOW_SECONDS = 30;    // the same form + contact within this window is saved once
+const EMAIL_RE = /^[^\s@<>"']{1,64}@[^\s@<>"']{1,190}\.[A-Za-z]{2,24}$/;
+const PHONE_RE = /^\+?[0-9][0-9 ()-]{6,18}$/;
+
 // Who gets an email for every submission (comma-separate several addresses).
 const NOTIFY_EMAIL = 'manimitit@gmail.com';
 
@@ -44,20 +51,48 @@ const FORMS = {
 };
 
 function doPost(e) {
+  const raw = (e && e.postData && e.postData.contents) || '';
+  if (raw.length > MAX_BODY) return json({ ok: false, error: 'too large' });
+
+  let data;
+  try { data = JSON.parse(raw || '{}'); } catch (err) { return json({ ok: false, error: 'bad request' }); }
+  if (!data || typeof data !== 'object' || Array.isArray(data)) return json({ ok: false, error: 'bad request' });
+
+  // bots fill the hidden "website" field: pretend all is well, save nothing
+  if (clean(data.website)) return json({ ok: true, emailStatus: 'sent' });
+
+  const form = Object.prototype.hasOwnProperty.call(FORMS, data.form) ? FORMS[data.form] : null;
+  if (!form) return json({ ok: false, error: 'unknown form' });
+
+  // keep only the fields this form stores, each cleaned and length-capped
+  const d = {};
+  form.fields.forEach(([key]) => { d[key] = clean(data[key], key === 'message' ? 1000 : 200); });
+  if (d.page && !/^'?https:\/\//.test(d.page)) d.page = '';
+
+  const missing = form.required
+    ? form.required.some(k => !d[k])
+    : !d.name || (!d.phone && !d.email); // register / interest / riseread: name + a way to reach them
+  if (missing) return json({ ok: false, error: 'missing required details' });
+  if (d.email && !EMAIL_RE.test(plain(d.email))) return json({ ok: false, error: 'invalid email' });
+  if (d.phone && !PHONE_RE.test(plain(d.phone))) return json({ ok: false, error: 'invalid phone' });
+
+  // flood and double-click protection
+  const cache = CacheService.getScriptCache();
+  const minute = 'n:' + Math.floor(Date.now() / 60000);
+  const count = Number(cache.get(minute) || 0);
+  if (count >= MAX_PER_MINUTE) return json({ ok: false, error: 'busy, please try again in a minute' });
+  cache.put(minute, String(count + 1), 120);
+  const dupKey = 'd:' + Utilities.base64EncodeWebSafe(Utilities.computeDigest(Utilities.DigestAlgorithm.SHA_256, data.form + '|' + (d.email || '') + '|' + (d.phone || '')));
+  if (cache.get(dupKey)) return json({ ok: true, emailStatus: 'sent', duplicate: true });
+
   const lock = LockService.getScriptLock();
-  lock.waitLock(20000); // one submission at a time, so rows never collide
   try {
-    const data = JSON.parse((e && e.postData && e.postData.contents) || '{}');
-    const form = FORMS[data.form];
-    if (!form) return json({ ok: false, error: 'unknown form' });
-    const missing = form.required
-      ? form.required.some(k => !clean(data[k]))
-      : !clean(data.name) || (!clean(data.phone) && !clean(data.email)); // register / interest: name + a way to reach them
-    if (missing) return json({ ok: false, error: 'missing required details' });
+    lock.waitLock(20000); // one submission at a time, so rows never collide
+    cache.put(dupKey, '1', DUPLICATE_WINDOW_SECONDS);
 
     // 1) save the row first
     const sheet = getSheet(form);
-    const row = [new Date(), ...form.fields.map(([key]) => clean(data[key])), 'pending'];
+    const row = [new Date(), ...form.fields.map(([key]) => d[key]), 'pending'];
     sheet.appendRow(row);
     const rowIndex = sheet.getLastRow();
     const statusCol = row.length;
@@ -65,22 +100,24 @@ function doPost(e) {
     // 2) then try the email, and 3) record what happened
     let emailStatus = 'sent';
     try {
-      const lines = form.fields.map(([key, label]) => `<tr><td style="padding:4px 12px 4px 0;color:#666">${label}</td><td style="padding:4px 0"><b>${escapeHtml(clean(data[key]) || '—')}</b></td></tr>`).join('');
+      const lines = form.fields.map(([key, label]) => `<tr><td style="padding:4px 12px 4px 0;color:#666">${escapeHtml(label)}</td><td style="padding:4px 0"><b>${escapeHtml(plain(d[key]) || '—')}</b></td></tr>`).join('');
+      const replyTo = d.email && EMAIL_RE.test(plain(d.email)) ? plain(d.email) : undefined;
       MailApp.sendEmail({
         to: NOTIFY_EMAIL,
-        subject: form.subject(data),
-        htmlBody: `<p>A new submission arrived from the HabitRise website.</p><table>${lines}</table><p><a href="${SpreadsheetApp.getActiveSpreadsheet().getUrl()}">Open the sheet</a></p>`,
-        replyTo: clean(data.email) || undefined,
+        subject: oneLine(form.subject(Object.fromEntries(Object.entries(d).map(([k, v]) => [k, plain(v)])))),
+        htmlBody: `<p>A new submission arrived from the HabitRise website.</p><table>${lines}</table><p><a href="${escapeHtml(SpreadsheetApp.getActiveSpreadsheet().getUrl())}">Open the sheet</a></p>`,
+        replyTo: replyTo,
         name: 'HabitRise Website',
       });
     } catch (err) {
-      emailStatus = 'failed: ' + (err && err.message ? err.message : String(err));
+      emailStatus = 'failed: ' + oneLine(err && err.message ? err.message : String(err));
     }
     sheet.getRange(rowIndex, statusCol).setValue(emailStatus);
 
     return json({ ok: true, emailStatus: emailStatus === 'sent' ? 'sent' : 'failed' });
   } catch (err) {
-    return json({ ok: false, error: String(err && err.message ? err.message : err) });
+    console.error(err); // the details stay in the Apps Script log, never in the reply
+    return json({ ok: false, error: 'could not save, please try again' });
   } finally {
     lock.releaseLock();
   }
@@ -103,15 +140,26 @@ function getSheet(form) {
   return sheet;
 }
 
-// Trim, cap length, and stop spreadsheet formula injection (=, +, -, @ at the start).
-function clean(v) {
-  let s = String(v == null ? '' : v).trim().slice(0, 1000);
-  if (/^[=+\-@]/.test(s)) s = "'" + s;
+// Remove control characters, trim, cap the length, and stop spreadsheet formula injection:
+// anything starting with = + - @ (or a tab / carriage return) is stored as plain text.
+function clean(v, max) {
+  let s = String(v == null ? '' : v).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, '').trim().slice(0, max || 200);
+  if (/^[=+\-@\t\r]/.test(s)) s = "'" + s;
   return s;
 }
 
+// The value without the leading apostrophe added by clean(), for emails and checks.
+function plain(s) {
+  return String(s || '').replace(/^'/, '');
+}
+
+// Email subjects must stay on one line (no header injection) and short.
+function oneLine(s) {
+  return String(s).replace(/[\r\n\t]+/g, ' ').slice(0, 150);
+}
+
 function escapeHtml(s) {
-  return String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+  return String(s).replace(/[&<>"'`]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;', '`': '&#96;' })[c]);
 }
 
 function json(obj) {
