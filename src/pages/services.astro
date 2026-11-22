@@ -15,7 +15,7 @@ const abs = (p: string) => new URL(u(p), site).href;
 const jsonLd = [
   ...c.services.map(s => ({
     '@context': 'https://schema.org', '@type': 'Service',
-    name: s.title, description: t(s.text), serviceType: s.tagline,
+    name: s.title, description: t(s.text),
     provider: { '@id': abs('/') + '#org' }, areaServed: 'IN',
     url: abs('/services') + '#' + s.id,
     ...(s.id === 'challenge' ? { offers: { '@type': 'Offer', price: settings.pricing.student.price, priceCurrency: 'INR', url: abs('/register') } } : {}),
@@ -33,54 +33,22 @@ const jsonLd = [
   <Header />
 
   <main id="main" tabindex="-1">
-    <!-- services: an index. Sticky intro + filter on the left, numbered rows that open on the right -->
+    <!-- services: a simple list. Each row is a link -->
     <section class="s-hero s-sv-hero" id="services">
-      <div class="s-wrap s-svx">
-        <aside class="s-svx-intro">
+      <div class="s-wrap">
+        <div class="s-head">
           <span class="s-eyebrow">{c.hero.tag}</span>
           <h1>{c.hero.title}</h1>
           <p>{t(c.hero.text)}</p>
-
-          <div class="s-svx-filter" role="group" aria-label={c.hero.filterLabel}>
-            <small>{c.hero.filterLabel}</small>
-            {c.hero.filters.map((fl, i) => (
-              <button type="button" data-filter={fl.id} aria-pressed={i === 0 ? 'true' : 'false'}>
-                <span>{fl.label}</span><b>{fl.id === 'all' ? c.services.length : c.services.filter(sv => sv.for.includes(fl.id)).length}</b>
-              </button>
-            ))}
-          </div>
-
-          <dl class="s-svx-proof">
-            {c.proof.map(pf => <div><dt>{pf.label}</dt><dd>{pf.value}</dd></div>)}
-          </dl>
-        </aside>
-
-        <ol class="s-svx-list">
+        </div>
+        <ol class="s-svl">
           {c.services.map((s, i) => (
-            <li class="s-svx-item" id={s.id} data-for={s.for.join(' ')}>
-              <details open={i === 0}>
-                <summary>
-                  <span class="s-svx-no">{String(i + 1).padStart(2, '0')}</span>
-                  <span class="s-svx-main">
-                    <span class="s-svx-tag"><i aria-hidden="true">{s.icon}</i>{s.tagline}</span>
-                    <b>{s.title}</b>
-                    <small>{t(s.text)}</small>
-                  </span>
-                  <span class="s-svx-side">
-                    <em>{t(s.price)}</em>
-                    <i class="s-svx-plus" aria-hidden="true"></i>
-                  </span>
-                </summary>
-                <div class="s-svx-body">
-                  <dl>
-                    <div><dt>{c.labels.bestFor}</dt><dd>{s.bestFor}</dd></div>
-                    <div><dt>{c.labels.format}</dt><dd>{s.format}</dd></div>
-                    <div><dt>{c.labels.duration}</dt><dd>{s.duration}</dd></div>
-                  </dl>
-                  <ul>{s.points.map(p => <li>{t(p)}</li>)}</ul>
-                  <a href={href(s.buttonHref)} class:list={['s-btn', s.buttonHref.startsWith('/') ? 's-btn-dark' : 's-btn-sun']} data-service={s.title}>{s.button} <span aria-hidden="true">→</span></a>
-                </div>
-              </details>
+            <li id={s.id}>
+              <a href={href(s.buttonHref)} data-service={s.title}>
+                <span class="s-svl-no">{String(i + 1).padStart(2, '0')}</span>
+                <span class="s-svl-text"><b>{s.title}</b><small>{t(s.text)}</small></span>
+                <span class="s-svl-go"><span class="sr">{s.button}</span><i aria-hidden="true">→</i></span>
+              </a>
             </li>
           ))}
         </ol>
@@ -182,25 +150,6 @@ const jsonLd = [
   <script>
     import { wireForms } from '../scripts/forms';
     wireForms();
-    // a link like /services#coaching opens that service
-    const fromHash = location.hash && document.querySelector<HTMLElement>(`.s-svx-item#${CSS.escape(location.hash.slice(1))}`);
-    if (fromHash) fromHash.querySelector('details')!.open = true;
-
-    // "Who is it for?" filter: matching rows stay, the rest fade and fold away
-    const rows = [...document.querySelectorAll<HTMLElement>('.s-svx-item')];
-    document.querySelectorAll<HTMLButtonElement>('[data-filter]').forEach(b => b.addEventListener('click', () => {
-      document.querySelectorAll('[data-filter]').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
-      const want = b.dataset.filter!;
-      let first = true;
-      rows.forEach(r => {
-        const match = want === 'all' || r.dataset.for!.split(' ').includes(want);
-        r.classList.toggle('s-dim', !match);
-        const det = r.querySelector('details')!;
-        if (!match) det.open = false;
-        else if (want !== 'all' && first) { det.open = true; first = false; }
-      });
-    }));
-
     // "I'm interested" buttons preselect their service
     document.querySelectorAll<HTMLAnchorElement>('a[data-service]').forEach(a => a.addEventListener('click', () => {
       const r = document.querySelector<HTMLInputElement>(`input[name="service"][value="${CSS.escape(a.dataset.service!)}"]`);

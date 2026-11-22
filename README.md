@@ -26,7 +26,7 @@ that land in a Google Sheet, and payments handed off to Razorpay.
 |---|---|
 | `/` | Home: streak-tracker hero, how a morning works, the 21-day program, the Skool community, the founder, member stories, FAQ |
 | `/register` | **Join**, with a tab for each program, each a rectangular ticket with a live stub that fills in as you type. **21-Day HabitRise Challenge**: 3-step form (plan → about you → contact), then Razorpay. **Rise & Read 2027**: plan + details. `/register?program=riseread` opens the second tab |
-| `/services` | Every way to work with HabitRise as a numbered index (sticky intro, "Who is it for?" filter and numbers on the left; rows that open on the right; `/services#coaching` opens a row), "How we work together" and an enquiry form of 5 numbered questions with a progress counter |
+| `/services` | A simple list of the 5 ways to work with HabitRise (each row links to its page or the enquiry form), "How we work together", and an enquiry form of 5 numbered questions with a progress counter |
 | `/rise-and-read` | **Rise & Read 2027**: a 21-day reading-habit challenge starting 1 January 2027 (waitlist landing page with its own prices and a sign-up form) |
 | `/about` | The founder's story, background and coaching areas |
 | `/privacy`, `/terms` | Privacy Policy and Terms of Use, with a sticky contents list (text in the CMS under ⚖️ Privacy & Terms) |

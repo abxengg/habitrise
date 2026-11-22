@@ -1394,3 +1394,28 @@ main:focus { outline: none; }
   .s-qf-foot { padding: 20px 18px 22px; }
   .s-qf-done { margin: 0 18px 22px; }
 }
+
+/* Services: a simple list, each row a link ------------------------------------------------ */
+.s-svl { list-style: none; margin: 0 auto; padding: 0; max-width: 900px; border-top: 2px solid var(--ink); }
+.s-svl li { border-bottom: 2px solid var(--ink); scroll-margin-top: 110px; }
+.s-svl a { position: relative; display: grid; grid-template-columns: 72px minmax(0, 1fr) 48px; align-items: center; gap: var(--s-3); padding: var(--s-3) var(--s-2); isolation: isolate; }
+.s-svl a::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--sun); transform: scaleX(0); transform-origin: left; transition: transform .5s var(--ease-out); }
+.s-svl-no { font-family: var(--brand-font); font-size: 44px; line-height: 1; color: transparent; -webkit-text-stroke: 2px var(--ink); transition: color .35s; }
+.s-svl-text { display: grid; gap: 4px; min-width: 0; }
+.s-svl-text b { font-size: clamp(21px, 2.3vw, 28px); letter-spacing: -.02em; line-height: 1.2; }
+.s-svl-text small { font-size: 15.5px; color: var(--ink-2); line-height: 1.45; }
+.s-svl-go i { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 50%; border: 2px solid var(--ink); font-style: normal; font-weight: 800; font-size: 20px; background: #fff; transition: background-color .3s, color .3s, transform .4s var(--ease-out); }
+@media (hover: hover) {
+  .s-svl a:hover::before { transform: scaleX(1); }
+  .s-svl a:hover .s-svl-no { color: var(--ink); }
+  .s-svl a:hover .s-svl-go i { background: var(--ink); color: var(--sun); transform: translateX(4px); }
+  .s-svl a:hover small { color: var(--ink); }
+}
+.s-svl a:focus-visible { outline: 3px solid var(--ink); outline-offset: -3px; }
+.s-svl a:active::before { transform: scaleX(1); transition-duration: .15s; }
+@media (max-width: 760px) {
+  .s-svl a { grid-template-columns: 40px minmax(0, 1fr) 36px; gap: 12px; padding: var(--s-2) 4px; }
+  .s-svl-no { font-size: 28px; -webkit-text-stroke-width: 1.5px; }
+  .s-svl-text small { font-size: 14.5px; }
+  .s-svl-go i { width: 36px; height: 36px; font-size: 16px; }
+}

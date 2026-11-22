@@ -482,14 +482,6 @@ content:
           - { name: tag, label: Section tag, type: string }
           - { name: title, label: Heading, type: string }
           - { name: text, label: Paragraph, type: text }
-          - { name: filterLabel, label: "'Who is it for?' label", type: string }
-          - name: filters
-            label: Filter chips
-            type: object
-            list: { collapsible: { collapsed: true, summary: "{label}" } }
-            fields:
-              - { name: id, label: Id (all / me / students / teams), type: string, description: "A service shows under a chip when the chip's id is in the service's 'For' list. 'all' shows everything." }
-              - { name: label, label: Text, type: string }
       - name: services
         label: Services
         type: object
@@ -497,31 +489,9 @@ content:
         fields:
           - { name: id, label: Short id (no spaces), type: string, pattern: "^[a-z0-9-]+$" }
           - { name: title, label: Title, type: string }
-          - { name: tagline, label: Tag, type: string }
           - { name: text, label: Description, type: text }
-          - { name: points, label: Points, type: string, list: true }
-          - { name: price, label: Price text, type: string }
           - { name: button, label: Button text, type: string }
           - { name: buttonHref, label: Button link, type: string, description: "#interest opens the interest form; /register goes to registration" }
-          - { name: icon, label: Icon (an emoji), type: string }
-          - { name: for, label: "For (filter ids: me, students, teams)", type: string, list: true }
-          - { name: bestFor, label: Best for, type: string }
-          - { name: format, label: Format, type: string }
-          - { name: duration, label: Duration, type: string }
-      - name: labels
-        label: Card labels
-        type: object
-        fields:
-          - { name: bestFor, label: "'Best for' label", type: string }
-          - { name: format, label: "'Format' label", type: string }
-          - { name: duration, label: "'Duration' label", type: string }
-      - name: proof
-        label: Numbers row
-        type: object
-        list: { collapsible: { collapsed: true, summary: "{value} {label}" } }
-        fields:
-          - { name: value, label: Number, type: string }
-          - { name: label, label: Label, type: string }
       - name: process
         label: How we work together
         type: object

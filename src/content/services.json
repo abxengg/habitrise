@@ -6,134 +6,43 @@
   "hero": {
     "tag": "Services",
     "title": "Ways to work with HabitRise.",
-    "text": "From the 21-day challenge to talks for your college or team — pick what fits, and we'll get in touch.",
-    "filterLabel": "Who is it for?",
-    "filters": [
-      {
-        "id": "all",
-        "label": "Everything"
-      },
-      {
-        "id": "me",
-        "label": "For me"
-      },
-      {
-        "id": "students",
-        "label": "Students & colleges"
-      },
-      {
-        "id": "teams",
-        "label": "Teams & companies"
-      }
-    ]
+    "text": "From the 21-day challenge to talks for your college or team — pick what fits, and we'll get in touch."
   },
   "services": [
     {
       "id": "challenge",
       "title": "21-Day 6 AM Challenge",
-      "tagline": "The flagship programme",
       "text": "Live 6 AM sessions for 21 days, the S.A.V.E.R.S routine and the private Skool community.",
-      "points": [
-        "21 live morning sessions",
-        "Skool community + leaderboard",
-        "Lifetime recordings"
-      ],
-      "price": "See pricing",
       "button": "Register",
-      "buttonHref": "/register",
-      "icon": "⏰",
-      "for": [
-        "me",
-        "students"
-      ],
-      "bestFor": "Anyone who wants mornings that stick",
-      "format": "Live on Zoom",
-      "duration": "21 days · 45 min/day"
+      "buttonHref": "/register"
     },
     {
       "id": "rise-and-read",
       "title": "Rise & Read 2027",
-      "tagline": "New · reading habit",
       "text": "A 21-day reading-habit challenge: 20 pages a day, one takeaway a day, one idea applied every week.",
-      "points": [
-        "Guided reading plan",
-        "Reading buddy + streaks",
-        "Weekly live reflection"
-      ],
-      "price": "Free for members",
       "button": "See Rise & Read",
-      "buttonHref": "/rise-and-read",
-      "icon": "📚",
-      "for": [
-        "me",
-        "students"
-      ],
-      "bestFor": "Anyone who keeps buying books and never finishes them",
-      "format": "Live on Zoom + WhatsApp",
-      "duration": "21 days · 20 min/day"
+      "buttonHref": "/rise-and-read"
     },
     {
       "id": "coaching",
       "title": "1:1 Habit Coaching",
-      "tagline": "Personal accountability",
       "text": "Weekly one-to-one sessions to design your routine, fix what keeps breaking and stay on track.",
-      "points": [
-        "Personal routine design",
-        "Weekly check-ins",
-        "WhatsApp accountability"
-      ],
-      "price": "Price on request",
       "button": "I'm interested",
-      "buttonHref": "#interest",
-      "icon": "🎯",
-      "for": [
-        "me"
-      ],
-      "bestFor": "Professionals and founders who want 1:1 focus",
-      "format": "Online, 1:1",
-      "duration": "Weekly sessions"
+      "buttonHref": "#interest"
     },
     {
       "id": "workshops",
       "title": "College Workshops",
-      "tagline": "For students & placement cells",
       "text": "High-energy sessions on discipline, purpose and exam-ready routines for schools and colleges.",
-      "points": [
-        "90-minute live session",
-        "Habit toolkit for students",
-        "Online or on campus"
-      ],
-      "price": "Price on request",
       "button": "I'm interested",
-      "buttonHref": "#interest",
-      "icon": "🎓",
-      "for": [
-        "students"
-      ],
-      "bestFor": "Schools, colleges and placement cells",
-      "format": "Online or on campus",
-      "duration": "90 minutes"
+      "buttonHref": "#interest"
     },
     {
       "id": "corporate",
       "title": "Corporate Sessions",
-      "tagline": "For teams & leaders",
       "text": "Morning-routine and focus programmes for teams, from a PMP-certified delivery lead.",
-      "points": [
-        "Focus & deep-work habits",
-        "Leadership mornings",
-        "Custom team challenges"
-      ],
-      "price": "Price on request",
       "button": "I'm interested",
-      "buttonHref": "#interest",
-      "icon": "🏢",
-      "for": [
-        "teams"
-      ],
-      "bestFor": "Teams and leaders who want sharper focus",
-      "format": "Online or on site",
-      "duration": "Custom"
+      "buttonHref": "#interest"
     }
   ],
   "interest": {
@@ -170,11 +79,6 @@
     "progressLabel": "{n} of {total} answered",
     "optional": "Optional"
   },
-  "labels": {
-    "bestFor": "Best for",
-    "format": "Format",
-    "duration": "Duration"
-  },
   "process": {
     "tag": "How we work together",
     "title": "From hello to habit in three steps.",
@@ -192,23 +96,5 @@
         "text": "Sessions begin, habits stick, and you see the change in weeks, not months."
       }
     ]
-  },
-  "proof": [
-    {
-      "value": "5,000+",
-      "label": "Students trained"
-    },
-    {
-      "value": "15+",
-      "label": "Entrepreneurs mentored"
-    },
-    {
-      "value": "12+",
-      "label": "Years in leadership"
-    },
-    {
-      "value": "21",
-      "label": "Days to a new habit"
-    }
-  ]
+  }
 }

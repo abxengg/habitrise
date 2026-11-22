@@ -7,7 +7,7 @@
 const REVEAL = [
   '.s-hero-copy > *', '.s-tracker-wrap', '.s-head', '.s-card', '.s-stat', '.s-tabs', '.s-panel.on',
   '.s-group', '.s-board', '.s-founder-img', '.s-founder-card > div:last-child', '.s-msg', '.s-ticket',
-  '.s-form:not(.s-wz-form)', '.s-faq details', '.s-final-box', '.s-ab-photo', '.s-ab-chapter', '.s-ab-card', '.s-ab-journey li', '.s-news', '.s-ia-side', '.s-wz', '.s-chatform', '.s-qform', '.s-svx-item', '.s-rr-problem > *', '.s-rr-list li', '.s-rr-plan', '.s-rr-who .s-card',
+  '.s-form:not(.s-wz-form)', '.s-faq details', '.s-final-box', '.s-ab-photo', '.s-ab-chapter', '.s-ab-card', '.s-ab-journey li', '.s-news', '.s-ia-side', '.s-wz', '.s-chatform', '.s-qform', '.s-svl li', '.s-rr-problem > *', '.s-rr-list li', '.s-rr-plan', '.s-rr-who .s-card',
 ].join(',');
 
 export function startMotion() {
