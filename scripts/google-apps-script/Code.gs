@@ -16,7 +16,7 @@ const NOTIFY_EMAIL = 'manimitit@gmail.com';
 const FORMS = {
   register: {
     sheet: 'Registrations',
-    subject: d => `New registration: ${d.name} (${d.plan === 'student' ? 'Student' : 'Others'})`,
+    subject: d => `New registration: ${d.name} (${d.plan === 'student' ? 'Student' : 'Professional'})`,
     fields: [
       ['plan', 'Plan'], ['name', 'Name'], ['email', 'Email'], ['phone', 'WhatsApp'], ['college', 'College / school'],
       ['city', 'City'], ['age', 'Age'], ['occupation', 'Occupation'], ['source', 'Heard from'], ['consent', 'Consent'], ['page', 'Page'],
@@ -24,8 +24,8 @@ const FORMS = {
   },
   riseread: {
     sheet: 'Rise & Read',
-    subject: d => `Rise & Read sign-up: ${d.name} (${d.iam || '—'})`,
-    fields: [['name', 'Name'], ['phone', 'WhatsApp'], ['email', 'Email'], ['iam', 'I am a'], ['organisation', 'College / company'], ['page', 'Page']],
+    subject: d => `Rise & Read sign-up: ${d.name} (${d.plan || d.iam || '—'})`,
+    fields: [['plan', 'Plan'], ['name', 'Name'], ['phone', 'WhatsApp'], ['email', 'Email'], ['iam', 'I am a'], ['organisation', 'College / company'], ['page', 'Page']],
   },
   newsletter: {
     sheet: 'Newsletter',

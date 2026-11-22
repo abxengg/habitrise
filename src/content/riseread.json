@@ -108,7 +108,7 @@
       {
         "name": "Professional",
         "price": "₹499",
-        "who": "Everyone else",
+        "who": "Working professionals, entrepreneurs and career builders",
         "highlight": false
       }
     ]
@@ -169,5 +169,14 @@
     "error": "Couldn't reserve your seat right now. Please try again, or message us on WhatsApp.",
     "notConfigured": "Sign-ups open soon. Message us on WhatsApp to reserve your seat.",
     "note": "We'll confirm your seat and next steps on WhatsApp."
+  },
+  "join": {
+    "ticketLabel": "Admit one · Reading pass",
+    "programName": "Rise & Read 2027 · 21-day reading challenge",
+    "planTitle": "Choose your plan",
+    "detailsTitle": "Your details",
+    "starts": "1 Jan 2027",
+    "iAmPreview": "I am a",
+    "serial": "No. RR-27 · 0101"
   }
 }

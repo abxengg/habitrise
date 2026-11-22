@@ -14,7 +14,7 @@
       "note": "School & college students. You'll be asked for your college or school name."
     },
     "others": {
-      "label": "Everyone else",
+      "label": "Professionals",
       "price": 699,
       "note": "Working professionals, entrepreneurs, career builders."
     },
@@ -56,7 +56,9 @@
     "whatsapp": "https://wa.me/918695866684",
     "whatsappLabel": "Chat on WhatsApp",
     "instagramLabel": "HabitRise on Instagram",
-    "linkedinLabel": "Mani on LinkedIn"
+    "linkedinLabel": "Mani on LinkedIn",
+    "contactLabel": "Contact us",
+    "closeLabel": "Close"
   },
   "socials": {
     "instagram": "https://www.instagram.com/habitrise.in",

@@ -72,7 +72,7 @@ const jsonLd = [
               <div>{c.services.map((sv, i) => <label><input type="radio" name="service" value={sv.title} required checked={i === 1} /><em>{sv.title}</em></label>)}</div>
             </div>
             <label><span>{f.nameLabel}</span><input name="name" autocomplete="name" required maxlength="80" placeholder={f.namePlaceholder} /></label>
-            <label><span>{f.phoneLabel}</span><input name="phone" type="tel" autocomplete="tel" required pattern="[+0-9 ()-]{10,16}" placeholder={f.phonePlaceholder} /></label>
+            <label><span>{f.phoneLabel}</span><input name="phone" type="tel" autocomplete="tel" required pattern="[0-9+ \(\)\-]{10,16}" placeholder={f.phonePlaceholder} /></label>
             <label><span>{f.emailLabel}</span><input name="email" type="email" autocomplete="email" maxlength="120" placeholder={f.emailPlaceholder} /></label>
             <label><span>{f.organisationLabel}</span><input name="organisation" maxlength="120" placeholder={f.organisationPlaceholder} /></label>
             <label class="s-form-wide"><span>{f.messageLabel}</span><textarea name="message" rows="3" maxlength="1000" placeholder={f.messagePlaceholder}></textarea></label>

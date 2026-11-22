@@ -1,15 +1,16 @@
 ---
-// Pricing & Registration. A 3-step form (plan → about you → contact) with a live ticket that
-// fills in as people type. On submit the details go to the Google Sheet, the ticket gets a
-// "Seat reserved" stamp, then people are sent to the Razorpay link for their plan.
-// Copy: src/content/register.json; prices + Razorpay links: settings.json.
+// Join: two program tabs, each a rectangular ticket with a live stub that fills in as people type.
+//   • 21-Day HabitRise Challenge: 3-step form (plan → about you → contact) → Google Sheet → Razorpay link
+//   • Rise & Read 2027: plan + details → Google Sheet ("Rise & Read" tab)
+// Open a tab directly with /register?program=riseread (or #rise-and-read).
+// Copy: register.json (HabitRise tab), riseread.json → join/pricing/final (Rise & Read tab); prices: settings.json.
 import { u } from '../lib/url';
 import Shell from '../layouts/Shell.astro';
 import Header from '../components/streak/Header.astro';
 import Footer from '../components/streak/Footer.astro';
 import { streakFonts } from '../components/streak/fonts';
 import '../styles/streak.css';
-import { register as c, settings, founder, t, rich, money } from '../lib/content';
+import { register as c, riseread as rr, settings, founder, t, rich, money } from '../lib/content';
 
 const pr = settings.pricing;
 const f = c.form;
@@ -17,6 +18,10 @@ const tk = c.ticket;
 const w = c.wizard;
 const pv = c.preview;
 const steps = w.steps;
+const pg = c.programs;
+const rj = rr.join;
+const rf = rr.final;
+const iamOf = (name: string) => (/student/i.test(name) ? rf.iAmOptions[0] : /professional/i.test(name) ? rf.iAmOptions[1] : '');
 const site = Astro.site!;
 const abs = (p: string) => new URL(u(p), site).href;
 const plans = [
@@ -59,6 +64,17 @@ const jsonLd = [
           <p>{t(c.hero.text)}</p>
         </div>
 
+        <!-- program tabs -->
+        <div class="s-prog" role="tablist" aria-label={pg.label}>
+          <button type="button" role="tab" id="tab-habitrise" aria-controls="panel-habitrise" aria-selected="true" data-program="habitrise">
+            <img src={u('/img/brand/mark-black.png')} alt="" width="215" height="256" /><span><b>{pg.habitrise.title}</b><small set:html={rich(pg.habitrise.meta)} /></span>
+          </button>
+          <button type="button" role="tab" id="tab-riseread" aria-controls="panel-riseread" aria-selected="false" data-program="riseread">
+            <i aria-hidden="true">📚</i><span><b>{pg.riseread.title}</b><small set:html={rich(pg.riseread.meta)} /></span>
+          </button>
+        </div>
+
+        <div role="tabpanel" id="panel-habitrise" aria-labelledby="tab-habitrise" data-panel="habitrise">
         <div class="s-wz" id="register">
           <form class="s-form s-wz-form"
             data-hr-form data-kind="register" data-endpoint={settings.forms.endpoint}
@@ -116,7 +132,7 @@ const jsonLd = [
               <legend>{f.contactTitle}</legend>
               <div class="s-wz-grid">
                 <label><span>{f.emailLabel}</span><input name="email" type="email" autocomplete="email" required maxlength="120" placeholder={f.emailPlaceholder} /></label>
-                <label><span>{f.phoneLabel}</span><input name="phone" type="tel" autocomplete="tel" required pattern="[+0-9 ()-]{10,16}" placeholder={f.phonePlaceholder} /></label>
+                <label><span>{f.phoneLabel}</span><input name="phone" type="tel" autocomplete="tel" required pattern="[0-9+ \(\)\-]{10,16}" placeholder={f.phonePlaceholder} /></label>
                 <div class="s-form-wide s-chips" role="radiogroup" aria-label={f.sourceLabel}>
                   <span>{f.sourceLabel}</span>
                   <div>{f.sourceOptions.map(o => <label><input type="radio" name="source" value={o} /><em>{o}</em></label>)}</div>
@@ -160,6 +176,73 @@ const jsonLd = [
             </div>
           </aside>
         </div>
+        </div>
+
+        <!-- Rise & Read 2027 -->
+        <div role="tabpanel" id="panel-riseread" aria-labelledby="tab-riseread" data-panel="riseread" hidden>
+          <div class="s-wz" id="rise-and-read">
+            <form class="s-form s-wz-form s-rrj-form" data-hr-form data-kind="riseread" data-fallback-kind="interest" data-endpoint={settings.forms.endpoint}
+              data-msg-sending={rf.sending} data-msg-success={rf.success} data-msg-error={rf.error} data-msg-not-configured={rf.notConfigured}>
+              <div class="s-wz-head" aria-hidden="true">
+                <span class="s-ticket-brand"><img src={u('/img/brand/mark-white.png')} alt="" width="215" height="256" />{settings.brand.wordmark}</span>
+                <span>{rj.ticketLabel}</span>
+              </div>
+              <fieldset class="s-wz-step">
+                <legend>{rj.planTitle}</legend>
+                <div class="s-rg-plans s-rg-plans-3">
+                  {rr.pricing.plans.map(pl => (
+                    <label class="s-rg-plan">
+                      <input type="radio" name="plan" value={pl.name} required checked={pl.highlight} data-price={pl.price} data-iam={iamOf(pl.name)} />
+                      <span class="s-rg-plan-name">{pl.name}</span>
+                      <span class="s-rg-plan-price"><b>{pl.price}</b></span>
+                      <span class="s-rg-plan-text">{t(pl.who)}</span>
+                    </label>
+                  ))}
+                </div>
+              </fieldset>
+              <fieldset class="s-wz-step">
+                <legend>{rj.detailsTitle}</legend>
+                <div class="s-wz-grid">
+                  <label class="s-form-wide"><span>{rf.nameLabel}</span><input name="name" autocomplete="name" required maxlength="80" placeholder={rf.namePlaceholder} /></label>
+                  <label><span>{rf.phoneLabel}</span><input name="phone" type="tel" autocomplete="tel" required pattern="[0-9+ \(\)\-]{10,16}" placeholder={rf.phonePlaceholder} /></label>
+                  <label><span>{rf.emailLabel}</span><input name="email" type="email" autocomplete="email" required maxlength="120" placeholder={rf.emailPlaceholder} /></label>
+                  <div class="s-form-wide s-chips" role="radiogroup" aria-label={rf.iAmLabel}>
+                    <span>{rf.iAmLabel}</span>
+                    <div>{rf.iAmOptions.map(o => <label><input type="radio" name="iam" value={o} required /><em>{o}</em></label>)}</div>
+                  </div>
+                  <label class="s-form-wide"><span>{rf.orgLabel}</span><input name="organisation" maxlength="120" placeholder={rf.orgPlaceholder} /></label>
+                  <input type="hidden" name="service" value={rr.seo.title} />
+                  <label class="np-hp" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off" /></label>
+                </div>
+              </fieldset>
+              <div class="s-wz-nav"><button type="submit" class="s-btn s-btn-sun s-wide">{rf.submit} →</button></div>
+              <p class="s-form-status" data-status hidden role="status" aria-live="polite"></p>
+              <p class="s-rg-secure">{rf.note}</p>
+            </form>
+
+            <aside class="s-wz-stub" aria-label={pv.title}>
+              <span class="s-wz-side-title">{pv.title}</span>
+              <div class="s-pv" data-rr-preview>
+                <div class="s-pv-top">
+                  <span class="s-ticket-brand"><img src={u('/img/brand/mark-black.png')} alt="" width="215" height="256" />{settings.brand.wordmark}</span>
+                  <span>{pv.admit}</span>
+                </div>
+                <b class="s-pv-name empty" data-rr-out="name" data-empty={pv.namePlaceholder}>{pv.namePlaceholder}</b>
+                <small class="s-pv-prog">{rj.programName}</small>
+                <dl>
+                  <div><dt>{pv.planLabel}</dt><dd data-rr-out="plan">—</dd></div>
+                  <div><dt>{pv.startsLabel}</dt><dd>{rj.starts}</dd></div>
+                  <div><dt>{rj.iAmPreview}</dt><dd data-rr-out="iam" data-empty="—">—</dd></div>
+                </dl>
+                <div class="s-pv-stub">
+                  <b data-rr-out="price">—</b>
+                  <div class="s-ticket-code" aria-hidden="true"><i></i><span>{rj.serial}</span></div>
+                </div>
+                <span class="s-pv-stamp" aria-hidden="true">{pv.stamp}</span>
+              </div>
+            </aside>
+          </div>
+        </div>
       </div>
     </section>
   </main>
@@ -170,8 +253,48 @@ const jsonLd = [
     import { wireForms } from '../scripts/forms';
     wireForms();
 
+    // program tabs (HabitRise / Rise & Read); ?program=riseread or #rise-and-read opens the second one
+    const tabs = [...document.querySelectorAll<HTMLButtonElement>('[data-program]')];
+    const openProgram = (p: string, focus = false) => {
+      tabs.forEach(b => b.setAttribute('aria-selected', String(b.dataset.program === p)));
+      document.querySelectorAll<HTMLElement>('[data-panel]').forEach(el => (el.hidden = el.dataset.panel !== p));
+      if (focus) document.getElementById(p === 'riseread' ? 'rise-and-read' : 'register')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+    tabs.forEach(b => b.addEventListener('click', () => {
+      openProgram(b.dataset.program!);
+      history.replaceState(null, '', b.dataset.program === 'riseread' ? '?program=riseread' : location.pathname);
+    }));
+    const want = new URLSearchParams(location.search).get('program') || (location.hash === '#rise-and-read' ? 'riseread' : '');
+    if (want === 'riseread') openProgram('riseread', !!location.hash);
+
+    // Rise & Read ticket: fills in as people type; the plan picks "I am a" for them
+    const rform = document.querySelector<HTMLFormElement>('.s-rrj-form');
+    const rpv = document.querySelector<HTMLElement>('[data-rr-preview]');
+    if (rform && rpv) {
+      const out = (k: string) => rpv.querySelector<HTMLElement>(`[data-rr-out="${k}"]`)!;
+      const paint = () => {
+        const name = (rform.elements.namedItem('name') as HTMLInputElement).value.trim();
+        const n = out('name'); n.textContent = name || n.dataset.empty!; n.classList.toggle('empty', !name);
+        const plan = rform.querySelector<HTMLInputElement>('input[name="plan"]:checked');
+        out('plan').textContent = plan?.value ?? '—';
+        const price = out('price');
+        if (price.textContent !== (plan?.dataset.price ?? '—')) { price.textContent = plan?.dataset.price ?? '—'; price.classList.remove('bump'); void price.offsetWidth; price.classList.add('bump'); }
+        out('iam').textContent = rform.querySelector<HTMLInputElement>('input[name="iam"]:checked')?.value ?? '—';
+      };
+      rform.querySelectorAll<HTMLInputElement>('input[name="plan"]').forEach(r => r.addEventListener('change', () => {
+        const iam = rform.querySelector<HTMLInputElement>(`input[name="iam"][value="${CSS.escape(r.dataset.iam || '')}"]`);
+        if (iam) iam.checked = true;
+      }));
+      rform.addEventListener('input', paint);
+      rform.addEventListener('change', paint);
+      rform.addEventListener('hr:saved', () => rpv.classList.add('stamped'));
+      const first = rform.querySelector<HTMLInputElement>('input[name="plan"]:checked');
+      if (first) first.dispatchEvent(new Event('change', { bubbles: true }));
+      paint();
+    }
+
     // 3-step wizard + live ticket preview
-    const form = document.querySelector<HTMLFormElement>('.s-wz-form');
+    const form = document.querySelector<HTMLFormElement>('.s-wz-form:not(.s-rrj-form)');
     if (form) {
       const stepsEls = [...form.querySelectorAll<HTMLFieldSetElement>('[data-step]')];
       const dots = [...form.querySelectorAll<HTMLElement>('[data-dot]')];

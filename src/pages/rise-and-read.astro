@@ -168,7 +168,7 @@ const jsonLd = [
           <form class="s-form s-rr-form" data-hr-form data-kind="riseread" data-fallback-kind="interest" data-endpoint={settings.forms.endpoint}
             data-msg-sending={f.sending} data-msg-success={f.success} data-msg-error={f.error} data-msg-not-configured={f.notConfigured}>
             <label><span>{f.nameLabel}</span><input name="name" autocomplete="name" required maxlength="80" placeholder={f.namePlaceholder} /></label>
-            <label><span>{f.phoneLabel}</span><input name="phone" type="tel" autocomplete="tel" required pattern="[+0-9 ()-]{10,16}" placeholder={f.phonePlaceholder} /></label>
+            <label><span>{f.phoneLabel}</span><input name="phone" type="tel" autocomplete="tel" required pattern="[0-9+ \(\)\-]{10,16}" placeholder={f.phonePlaceholder} /></label>
             <label class="s-form-wide"><span>{f.emailLabel}</span><input name="email" type="email" autocomplete="email" required maxlength="120" placeholder={f.emailPlaceholder} /></label>
             <div class="s-form-wide s-chips" role="radiogroup" aria-label={f.iAmLabel}>
               <span>{f.iAmLabel}</span>

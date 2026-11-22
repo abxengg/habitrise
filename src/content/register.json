@@ -1,12 +1,23 @@
 {
   "seo": {
-    "title": "Pricing & Registration — The 21-Day 6 AM Challenge",
-    "description": "HabitRise pricing: students ₹399, everyone else ₹699 (regular ₹999), one-time for all 21 days. Choose your plan, fill in your details and pay securely via Razorpay."
+    "title": "Join — 21-Day HabitRise Challenge & Rise & Read 2027",
+    "description": "Join HabitRise: the 21-day 6 AM habit challenge (students ₹399, professionals ₹699, regular ₹999) or Rise & Read 2027, the 21-day reading-habit challenge. Fill in your details and pay securely via Razorpay."
   },
   "hero": {
     "tag": "Join now",
-    "title": "Three steps to your 6 AM seat.",
-    "text": "Pick your plan, tell us a little about you, and your ticket fills in as you go. Payment happens securely on Razorpay."
+    "title": "Pick your program. Claim your seat.",
+    "text": "Two ways to start: the 21-day 6 AM HabitRise challenge, or Rise & Read 2027. Fill in your details and your ticket fills in as you go."
+  },
+  "programs": {
+    "label": "Choose a program",
+    "habitrise": {
+      "title": "21-Day HabitRise Challenge",
+      "meta": "6 AM habits · starts {nextMonday}"
+    },
+    "riseread": {
+      "title": "Rise & Read 2027",
+      "meta": "Reading habit · starts 1 Jan 2027"
+    }
   },
   "ticket": {
     "ticketLabel": "Admit one · Cohort pass",

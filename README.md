@@ -25,14 +25,15 @@ that land in a Google Sheet, and payments handed off to Razorpay.
 | Page | What it's for |
 |---|---|
 | `/` | Home: streak-tracker hero, how a morning works, the 21-day program, the Skool community, the founder, member stories, FAQ |
-| `/register` | **Pricing & registration**, the only page that shows prices. A rectangular ticket with a 3-step form (plan → about you → contact) and a live ticket stub that fills in as you type, then hands off to Razorpay |
+| `/register` | **Join**, with a tab for each program, each a rectangular ticket with a live stub that fills in as you type. **21-Day HabitRise Challenge**: 3-step form (plan → about you → contact), then Razorpay. **Rise & Read 2027**: plan + details. `/register?program=riseread` opens the second tab |
 | `/services` | Coaching, workshops and corporate sessions, with an "I'm interested" form shown as a live chat |
 | `/rise-and-read` | **Rise & Read 2027**: a 21-day reading-habit challenge starting 1 January 2027 (waitlist landing page with its own prices and a sign-up form) |
 | `/about` | The founder's story, background and coaching areas |
 | `404` | Friendly "page not found" |
 
 **On every page:** a newsletter signup styled as a letter (footer), floating Instagram / LinkedIn / WhatsApp buttons,
-and on phones an app-style tab bar at the bottom with **Join** in the middle.
+and on phones an app-style tab bar at the bottom with **Join** in the middle. On phones the tab bar and top header slide away while
+you scroll down (and return when you scroll up), and the three contact buttons fold into one small button.
 
 ---
 
@@ -163,7 +164,7 @@ Set in *Site settings → Prices & payment links*:
 | Plan | Price | Who |
 |---|---|---|
 | Students | ₹399 | School and college students. They must enter their college or school, and only see student occupations |
-| Everyone else | ₹699 | Professionals, entrepreneurs, career switchers and others |
+| Professionals | ₹699 | Working professionals, entrepreneurs, career switchers and others |
 | Regular (struck through) | ~~₹999~~ | Shown as the early-bird comparison |
 
 Prices appear **only on `/register`** (and Rise & Read's own plans on `/rise-and-read`); the rest of the site and the share image have none. After the form is saved,

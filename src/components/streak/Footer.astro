@@ -50,7 +50,11 @@ const external = (h: string) => /^https?:/.test(h);
   </div>
 </footer>
 <!-- floating contact buttons: Instagram, LinkedIn, WhatsApp -->
-<div class="s-float">
+<div class="s-float" id="float">
+  <!-- phones: one small button that opens the three -->
+  <button type="button" class="s-float-toggle" aria-expanded="false" aria-controls="float" aria-label={settings.contact.contactLabel} data-open-label={settings.contact.contactLabel} data-close-label={settings.contact.closeLabel}>
+    <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20.5l1.4-5.1A8 8 0 1 1 21 12z" class="i-chat"/><path d="M8 8l8 8M16 8l-8 8" class="i-close"/></svg>
+  </button>
   <a class="s-float-btn s-float-ig" href={settings.socials.instagram} target="_blank" rel="noopener" aria-label={settings.contact.instagramLabel}>
     <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
   </a>
@@ -67,6 +71,29 @@ const external = (h: string) => /^https?:/.test(h);
   import { startMotion } from '../../scripts/motion';
   wireForms();
   startMotion();
+
+  // phones: contact buttons fold into one; close when tapping anywhere else
+  const float = document.getElementById('float');
+  const toggle = float?.querySelector<HTMLButtonElement>('.s-float-toggle');
+  const setOpen = (open: boolean) => {
+    float!.classList.toggle('open', open);
+    toggle!.setAttribute('aria-expanded', String(open));
+    toggle!.setAttribute('aria-label', (open ? toggle!.dataset.closeLabel : toggle!.dataset.openLabel) || '');
+  };
+  toggle?.addEventListener('click', e => { e.stopPropagation(); setOpen(!float!.classList.contains('open')); });
+  document.addEventListener('click', e => { if (float && !float.contains(e.target as Node)) setOpen(false); });
+
+  // phones: the tab bar and top header slide away while scrolling down, and return on scroll up
+  const phone = matchMedia('(max-width: 760px)');
+  let lastY = scrollY;
+  addEventListener('scroll', () => {
+    const y = scrollY, nearEnd = y + innerHeight > document.documentElement.scrollHeight - 80;
+    if (!phone.matches || Math.abs(y - lastY) < 8) return;
+    const hide = y > lastY && y > 160 && !nearEnd;
+    document.documentElement.classList.toggle('s-bars-away', hide);
+    if (hide && float) setOpen(false);
+    lastY = y;
+  }, { passive: true });
   // newsletter: the letter flies off when the signup is saved, then a fresh one slides in
   const letter = document.querySelector<HTMLFormElement>('.s-letter');
   letter?.addEventListener('hr:saved', e => {

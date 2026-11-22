@@ -54,13 +54,13 @@ content:
               - { name: note, label: Short note, type: text }
               - { name: paymentUrl, label: Razorpay payment link, type: string, description: "After the form is submitted, students are sent here. Leave empty to show the 'we'll WhatsApp you' message." }
           - name: others
-            label: Everyone-else plan
+            label: Professionals plan
             type: object
             fields:
               - { name: label, label: Plan name, type: string }
               - { name: price, label: Price, type: number, required: true, options: { min: 0 } }
               - { name: note, label: Short note, type: text }
-              - { name: paymentUrl, label: Razorpay payment link, type: string, description: "Everyone else is sent here after the form." }
+              - { name: paymentUrl, label: Razorpay payment link, type: string, description: "Professionals are sent here after the form." }
           - { name: includes, label: What's included (list), type: string, list: true }
       - name: forms
         label: Forms
@@ -98,6 +98,8 @@ content:
           - { name: whatsappLabel, label: WhatsApp button label (for screen readers), type: string }
           - { name: instagramLabel, label: Instagram button label (for screen readers), type: string }
           - { name: linkedinLabel, label: LinkedIn button label (for screen readers), type: string }
+          - { name: contactLabel, label: Phone contact button label (for screen readers), type: string }
+          - { name: closeLabel, label: Phone contact close label (for screen readers), type: string }
       - name: socials
         label: Social links
         type: object
@@ -563,7 +565,7 @@ content:
         fields:
           - { name: title, label: Plan picker title, type: string }
           - { name: studentTag, label: Student card tag, type: string }
-          - { name: othersTag, label: Everyone-else card tag, type: string }
+          - { name: othersTag, label: Professionals card tag, type: string }
           - { name: regularLabel, label: "'Regular' word", type: string }
           - { name: perPerson, label: Price note, type: string }
       - name: preview
