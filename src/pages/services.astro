@@ -97,51 +97,59 @@ const jsonLd = [
           <h2>{f.title}</h2>
           <p>{t(f.text)}</p>
         </div>
-        <div class="s-ia">
-          <form class="s-form s-ia-form" data-hr-form data-kind="interest" data-endpoint={settings.forms.endpoint}
-            data-msg-sending={f.sending} data-msg-success={f.success} data-msg-error={f.error} data-msg-not-configured={f.notConfigured}>
-            <div class="s-form-wide s-sv-top s-ia-top">
-              <span class="s-sv-icon" aria-hidden="true">{f.formIcon}</span>
-              <span class="s-step">{f.formTag}</span>
-              <span class="s-sv-num" aria-hidden="true">{String(c.services.length + 1).padStart(2, '0')}</span>
-            </div>
-            <h3 class="s-form-wide s-ia-title">{f.formTitle}</h3>
-            <div class="s-form-wide s-chips s-chips-pill" role="radiogroup" aria-label={f.serviceLabel}>
-              <span>{f.serviceLabel}</span>
-              <div>{c.services.map(sv => <label><input type="radio" name="service" value={sv.title} required checked={sv.id === 'coaching'} /><em>{sv.title}</em></label>)}</div>
-            </div>
-            <label><span>{f.nameLabel}</span><input name="name" autocomplete="name" required maxlength="80" placeholder={f.namePlaceholder} /></label>
-            <Phone label={f.phoneLabel} placeholder={f.phonePlaceholder} />
-            <label><span>{f.emailLabel}</span><input name="email" type="email" autocomplete="email" maxlength="120" placeholder={f.emailPlaceholder} /></label>
-            <label><span>{f.organisationLabel}</span><input name="organisation" maxlength="120" placeholder={f.organisationPlaceholder} /></label>
-            <label class="s-form-wide"><span>{f.messageLabel}</span><textarea name="message" rows="3" maxlength="1000" placeholder={f.messagePlaceholder}></textarea></label>
-            <label class="np-hp" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off" /></label>
-            <button type="submit" class="s-btn s-btn-sun s-wide s-form-wide">{f.submit} <span aria-hidden="true">→</span></button>
-            <p class="s-form-status s-form-wide" data-status hidden role="status" aria-live="polite"></p>
-          </form>
+        <!-- the enquiry is a chat: HabitRise asks, you answer in your own bubbles -->
+        <form class="s-chatform" data-hr-form data-kind="interest" data-endpoint={settings.forms.endpoint}
+          data-msg-sending={f.sending} data-msg-success={f.success} data-msg-error={f.error} data-msg-not-configured={f.notConfigured}>
+          <div class="s-cf-head">
+            <img src={u('/img/brand/mark-black.png')} alt="" width="215" height="256" />
+            <div><b>{f.previewName}</b><small>{f.previewStatus}</small></div>
+            <span class="s-cf-dot" aria-hidden="true"></span>
+          </div>
 
-          <!-- live chat preview: the message builds as people type -->
-          <aside class="s-ia-side" aria-label={f.previewTitle}>
-            <span class="s-wz-side-title">{f.previewTitle}</span>
-            <div class="s-chatpv" data-chat
-              data-hello={f.previewHello} data-from={f.previewFrom} data-fallback={f.previewNameFallback} data-interest={f.previewInterest}>
-              <div class="s-chatpv-top">
-                <img src={u('/img/brand/mark-black.png')} alt="" width="215" height="256" />
-                <div><b>{f.previewName}</b><small>{f.previewStatus}</small></div>
-              </div>
-              <div class="s-chatpv-body">
-                <p class="s-bub out" data-line="hello"></p>
-                <p class="s-bub out" data-line="interest"></p>
-                <p class="s-bub out" data-line="message" hidden></p>
-                <span class="s-ticks" aria-hidden="true">✓✓</span>
-                <div class="s-bub-slot">
-                  <p class="s-bub in s-typing" aria-hidden="true"><i></i><i></i><i></i></p>
-                  <p class="s-bub in s-reply">{f.previewReply}</p>
-                </div>
+          <div class="s-cf-body">
+            <p class="s-cf-q">{f.askService}</p>
+            <div class="s-cf-a">
+              <div class="s-chips s-cf-chips" role="radiogroup" aria-label={f.serviceLabel}>
+                <div>{c.services.map(sv => <label><input type="radio" name="service" value={sv.title} required checked={sv.id === 'coaching'} /><em>{sv.title}</em></label>)}</div>
               </div>
             </div>
-          </aside>
-        </div>
+
+            <p class="s-cf-q" id="q-name">{f.askName}</p>
+            <div class="s-cf-a">
+              <label><span class="sr">{f.nameLabel}</span><input name="name" autocomplete="name" required maxlength="80" placeholder={f.namePlaceholder} aria-labelledby="q-name" /></label>
+            </div>
+
+            <p class="s-cf-q">{f.askContact}</p>
+            <div class="s-cf-a s-cf-two">
+              <Phone label={f.phoneLabel} placeholder={f.phonePlaceholder} />
+              <label><span>{f.emailLabel}</span><input name="email" type="email" autocomplete="email" maxlength="120" placeholder={f.emailPlaceholder} /></label>
+            </div>
+
+            <p class="s-cf-q" id="q-org">{f.askOrg}</p>
+            <div class="s-cf-a">
+              <label><span class="sr">{f.organisationLabel}</span><input name="organisation" maxlength="120" placeholder={f.organisationPlaceholder} aria-labelledby="q-org" /></label>
+            </div>
+
+            <p class="s-cf-q" id="q-msg">{f.askMessage}</p>
+            <div class="s-cf-a">
+              <label><span class="sr">{f.messageLabel}</span><textarea name="message" rows="2" maxlength="1000" placeholder={f.messagePlaceholder} aria-labelledby="q-msg"></textarea></label>
+              <span class="s-ticks" aria-hidden="true">✓✓</span>
+            </div>
+
+            <!-- after sending: typing… then a reply -->
+            <div class="s-bub-slot s-cf-reply">
+              <p class="s-bub in s-typing" aria-hidden="true"><i></i><i></i><i></i></p>
+              <p class="s-bub in s-reply">{f.previewReply}</p>
+            </div>
+            <p class="s-form-status" data-status hidden role="status" aria-live="polite"></p>
+            <label class="np-hp" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off" /></label>
+          </div>
+
+          <div class="s-cf-foot">
+            <small>{f.composerHint}</small>
+            <button type="submit" class="s-btn s-btn-sun">{f.submit} <span aria-hidden="true">→</span></button>
+          </div>
+        </form>
       </div>
     </section>
   </main>
@@ -165,25 +173,9 @@ const jsonLd = [
       if (r && a.getAttribute('href')?.startsWith('#')) { r.checked = true; r.dispatchEvent(new Event('change', { bubbles: true })); }
     }));
 
-    // live chat preview
-    const form = document.querySelector<HTMLFormElement>('.s-ia-form');
-    const chat = document.querySelector<HTMLElement>('[data-chat]');
-    if (form && chat) {
-      const d = chat.dataset;
-      const val = (n: string) => ((form.elements.namedItem(n) as HTMLInputElement | null)?.value ?? '').trim();
-      const line = (k: string) => chat.querySelector<HTMLElement>(`[data-line="${k}"]`)!;
-      const paint = () => {
-        const org = val('organisation');
-        const service = (form.querySelector('input[name="service"]:checked') as HTMLInputElement | null)?.value ?? '';
-        line('hello').textContent = (d.hello || '').replace('{name}', val('name') || d.fallback || '').replace('{from}', org ? (d.from || '').replace('{organisation}', org) : '');
-        line('interest').textContent = (d.interest || '').replace('{service}', service);
-        const msg = val('message'); const m = line('message'); m.textContent = msg; m.hidden = !msg;
-        chat.classList.remove('sent');
-      };
-      form.addEventListener('input', paint);
-      form.addEventListener('change', paint);
-      form.addEventListener('hr:saved', () => chat.classList.add('sent')); // the sent message stays until they type again
-      paint();
-    }
+    // after sending, the chat shows blue ticks, "typing…" and a reply; editing again resets it
+    const chatForm = document.querySelector<HTMLFormElement>('.s-chatform');
+    chatForm?.addEventListener('hr:saved', () => chatForm.classList.add('sent'));
+    chatForm?.addEventListener('input', () => chatForm.classList.remove('sent'));
   </script>
 </Shell>

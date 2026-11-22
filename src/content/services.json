@@ -156,17 +156,15 @@
     "success": "Thank you! We've got your details and will reach out within 24 hours.",
     "error": "Something went wrong. Please try again, or message us on WhatsApp.",
     "notConfigured": "The form isn't connected yet. Please message us on WhatsApp for now.",
-    "previewTitle": "Your message to us",
     "previewName": "HabitRise team",
     "previewStatus": "usually replies within a day",
-    "previewHello": "Hi! I'm {name}{from}.",
-    "previewFrom": " from {organisation}",
-    "previewNameFallback": "…",
-    "previewInterest": "I'm interested in {service}.",
     "previewReply": "Got it! 🙌 We'll reach out within 24 hours.",
-    "formIcon": "✉️",
-    "formTag": "Takes 2 minutes",
-    "formTitle": "Your enquiry"
+    "askService": "Hi 👋 What would you like to explore?",
+    "askName": "Lovely choice! What's your name?",
+    "askContact": "How can we reach you?",
+    "askOrg": "Which college or company are you from? (optional)",
+    "askMessage": "Anything we should know? Dates, group size, goals… (optional)",
+    "composerHint": "We reply on WhatsApp or email within 24 hours."
   },
   "labels": {
     "bestFor": "Best for",

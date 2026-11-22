@@ -1214,3 +1214,45 @@ main:focus { outline: none; }
 .s-form .s-chips em { background: #fff; border: 2px solid var(--line); padding: 9px 16px; font-size: 14.5px; }
 @media (hover: hover) { .s-form .s-chips label:hover em { border-color: var(--ink); } }
 .s-form .s-chips input:checked + em { background: var(--ink); color: #fff; border-color: var(--ink); box-shadow: 3px 3px 0 var(--sun); }
+
+/* Services: the enquiry is a WhatsApp-style chat ------------------------------------------- */
+.s-chatform { max-width: 760px; margin: 0 auto; border: 2px solid var(--ink); border-radius: 32px; overflow: hidden; background: #efe9df; box-shadow: 10px 10px 0 var(--ink); }
+.s-cf-head { display: flex; align-items: center; gap: 12px; padding: 14px 20px; background: var(--ink); color: #fff; }
+.s-cf-head img { width: 40px; height: 40px; object-fit: contain; padding: 6px; border-radius: 50%; background: var(--sun); }
+.s-cf-head b { display: block; font-size: 16px; }
+.s-cf-head small { display: block; font-size: 12.5px; color: #b7b3ab; }
+.s-cf-dot { margin-left: auto; width: 10px; height: 10px; border-radius: 50%; background: var(--mint); box-shadow: 0 0 0 4px rgba(35,196,131,.25); }
+.s-cf-body { display: flex; flex-direction: column; gap: 10px; padding: 24px 20px 20px; background-image: radial-gradient(rgba(18,18,18,.06) 1.2px, transparent 1.2px); background-size: 14px 14px; }
+/* HabitRise asks… */
+.s-cf-q { align-self: flex-start; max-width: 80%; margin: 8px 0 0; padding: 10px 14px; background: #fff; border-radius: 16px 16px 16px 4px; font-weight: 700; font-size: 15.5px; line-height: 1.4; box-shadow: 0 1px 0 rgba(18,18,18,.12); }
+/* …you answer */
+.s-cf-a { position: relative; align-self: flex-end; width: min(540px, 90%); padding: 12px 16px 14px; background: #dff7c9; border-radius: 16px 16px 4px 16px; box-shadow: 0 1px 0 rgba(18,18,18,.12); transition: box-shadow .3s var(--ease-out), transform .35s var(--ease-out); }
+.s-cf-a:focus-within { box-shadow: 0 0 0 2px var(--ink), 4px 4px 0 2px var(--sun); transform: translateY(-1px); }
+.s-cf-two { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.s-chatform label { display: grid; gap: 4px; }
+.s-chatform label > span:first-child { font-size: 12px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: rgba(18,18,18,.55); }
+.s-chatform input:not([type=radio]):not([type=checkbox]), .s-chatform textarea { width: 100%; min-width: 0; font: inherit; font-size: 16.5px; font-weight: 600; color: var(--ink); padding: 8px 2px; background: transparent; border: 0; border-bottom: 2px solid rgba(18,18,18,.22); border-radius: 0; outline: none; transition: border-color .3s var(--ease-out), box-shadow .3s var(--ease-out); resize: vertical; }
+.s-chatform input::placeholder, .s-chatform textarea::placeholder { color: rgba(18,18,18,.38); font-weight: 500; }
+.s-chatform input:not([type=radio]):not([type=checkbox]):focus, .s-chatform textarea:focus { border-color: var(--sun-deep); box-shadow: 0 2px 0 var(--sun); }
+.s-chatform .s-tel { border-bottom-color: rgba(18,18,18,.22); }
+.s-chatform .s-tel-cc { display: inline-flex; align-items: center; gap: 7px; padding: 0 10px 0 2px; font-weight: 700; border-right: 2px solid rgba(18,18,18,.12); }
+.s-chatform .s-tel input { border-bottom: 0 !important; box-shadow: none !important; padding-left: 10px; }
+.s-cf-chips { display: block; }
+.s-cf-chips em { background: #fff; border: 2px solid rgba(18,18,18,.12); padding: 8px 14px; font-size: 14px; }
+.s-cf-chips input:checked + em { background: var(--ink); color: #fff; border-color: var(--ink); box-shadow: 3px 3px 0 var(--sun); }
+@media (hover: hover) { .s-cf-chips label:hover em { border-color: var(--ink); } }
+.s-chatform .s-ticks { position: absolute; right: 10px; bottom: 4px; margin: 0; }
+.s-chatform.sent .s-ticks { color: #3b8cff; }
+.s-cf-reply { margin-top: 4px; }
+.s-chatform .s-form-status { align-self: stretch; margin: 6px 0 0; }
+.s-cf-foot { display: flex; align-items: center; justify-content: space-between; gap: var(--s-2); padding: 14px 20px; background: #fff; border-top: 2px solid var(--ink); }
+.s-cf-foot small { font-size: 13.5px; font-weight: 600; color: var(--ink-3); }
+.s-cf-foot .s-btn { box-shadow: 0 4px 0 var(--sun-deep); flex: none; }
+@media (max-width: 760px) {
+  .s-chatform { border-radius: 24px; box-shadow: 6px 6px 0 var(--ink); }
+  .s-cf-body { padding: 18px 12px 16px; }
+  .s-cf-q { max-width: 92%; font-size: 15px; }
+  .s-cf-a { width: 100%; }
+  .s-cf-two { grid-template-columns: 1fr; }
+  .s-cf-foot { flex-direction: column; align-items: stretch; text-align: center; }
+}

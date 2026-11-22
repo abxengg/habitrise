@@ -557,17 +557,15 @@ content:
           - { name: success, label: Success message, type: text }
           - { name: error, label: Error message, type: text }
           - { name: notConfigured, label: Message before the form is connected, type: text }
-          - { name: formIcon, label: Form card icon (an emoji), type: string }
-          - { name: formTag, label: Form card tag, type: string }
-          - { name: formTitle, label: Form card title, type: string }
-          - { name: previewTitle, label: Chat preview — title above it, type: string }
-          - { name: previewName, label: Chat preview — contact name, type: string }
-          - { name: previewStatus, label: Chat preview — status line, type: string }
-          - { name: previewHello, label: Chat preview — first line, type: string, description: "{name} = their name, {from} = the 'from' text below (only when they fill in college/company)" }
-          - { name: previewFrom, label: Chat preview — 'from' text, type: string, description: "{organisation} = their college/company" }
-          - { name: previewNameFallback, label: Chat preview — shown before a name is typed, type: string }
-          - { name: previewInterest, label: Chat preview — second line, type: string, description: "{service} = the service they picked" }
-          - { name: previewReply, label: Chat preview — reply after sending, type: string }
+          - { name: askService, label: Chat question — service, type: string }
+          - { name: askName, label: Chat question — name, type: string }
+          - { name: askContact, label: Chat question — WhatsApp & email, type: string }
+          - { name: askOrg, label: Chat question — college/company, type: string }
+          - { name: askMessage, label: Chat question — anything else, type: string }
+          - { name: composerHint, label: Line beside the send button, type: string }
+          - { name: previewName, label: Chat — contact name, type: string }
+          - { name: previewStatus, label: Chat — status line, type: string }
+          - { name: previewReply, label: Chat — reply after sending, type: string }
 
   # ───────────────────────────── Register page ─────────────────────────────
   - name: register
