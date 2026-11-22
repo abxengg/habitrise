@@ -284,9 +284,17 @@ const jsonLd = [
         if (price.textContent !== (plan?.dataset.price ?? '—')) { price.textContent = plan?.dataset.price ?? '—'; price.classList.remove('bump'); void price.offsetWidth; price.classList.add('bump'); }
         out('iam').textContent = rform.querySelector<HTMLInputElement>('input[name="iam"]:checked')?.value ?? '—';
       };
+      // Plan and "I am a" stay in step both ways: Student plan <-> Student, Professional plan <-> Working professional.
+      // The Habit Rise member plan fits either, so it leaves "I am a" free.
       rform.querySelectorAll<HTMLInputElement>('input[name="plan"]').forEach(r => r.addEventListener('change', () => {
         const iam = rform.querySelector<HTMLInputElement>(`input[name="iam"][value="${CSS.escape(r.dataset.iam || '')}"]`);
         if (iam) iam.checked = true;
+      }));
+      rform.querySelectorAll<HTMLInputElement>('input[name="iam"]').forEach(r => r.addEventListener('change', () => {
+        const plan = rform.querySelector<HTMLInputElement>('input[name="plan"]:checked');
+        if (!plan || !plan.dataset.iam) return; // member plan: keep it
+        const match = rform.querySelector<HTMLInputElement>(`input[name="plan"][data-iam="${CSS.escape(r.value)}"]`);
+        if (match && match !== plan) { match.checked = true; match.dispatchEvent(new Event('change', { bubbles: true })); }
       }));
       rform.addEventListener('input', paint);
       rform.addEventListener('change', paint);

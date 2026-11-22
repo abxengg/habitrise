@@ -35,7 +35,7 @@ const FORMS = {
   riseread: {
     sheet: 'Rise & Read',
     subject: d => `Rise & Read sign-up: ${d.name} (${d.plan || d.iam || '—'})`,
-    fields: [['plan', 'Plan'], ['name', 'Name'], ['phone', 'WhatsApp'], ['email', 'Email'], ['iam', 'I am a'], ['organisation', 'College / company'], ['collegeEmail', 'College email'], ['page', 'Page']],
+    fields: [['plan', 'Plan'], ['name', 'Name'], ['phone', 'WhatsApp'], ['email', 'Email'], ['iam', 'I am a'], ['organisation', 'College / company'], ['collegeEmail', 'College email'], ['page', 'Page'], ['memberCheck', 'Member check']],
   },
   newsletter: {
     sheet: 'Newsletter',
@@ -94,6 +94,11 @@ function doPost(e) {
     lock.waitLock(20000); // one submission at a time, so rows never collide
     cache.put(dupKey, '1', DUPLICATE_WINDOW_SECONDS);
 
+    // Rise & Read "Habit Rise member" (free) claims are checked against past registrations.
+    // The result goes only to the Sheet and the notification email, never back to the visitor,
+    // so the form can't be used to find out who is a member.
+    if (data.form === 'riseread') d.memberCheck = /member/i.test(plain(d.plan)) ? memberCheck(d) : '';
+
     // 1) save the row first
     const sheet = getSheet(form);
     const row = [new Date(), ...form.fields.map(([key]) => d[key]), 'pending'];
@@ -130,6 +135,27 @@ function doPost(e) {
 // Visiting the web-app URL in a browser just confirms it's running.
 function doGet() {
   return json({ ok: true, service: 'HabitRise form receiver' });
+}
+
+// Looks for the same WhatsApp number (last 10 digits) or email in the Registrations tab.
+function memberCheck(d) {
+  try {
+    const sh = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(FORMS.register.sheet);
+    if (!sh || sh.getLastRow() < 2) return 'NOT FOUND - no registrations to check against';
+    const values = sh.getDataRange().getDisplayValues();
+    const head = values[0];
+    const ec = head.indexOf('Email'), pc = head.indexOf('WhatsApp');
+    const email = plain(d.email).toLowerCase();
+    const phone = plain(d.phone).replace(/\D/g, '').slice(-10);
+    for (let r = 1; r < values.length; r++) {
+      const e2 = ec >= 0 ? String(values[r][ec]).replace(/^'/, '').trim().toLowerCase() : '';
+      const p2 = pc >= 0 ? String(values[r][pc]).replace(/\D/g, '').slice(-10) : '';
+      if ((email && e2 === email) || (phone.length === 10 && p2 === phone)) return 'OK - matches Registrations row ' + (r + 1) + (e2 === email ? ' (email)' : ' (WhatsApp)');
+    }
+    return 'NOT FOUND - check before confirming the free seat';
+  } catch (err) {
+    return 'could not check: ' + oneLine(err && err.message ? err.message : String(err));
+  }
 }
 
 function getSheet(form) {
