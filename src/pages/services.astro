@@ -104,57 +104,73 @@ const jsonLd = [
           <h2>{f.title}</h2>
           <p>{t(f.text)}</p>
         </div>
-        <!-- the enquiry is a chat: HabitRise asks, you answer in your own bubbles -->
-        <form class="s-chatform" data-hr-form data-kind="interest" data-endpoint={settings.forms.endpoint}
-          data-msg-sending={f.sending} data-msg-success={f.success} data-msg-error={f.error} data-msg-not-configured={f.notConfigured}>
-          <div class="s-cf-head">
-            <img src={u('/img/brand/mark-black.png')} alt="" width="215" height="256" />
-            <div><b>{f.previewName}</b><small>{f.previewStatus}</small></div>
-            <span class="s-cf-dot" aria-hidden="true"></span>
+        <!-- the enquiry: a short numbered questionnaire -->
+        <form class="s-qform" data-hr-form data-kind="interest" data-endpoint={settings.forms.endpoint}
+          data-msg-sending={f.sending} data-msg-success={f.success} data-msg-error={f.error} data-msg-not-configured={f.notConfigured}
+          data-progress={f.progressLabel}>
+          <div class="s-qf-head">
+            <span class="s-qf-icon" aria-hidden="true">✉️</span>
+            <div><small>{f.formLabel}</small><b>{f.formCount}</b></div>
+            <div class="s-qf-meter">
+              <span data-qf-count aria-live="polite">{f.progressLabel.replace('{n}', '0').replace('{total}', '5')}</span>
+              <i><b data-qf-bar></b></i>
+            </div>
           </div>
 
-          <div class="s-cf-body">
-            <p class="s-cf-q">{f.askService}</p>
-            <div class="s-cf-a">
-              <div class="s-chips s-cf-chips" role="radiogroup" aria-label={f.serviceLabel}>
-                <div>{c.services.map(sv => <label><input type="radio" name="service" value={sv.title} required checked={sv.id === 'coaching'} /><em>{sv.title}</em></label>)}</div>
+          <ol class="s-qf-list">
+            <li data-q="service">
+              <span class="s-qf-no">01</span>
+              <div class="s-qf-body">
+                <span class="s-qf-q" id="q-service">{f.askService}</span>
+                <div class="s-chips s-qf-chips" role="radiogroup" aria-labelledby="q-service">
+                  <div>{c.services.map(sv => <label><input type="radio" name="service" value={sv.title} required checked={sv.id === 'coaching'} /><em>{sv.title}</em></label>)}</div>
+                </div>
               </div>
-            </div>
+            </li>
+            <li data-q="name">
+              <span class="s-qf-no">02</span>
+              <label class="s-qf-body">
+                <span class="s-qf-q">{f.askName}</span>
+                <input name="name" autocomplete="name" required maxlength="80" placeholder={f.namePlaceholder} />
+              </label>
+            </li>
+            <li data-q="contact">
+              <span class="s-qf-no">03</span>
+              <div class="s-qf-body">
+                <span class="s-qf-q">{f.askContact}</span>
+                <div class="s-qf-two">
+                  <Phone label={f.phoneLabel} placeholder={f.phonePlaceholder} />
+                  <label><span>{f.emailLabel}</span><input name="email" type="email" autocomplete="email" maxlength="120" placeholder={f.emailPlaceholder} /></label>
+                </div>
+              </div>
+            </li>
+            <li data-q="organisation">
+              <span class="s-qf-no">04</span>
+              <label class="s-qf-body">
+                <span class="s-qf-q">{f.askOrg} <em>{f.optional}</em></span>
+                <input name="organisation" maxlength="120" placeholder={f.organisationPlaceholder} />
+              </label>
+            </li>
+            <li data-q="message">
+              <span class="s-qf-no">05</span>
+              <label class="s-qf-body">
+                <span class="s-qf-q">{f.askMessage} <em>{f.optional}</em></span>
+                <textarea name="message" rows="2" maxlength="1000" placeholder={f.messagePlaceholder}></textarea>
+              </label>
+            </li>
+          </ol>
 
-            <p class="s-cf-q" id="q-name">{f.askName}</p>
-            <div class="s-cf-a">
-              <label><span class="sr">{f.nameLabel}</span><input name="name" autocomplete="name" required maxlength="80" placeholder={f.namePlaceholder} aria-labelledby="q-name" /></label>
-            </div>
-
-            <p class="s-cf-q">{f.askContact}</p>
-            <div class="s-cf-a s-cf-two">
-              <Phone label={f.phoneLabel} placeholder={f.phonePlaceholder} />
-              <label><span>{f.emailLabel}</span><input name="email" type="email" autocomplete="email" maxlength="120" placeholder={f.emailPlaceholder} /></label>
-            </div>
-
-            <p class="s-cf-q" id="q-org">{f.askOrg}</p>
-            <div class="s-cf-a">
-              <label><span class="sr">{f.organisationLabel}</span><input name="organisation" maxlength="120" placeholder={f.organisationPlaceholder} aria-labelledby="q-org" /></label>
-            </div>
-
-            <p class="s-cf-q" id="q-msg">{f.askMessage}</p>
-            <div class="s-cf-a">
-              <label><span class="sr">{f.messageLabel}</span><textarea name="message" rows="2" maxlength="1000" placeholder={f.messagePlaceholder} aria-labelledby="q-msg"></textarea></label>
-              <span class="s-ticks" aria-hidden="true">✓✓</span>
-            </div>
-
-            <!-- after sending: typing… then a reply -->
-            <div class="s-bub-slot s-cf-reply">
-              <p class="s-bub in s-typing" aria-hidden="true"><i></i><i></i><i></i></p>
-              <p class="s-bub in s-reply">{f.previewReply}</p>
-            </div>
+          <label class="np-hp" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off" /></label>
+          <div class="s-qf-foot">
+            <button type="submit" class="s-btn s-btn-sun s-wide">{f.submit} <span aria-hidden="true">→</span></button>
+            <small>{f.composerHint}</small>
             <p class="s-form-status" data-status hidden role="status" aria-live="polite"></p>
-            <label class="np-hp" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off" /></label>
           </div>
 
-          <div class="s-cf-foot">
-            <small>{f.composerHint}</small>
-            <button type="submit" class="s-btn s-btn-sun">{f.submit} <span aria-hidden="true">→</span></button>
+          <!-- after sending: a reply, WhatsApp-style -->
+          <div class="s-qf-done" aria-hidden="true">
+            <img src={u('/img/brand/mark-black.png')} alt="" width="215" height="256" />
+            <div><b>{f.previewName}</b><p class="s-bub in">{f.previewReply}</p></div>
           </div>
         </form>
       </div>
@@ -191,9 +207,29 @@ const jsonLd = [
       if (r && a.getAttribute('href')?.startsWith('#')) { r.checked = true; r.dispatchEvent(new Event('change', { bubbles: true })); }
     }));
 
-    // after sending, the chat shows blue ticks, "typing…" and a reply; editing again resets it
-    const chatForm = document.querySelector<HTMLFormElement>('.s-chatform');
-    chatForm?.addEventListener('hr:saved', () => chatForm.classList.add('sent'));
-    chatForm?.addEventListener('input', () => chatForm.classList.remove('sent'));
+    // questionnaire: progress counter, the row you're on, and a reply after sending
+    const qf = document.querySelector<HTMLFormElement>('.s-qform');
+    if (qf) {
+      const items = [...qf.querySelectorAll<HTMLElement>('[data-q]')];
+      const val = (n: string) => ((qf.elements.namedItem(n) as HTMLInputElement | null)?.value ?? '').trim();
+      const answered = (q: string) =>
+        q === 'service' ? !!qf.querySelector('input[name="service"]:checked')
+        : q === 'contact' ? !!(val('phone') || val('email'))
+        : !!val(q);
+      const count = qf.querySelector<HTMLElement>('[data-qf-count]')!;
+      const bar = qf.querySelector<HTMLElement>('[data-qf-bar]')!;
+      const paint = () => {
+        let n = 0;
+        items.forEach(li => { const done = answered(li.dataset.q!); li.classList.toggle('done', done); if (done) n++; });
+        count.textContent = (qf.dataset.progress || '').replace('{n}', String(n)).replace('{total}', String(items.length));
+        bar.style.transform = `scaleX(${n / items.length})`;
+      };
+      qf.addEventListener('input', () => { qf.classList.remove('sent'); paint(); });
+      qf.addEventListener('change', paint);
+      qf.addEventListener('focusin', e => items.forEach(li => li.classList.toggle('on', li.contains(e.target as Node))));
+      qf.addEventListener('focusout', () => setTimeout(() => { if (!qf.contains(document.activeElement)) items.forEach(li => li.classList.remove('on')); }));
+      qf.addEventListener('hr:saved', () => { qf.classList.add('sent'); setTimeout(paint); });
+      paint();
+    }
   </script>
 </Shell>

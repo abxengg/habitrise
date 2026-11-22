@@ -159,12 +159,16 @@
     "previewName": "HabitRise team",
     "previewStatus": "usually replies within a day",
     "previewReply": "Got it! 🙌 We'll reach out within 24 hours.",
-    "askService": "Hi 👋 What would you like to explore?",
-    "askName": "Lovely choice! What's your name?",
+    "askService": "What would you like to explore?",
+    "askName": "What's your name?",
     "askContact": "How can we reach you?",
-    "askOrg": "Which college or company are you from? (optional)",
-    "askMessage": "Anything we should know? Dates, group size, goals… (optional)",
-    "composerHint": "We reply on WhatsApp or email within 24 hours."
+    "askOrg": "Which college or company are you from?",
+    "askMessage": "Anything we should know?",
+    "composerHint": "We reply on WhatsApp or email within 24 hours.",
+    "formLabel": "Enquiry form",
+    "formCount": "5 quick questions",
+    "progressLabel": "{n} of {total} answered",
+    "optional": "Optional"
   },
   "labels": {
     "bestFor": "Best for",

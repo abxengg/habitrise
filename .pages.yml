@@ -557,15 +557,19 @@ content:
           - { name: success, label: Success message, type: text }
           - { name: error, label: Error message, type: text }
           - { name: notConfigured, label: Message before the form is connected, type: text }
-          - { name: askService, label: Chat question — service, type: string }
-          - { name: askName, label: Chat question — name, type: string }
-          - { name: askContact, label: Chat question — WhatsApp & email, type: string }
-          - { name: askOrg, label: Chat question — college/company, type: string }
-          - { name: askMessage, label: Chat question — anything else, type: string }
-          - { name: composerHint, label: Line beside the send button, type: string }
-          - { name: previewName, label: Chat — contact name, type: string }
+          - { name: formLabel, label: Form header — small label, type: string }
+          - { name: formCount, label: Form header — title, type: string }
+          - { name: progressLabel, label: Progress text, type: string, description: "{n} = answered, {total} = number of questions" }
+          - { name: optional, label: "'Optional' tag", type: string }
+          - { name: askService, label: Question 1 — service, type: string }
+          - { name: askName, label: Question 2 — name, type: string }
+          - { name: askContact, label: Question 3 — WhatsApp & email, type: string }
+          - { name: askOrg, label: Question 4 — college/company, type: string }
+          - { name: askMessage, label: Question 5 — anything else, type: string }
+          - { name: composerHint, label: Line under the send button, type: string }
+          - { name: previewName, label: Reply — sender name, type: string }
           - { name: previewStatus, label: Chat — status line, type: string }
-          - { name: previewReply, label: Chat — reply after sending, type: string }
+          - { name: previewReply, label: Reply after sending, type: string }
 
   # ───────────────────────────── Register page ─────────────────────────────
   - name: register
