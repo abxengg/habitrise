@@ -1,0 +1,99 @@
+<!doctype html>
+<!-- HabitRise ad for the whole website. ?size=thumb (1200×630, also the site's share image) or ?size=square (1080×1080).
+     Render: node scripts/ads/render.mjs → public/ads/ (+ public/og-image.png) -->
+<html><head><meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@500;600;700;800&display=block" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{--ink:#121212;--sun:#f8af3c;--deep:#cf8a1f;--mint:#23c483;--grey:#55524c}
+  html,body{overflow:hidden;font-family:Manrope,sans-serif;color:var(--ink)}
+  body{background:#fff;background-image:radial-gradient(55% 70% at 88% 15%,#fff1cc 0%,rgba(255,255,255,0) 70%),radial-gradient(45% 60% at 0% 100%,#e8eeff 0%,rgba(255,255,255,0) 70%)}
+  .wrap{position:absolute;inset:0;display:grid;align-items:center}
+  .brand{display:flex;align-items:center;gap:14px;font-family:Anton;letter-spacing:.01em;line-height:1}
+  .brand small{display:block;font-family:Manrope;font-weight:800;letter-spacing:.42em;color:#b8741a;margin-top:6px}
+  h1{font-weight:800;letter-spacing:-.045em;line-height:1.02}
+  mark{background:none;position:relative;white-space:nowrap;color:inherit}
+  mark::before{content:"";position:absolute;left:-6px;right:-8px;bottom:.06em;height:.42em;z-index:-1;border-radius:8px;transform:rotate(-1.5deg);background:var(--sun)}
+  mark.b::before{background:#c9d6ff}
+  .sub{font-weight:600;color:var(--grey)}
+  .offers{display:grid;gap:10px}
+  .offers span{display:flex;align-items:center;gap:10px;font-weight:800;border:2.5px solid var(--ink);border-radius:14px;background:#fff;padding:9px 14px;width:max-content;box-shadow:3px 3px 0 var(--ink)}
+  .offers span:first-child{background:var(--sun)}
+  .url{font-weight:800;color:#8f8a82}
+  /* streak card */
+  .card{position:relative;background:#fff;border:3px solid var(--ink);border-radius:30px;box-shadow:12px 12px 0 var(--ink)}
+  .hd{display:flex;align-items:center;gap:12px}
+  .hd .m{width:46px;height:46px;border-radius:13px;background:#f6f5f1;display:grid;place-items:center}
+  .hd small{display:block;font-size:13px;font-weight:600;color:#8f8a82}
+  .hd b{font-size:19px}
+  .cnt{display:flex;align-items:baseline;gap:8px;margin:14px 0}
+  .cnt b{font-size:56px;letter-spacing:-.05em;line-height:1}
+  .cnt span{font-weight:600;color:#8f8a82}
+  .cnt em{margin-left:auto;font-style:normal;font-weight:800;font-size:14px;color:#e0412a;background:#ffe9e3;padding:5px 11px;border-radius:999px}
+  .days{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}
+  .days i{aspect-ratio:1;border-radius:10px;border:2px solid #eceae4;display:grid;place-items:center;font-style:normal;font-weight:800;font-size:13px;color:#8f8a82}
+  .days i.on{background:var(--mint);border-color:var(--mint);color:#fff}
+  .days i.t{border-color:#e0412a;color:#e0412a}
+  .chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+  .chips b{font-size:12.5px;padding:6px 11px;border-radius:999px;background:var(--ink);color:#fff}
+  .chips b.off{background:#fff;color:var(--ink);border:1.5px solid #eceae4}
+  .st{position:absolute;z-index:3;font-weight:800;border:2.5px solid var(--ink);border-radius:14px;box-shadow:4px 4px 0 var(--ink);padding:8px 13px}
+
+  body.thumb{width:1200px;height:630px}
+  .thumb .wrap{padding:54px 64px;grid-template-columns:1fr 430px;gap:52px}
+  .thumb .brand{font-size:34px}.thumb .brand img{height:46px}.thumb .brand small{font-size:11.5px}
+  .thumb h1{font-size:54px;margin:24px 0 14px}
+  .thumb .sub{font-size:18px;max-width:560px;margin-bottom:18px}
+  .thumb .offers{grid-template-columns:auto auto;justify-content:start}.thumb .offers span{font-size:15px;padding:8px 12px}
+  .thumb .url{font-size:16px;margin-top:20px}
+  .thumb .card{padding:22px}
+  .thumb .s1{top:-20px;right:26px;background:var(--sun);transform:rotate(6deg);font-size:15px}
+  .thumb .s2{display:none}
+  .thumb .s3{bottom:-18px;right:-12px;background:#c9d6ff;transform:rotate(4deg);font-size:14px}
+
+  body.square{width:1080px;height:1080px}
+  .square .wrap{padding:70px 76px;align-content:start;gap:38px}
+  .square .brand{font-size:38px}.square .brand img{height:52px}.square .brand small{font-size:13px}
+  .square h1{font-size:88px;margin:34px 0 18px}
+  .square .sub{font-size:24px;max-width:860px}
+  .square .bottom{display:grid;grid-template-columns:1fr 450px;gap:40px;align-items:end;margin-top:6px}
+  .square .offers span{font-size:20px;padding:11px 16px}
+  .square .url{font-size:20px;margin-top:22px}
+  .square .card{padding:22px}
+  .square .s1{top:-20px;right:26px;background:var(--sun);transform:rotate(6deg);font-size:16px}
+  .square .s2{display:none}
+  .square .s3{bottom:-18px;right:-12px;background:#c9d6ff;transform:rotate(4deg);font-size:15px}
+</style></head>
+<body>
+<script>document.body.className = new URLSearchParams(location.search).get('size') === 'square' ? 'square' : 'thumb';</script>
+<div class="wrap">
+  <div class="copy">
+    <div class="brand"><img src="../../public/img/brand/mark-black.png" alt=""><div>HABITRISE<small>BUILD THE SYSTEM</small></div></div>
+    <h1>Rise at 6.<br>Keep the <mark>streak.</mark><br>Change your <mark class="b">life.</mark></h1>
+    <p class="sub">Live 6 AM habit challenges, reading cohorts and coaching with Manikandan Rajendran.</p>
+    <div class="side">
+      <div class="offers"><span>⏰ 21-Day 6 AM Challenge</span><span>📚 Rise &amp; Read 2027</span><span>🎯 Coaching &amp; workshops</span></div>
+      <p class="url">habitrise.in</p>
+    </div>
+  </div>
+  <div class="art">
+    <div class="card">
+      <span class="st s1">+50 pts</span><span class="st s2">🔴 Live in 2 min</span><span class="st s3">⭐ 4.9/5</span>
+      <div class="hd"><span class="m"><img src="../../public/img/brand/mark-black.png" alt="" style="height:28px"></span><div><small>Good morning ☀️</small><b>Your 21-day streak</b></div></div>
+      <div class="cnt"><b>14</b><span>/ 21 days</span><em>🔥 on fire</em></div>
+      <div class="days">
+        <i class="on">✓</i><i class="on">✓</i><i class="on">✓</i><i class="on">✓</i><i class="on">✓</i><i class="on">✓</i><i class="on">✓</i>
+        <i class="on">✓</i><i class="on">✓</i><i class="on">✓</i><i class="on">✓</i><i class="on">✓</i><i class="on">✓</i><i class="on">✓</i>
+        <i class="t">15</i><i>16</i><i>17</i><i>18</i><i>19</i><i>20</i><i>21</i>
+      </div>
+      <div class="chips"><b>✓ Silence</b><b>✓ Affirmations</b><b>✓ Visualisation</b><b>✓ Exercise</b><b class="off">Reading</b><b class="off">Scribing</b></div>
+    </div>
+  </div>
+</div>
+<script>
+  if (document.body.className === 'square') {
+    const w = document.querySelector('.wrap'), art = document.querySelector('.art'), side = document.querySelector('.side');
+    const bottom = document.createElement('div'); bottom.className = 'bottom'; bottom.append(side, art); w.append(bottom);
+  }
+</script>
+</body></html>

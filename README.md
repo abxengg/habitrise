@@ -220,15 +220,26 @@ pasted, they see "we'll send your payment link on WhatsApp" instead.
 
 | File | Size | Use it for |
 |---|---|---|
-| [`public/ads/rise-and-read-thumb.png`](public/ads/rise-and-read-thumb.png) | 1200×630 | Link previews (WhatsApp, LinkedIn, X), YouTube-style thumbnails. Also the share image for `/rise-and-read` |
-| [`public/ads/rise-and-read-square.png`](public/ads/rise-and-read-square.png) | 1080×1080 | Instagram and LinkedIn posts |
-| [`public/og-image.png`](public/og-image.png) | 1200×630 | The share image for every other page |
+| [`public/ads/habitrise-thumb.png`](public/ads/habitrise-thumb.png) | 1200×630 | **The whole website**: link previews, YouTube-style thumbnails. Also copied to `public/og-image.png`, the share image for every page |
+| [`public/ads/habitrise-square.png`](public/ads/habitrise-square.png) | 1080×1080 | **The whole website**: Instagram and LinkedIn posts |
+| [`public/ads/rise-and-read-thumb.png`](public/ads/rise-and-read-thumb.png) | 1200×630 | Rise & Read 2027 only; also the share image for `/rise-and-read` |
+| [`public/ads/rise-and-read-square.png`](public/ads/rise-and-read-square.png) | 1080×1080 | Rise & Read 2027 posts |
 
-![Rise & Read 2027 thumbnail](public/ads/rise-and-read-thumb.png)
+![HabitRise thumbnail](public/ads/habitrise-thumb.png)
 
-They're HTML designs rendered with headless Chrome, so text changes are quick: edit
-[`scripts/ads/rise-and-read.html`](scripts/ads/rise-and-read.html) (or `scripts/og/og-image.html`) and run
-`node scripts/ads/render.mjs` (or `node scripts/og/render.mjs`). The ads carry no prices until they're confirmed.
+They're HTML designs in [`scripts/ads/`](scripts/ads/) rendered with headless Chrome, so text changes are quick: edit
+`habitrise.html` or `rise-and-read.html` and run `node scripts/ads/render.mjs` (it renders all four and refreshes
+`public/og-image.png`). No prices appear on them.
+
+---
+
+## Admin dashboard
+
+A private dashboard lives in its own private repo, **[abxengg/habitrise-admin](https://github.com/abxengg/habitrise-admin)**:
+submissions per form with trends, the latest entries, email delivery, payment links (and payments once a Razorpay
+key is added), site and form receiver deploys, changes waiting for Redeploy, CMS edits and the changelog.
+Only Google accounts the submissions Sheet is shared with can see it. Open it:
+<https://script.google.com/macros/s/AKfycbxMVTJOWO9pwxHwOcv0asTsdgdckaf4lwBFH7pA9jWgcJtDrbsaXV3chDmhyqXMfFXd/exec>
 
 ---
 
@@ -236,7 +247,7 @@ They're HTML designs rendered with headless Chrome, so text changes are quick: e
 
 - Per-page title and description from each page's **SEO** block in the CMS, with defaults in Site settings → SEO.
 - Canonical URLs, `en-IN`, Open Graph and Twitter cards, and a price-free 1200×630 share image (`public/og-image.png`).
-  Re-render it with `node scripts/og/render.mjs`.
+  Re-render it with `node scripts/ads/render.mjs`.
 - Structured data (JSON-LD): Organization, WebSite, Course with both offers (on `/register`), FAQPage, founder
   ProfilePage, Services, Breadcrumbs.
 - `/sitemap.xml`, `/robots.txt`, `/.well-known/security.txt`, web manifest, favicons, a "skip to content" link and a
@@ -285,7 +296,7 @@ npm run preview    # serve dist/
 | Form receiver (Google) | `scripts/google-apps-script/Code.gs`, with [`SETUP.md`](scripts/google-apps-script/SETUP.md) |
 | `<head>`, SEO, JSON-LD | `src/layouts/Shell.astro` |
 | Sitemap, robots | `src/pages/sitemap.xml.ts`, `src/pages/robots.txt.ts` |
-| Share image | `scripts/og/og-image.html`, rendered by `scripts/og/render.mjs` |
+| Ads + share image | `scripts/ads/*.html`, rendered by `scripts/ads/render.mjs` |
 | Deploy and release | `.github/workflows/pages.yml` |
 
 **Base path:** GitHub Pages serves the site under `/habitrise/`, so internal links and images go through `u()`
