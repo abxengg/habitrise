@@ -9,6 +9,7 @@ import Phone from '../components/streak/Phone.astro';
 import '../styles/streak.css';
 import { services as c, settings, founder, t, href } from '../lib/content';
 
+const tones = ['c-yellow', 'c-blue', 'c-mint', 'c-lilac'];
 const f = c.interest;
 const site = Astro.site!;
 const abs = (p: string) => new URL(u(p), site).href;
@@ -33,7 +34,7 @@ const jsonLd = [
   <Header />
 
   <main id="main" tabindex="-1">
-    <!-- services: a simple list. Each row is a link -->
+    <!-- services: cards with a "Who is it for?" filter -->
     <section class="s-hero s-sv-hero" id="services">
       <div class="s-wrap">
         <div class="s-head">
@@ -41,17 +42,32 @@ const jsonLd = [
           <h1>{c.hero.title}</h1>
           <p>{t(c.hero.text)}</p>
         </div>
-        <ol class="s-svl">
+
+        <div class="s-sv-filter" role="group" aria-label={c.hero.filterLabel}>
+          <span>{c.hero.filterLabel}</span>
+          {c.hero.filters.map((fl, i) => <button type="button" data-filter={fl.id} aria-pressed={i === 0 ? 'true' : 'false'}>{fl.label}</button>)}
+        </div>
+
+        <div class="s-svc-grid">
           {c.services.map((s, i) => (
-            <li id={s.id}>
-              <a href={href(s.buttonHref)} data-service={s.title}>
-                <span class="s-svl-no">{String(i + 1).padStart(2, '0')}</span>
-                <span class="s-svl-text"><b>{s.title}</b><small>{t(s.text)}</small></span>
-                <span class="s-svl-go"><span class="sr">{s.button}</span><i aria-hidden="true">→</i></span>
-              </a>
-            </li>
+            <article class="s-svc" id={s.id} data-for={s.for.join(' ')} style={`--i:${i}`}>
+              <div class={`s-svc-in ${tones[i % tones.length]}`}>
+              <div class="s-svc-top">
+                <span class="s-svc-icon" aria-hidden="true">{s.icon}</span>
+                <span class="s-step">{s.tagline}</span>
+                <span class="s-svc-num" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+              </div>
+              <h2>{s.title}</h2>
+              <p>{t(s.text)}</p>
+              <ul>{s.points.slice(0, 3).map((p, pi) => <li style={`--p:${pi}`}>{t(p)}</li>)}</ul>
+              <div class="s-svc-foot">
+                <b>{t(s.price)}</b>
+                <a href={href(s.buttonHref)} class:list={['s-btn', s.buttonHref.startsWith('/') ? 's-btn-dark' : 's-btn-line']} data-service={s.title}>{s.button} <span aria-hidden="true">→</span></a>
+              </div>
+              </div>
+            </article>
           ))}
-        </ol>
+        </div>
       </div>
     </section>
 
@@ -155,6 +171,34 @@ const jsonLd = [
       const r = document.querySelector<HTMLInputElement>(`input[name="service"][value="${CSS.escape(a.dataset.service!)}"]`);
       if (r && a.getAttribute('href')?.startsWith('#')) { r.checked = true; r.dispatchEvent(new Event('change', { bubbles: true })); }
     }));
+
+    // "Who is it for?" filter: matching cards move to the front (animated), the rest fade back
+    const grid = document.querySelector<HTMLElement>('.s-svc-grid');
+    const cards = [...document.querySelectorAll<HTMLElement>('.s-svc')];
+    const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.querySelectorAll<HTMLButtonElement>('[data-filter]').forEach(b => b.addEventListener('click', () => {
+      document.querySelectorAll('[data-filter]').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+      const want = b.dataset.filter!;
+      const first = new Map(cards.map(c => [c, c.getBoundingClientRect()]));
+      const match = (c: HTMLElement) => want === 'all' || c.dataset.for!.split(' ').includes(want);
+      [...cards].sort((x, y) => Number(match(y)) - Number(match(x)) || cards.indexOf(x) - cards.indexOf(y)).forEach(c => grid!.appendChild(c));
+      cards.forEach(c => {
+        c.classList.toggle('s-dim', !match(c));
+        if (still) return;
+        const a = first.get(c)!, z = c.getBoundingClientRect();
+        c.animate([{ transform: `translate(${a.left - z.left}px, ${a.top - z.top}px)` }, { transform: 'none' }], { duration: 550, easing: 'cubic-bezier(.16,1,.3,1)' });
+      });
+    }));
+
+    // cards lean a little toward the pointer (mouse only)
+    if (!still && matchMedia('(hover: hover)').matches) cards.forEach(c => {
+      c.addEventListener('pointermove', e => {
+        const r = c.getBoundingClientRect();
+        c.style.setProperty('--rx', `${((e.clientY - r.top) / r.height - .5) * -4}deg`);
+        c.style.setProperty('--ry', `${((e.clientX - r.left) / r.width - .5) * 5}deg`);
+      });
+      c.addEventListener('pointerleave', () => { c.style.removeProperty('--rx'); c.style.removeProperty('--ry'); });
+    });
 
     // questionnaire: progress counter, the row you're on, and a reply after sending
     const qf = document.querySelector<HTMLFormElement>('.s-qform');

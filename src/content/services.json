@@ -6,43 +6,119 @@
   "hero": {
     "tag": "Services",
     "title": "Ways to work with HabitRise.",
-    "text": "From the 21-day challenge to talks for your college or team — pick what fits, and we'll get in touch."
+    "text": "From the 21-day challenge to talks for your college or team — pick what fits, and we'll get in touch.",
+    "filterLabel": "Who is it for?",
+    "filters": [
+      {
+        "id": "all",
+        "label": "Everything"
+      },
+      {
+        "id": "me",
+        "label": "For me"
+      },
+      {
+        "id": "students",
+        "label": "Students & colleges"
+      },
+      {
+        "id": "teams",
+        "label": "Teams & companies"
+      }
+    ]
   },
   "services": [
     {
       "id": "challenge",
       "title": "21-Day 6 AM Challenge",
+      "tagline": "The flagship programme",
+      "icon": "⏰",
       "text": "Live 6 AM sessions for 21 days, the S.A.V.E.R.S routine and the private Skool community.",
+      "points": [
+        "21 live morning sessions",
+        "Skool community + leaderboard",
+        "Lifetime recordings"
+      ],
+      "price": "See pricing",
       "button": "Register",
-      "buttonHref": "/register"
+      "buttonHref": "/register",
+      "for": [
+        "me",
+        "students"
+      ]
     },
     {
       "id": "rise-and-read",
       "title": "Rise & Read 2027",
+      "tagline": "New · reading habit",
+      "icon": "📚",
       "text": "A 21-day reading-habit challenge: 20 pages a day, one takeaway a day, one idea applied every week.",
+      "points": [
+        "Guided reading plan",
+        "Reading buddy + streaks",
+        "Weekly live reflection"
+      ],
+      "price": "Free for members",
       "button": "See Rise & Read",
-      "buttonHref": "/rise-and-read"
+      "buttonHref": "/rise-and-read",
+      "for": [
+        "me",
+        "students"
+      ]
     },
     {
       "id": "coaching",
       "title": "1:1 Habit Coaching",
+      "tagline": "Personal accountability",
+      "icon": "🎯",
       "text": "Weekly one-to-one sessions to design your routine, fix what keeps breaking and stay on track.",
+      "points": [
+        "Personal routine design",
+        "Weekly check-ins",
+        "WhatsApp accountability"
+      ],
+      "price": "Price on request",
       "button": "I'm interested",
-      "buttonHref": "#interest"
+      "buttonHref": "#interest",
+      "for": [
+        "me"
+      ]
     },
     {
       "id": "workshops",
       "title": "College Workshops",
+      "tagline": "For students & placement cells",
+      "icon": "🎓",
       "text": "High-energy sessions on discipline, purpose and exam-ready routines for schools and colleges.",
+      "points": [
+        "90-minute live session",
+        "Habit toolkit for students",
+        "Online or on campus"
+      ],
+      "price": "Price on request",
       "button": "I'm interested",
-      "buttonHref": "#interest"
+      "buttonHref": "#interest",
+      "for": [
+        "students"
+      ]
     },
     {
       "id": "corporate",
       "title": "Corporate Sessions",
+      "tagline": "For teams & leaders",
+      "icon": "🏢",
       "text": "Morning-routine and focus programmes for teams, from a PMP-certified delivery lead.",
+      "points": [
+        "Focus & deep-work habits",
+        "Leadership mornings",
+        "Custom team challenges"
+      ],
+      "price": "Price on request",
       "button": "I'm interested",
-      "buttonHref": "#interest"
+      "buttonHref": "#interest",
+      "for": [
+        "teams"
+      ]
     }
   ],
   "interest": {
