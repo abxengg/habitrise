@@ -11,7 +11,7 @@
     "filters": [
       {
         "id": "all",
-        "label": "Everything"
+        "label": "Everyone"
       },
       {
         "id": "me",
@@ -121,6 +121,24 @@
       ]
     }
   ],
+  "process": {
+    "tag": "How we work together",
+    "title": "From hello to habit in three steps.",
+    "steps": [
+      {
+        "title": "Tell us what you need",
+        "text": "Fill in the form below or message us on WhatsApp. Two minutes, no commitment."
+      },
+      {
+        "title": "We plan it with you",
+        "text": "A short call to understand your goals, group size and dates. You get a clear plan."
+      },
+      {
+        "title": "Start building the system",
+        "text": "Sessions begin, habits stick, and you see the change in weeks, not months."
+      }
+    ]
+  },
   "interest": {
     "tag": "Interested?",
     "title": "Tell us what you're looking for.",
@@ -141,36 +159,18 @@
     "success": "Thank you! We've got your details and will reach out within 24 hours.",
     "error": "Something went wrong. Please try again, or message us on WhatsApp.",
     "notConfigured": "The form isn't connected yet. Please message us on WhatsApp for now.",
-    "previewName": "HabitRise team",
-    "previewStatus": "usually replies within a day",
-    "previewReply": "Got it! 🙌 We'll reach out within 24 hours.",
+    "formLabel": "Enquiry form",
+    "formCount": "5 quick questions",
+    "progressLabel": "{n} of {total} answered",
+    "optional": "Optional",
     "askService": "What would you like to explore?",
     "askName": "What's your name?",
     "askContact": "How can we reach you?",
     "askOrg": "Which college or company are you from?",
     "askMessage": "Anything we should know?",
     "composerHint": "We reply on WhatsApp or email within 24 hours.",
-    "formLabel": "Enquiry form",
-    "formCount": "5 quick questions",
-    "progressLabel": "{n} of {total} answered",
-    "optional": "Optional"
-  },
-  "process": {
-    "tag": "How we work together",
-    "title": "From hello to habit in three steps.",
-    "steps": [
-      {
-        "title": "Tell us what you need",
-        "text": "Fill in the form below or message us on WhatsApp. Two minutes, no commitment."
-      },
-      {
-        "title": "We plan it with you",
-        "text": "A short call to understand your goals, group size and dates. You get a clear plan."
-      },
-      {
-        "title": "Start building the system",
-        "text": "Sessions begin, habits stick, and you see the change in weeks, not months."
-      }
-    ]
+    "previewName": "HabitRise team",
+    "previewStatus": "usually replies within a day",
+    "previewReply": "Got it! 🙌 We'll reach out within 24 hours."
   }
 }
