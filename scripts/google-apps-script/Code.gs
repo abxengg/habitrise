@@ -22,6 +22,11 @@ const FORMS = {
       ['city', 'City'], ['age', 'Age'], ['occupation', 'Occupation'], ['source', 'Heard from'], ['consent', 'Consent'], ['page', 'Page'],
     ],
   },
+  riseread: {
+    sheet: 'Rise & Read',
+    subject: d => `Rise & Read sign-up: ${d.name} (${d.iam || '—'})`,
+    fields: [['name', 'Name'], ['phone', 'WhatsApp'], ['email', 'Email'], ['iam', 'I am a'], ['organisation', 'College / company'], ['page', 'Page']],
+  },
   newsletter: {
     sheet: 'Newsletter',
     subject: d => `New newsletter subscriber: ${d.email}`,

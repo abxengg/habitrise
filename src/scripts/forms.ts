@@ -63,11 +63,17 @@ export function wireForms() {
       if (button) button.disabled = true;
       status(form, msgs.sending, 'info');
       try {
-        const res = await fetch(d.endpoint, {
-          method: 'POST',
-          body: JSON.stringify({ form: d.kind, ...data, page: location.href, submittedAt: new Date().toISOString() }),
-        });
-        const out = await res.json().catch(() => ({ ok: res.ok }));
+        const send = async (body: Record<string, string>) => {
+          const res = await fetch(d.endpoint!, { method: 'POST', body: JSON.stringify({ ...body, page: location.href, submittedAt: new Date().toISOString() }) });
+          return res.json().catch(() => ({ ok: res.ok }));
+        };
+        let out = await send({ form: d.kind!, ...data });
+        // an older form receiver that doesn't know this form yet: save it to a form it does know
+        // (e.g. Rise & Read sign-ups land in the Interest tab), so no sign-up is ever lost
+        if (!out.ok && out.error === 'unknown form' && d.fallbackKind) {
+          const extra = Object.entries(data).filter(([k]) => !['name', 'email', 'phone', 'organisation', 'service', 'message'].includes(k)).map(([k, v]) => `${k}: ${v}`).join(' · ');
+          out = await send({ form: d.fallbackKind, ...data, message: [data.message, extra].filter(Boolean).join(' · ') });
+        }
         if (!out.ok) throw new Error(out.error || 'save failed');
 
         if (d.kind === 'register') {

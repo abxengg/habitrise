@@ -69,22 +69,32 @@
       {
         "label": "How it works",
         "href": "/#how",
-        "short": "How"
+        "short": "How",
+        "inTabBar": false
       },
       {
         "label": "Program",
         "href": "/#program",
-        "short": "Program"
+        "short": "Program",
+        "inTabBar": true
       },
       {
         "label": "Services",
         "href": "/services",
-        "short": "Services"
+        "short": "Services",
+        "inTabBar": true
       },
       {
         "label": "Founder",
         "href": "/about",
-        "short": "Founder"
+        "short": "Founder",
+        "inTabBar": true
+      },
+      {
+        "label": "Rise & Read",
+        "href": "/rise-and-read",
+        "short": "Read",
+        "inTabBar": true
       }
     ],
     "button": "Join now",
@@ -113,6 +123,10 @@
           {
             "label": "Register",
             "href": "/register"
+          },
+          {
+            "label": "Rise & Read 2027",
+            "href": "/rise-and-read"
           }
         ]
       },

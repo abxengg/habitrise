@@ -2,14 +2,17 @@
 import Brand from './Brand.astro';
 import { settings, href } from '../../lib/content';
 const h = settings.header;
-// tab-bar icons for the phone, in the same order as the menu links (How · Program · Services · Founder)
+// tab-bar icons for the phone, in the same order as the menu links (How · Program · Services · Founder · Rise & Read)
 const icons = [
   '<path d="M4 6h16M4 12h10M4 18h7"/><circle cx="18" cy="17" r="3"/>',
   '<rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/>',
   '<rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/>',
   '<circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/>',
+  '<path d="M12 6c-2-1.5-5-2-8-1.5V19c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V4.5C17 4 14 4.5 12 6z"/><path d="M12 6v14.5"/>',
 ];
-const mid = Math.ceil(h.links.length / 2);
+// phone tab bar: the links switched on for it, with Join in the middle; icons follow the menu order
+const tabLinks = h.links.map((l, i) => ({ ...l, icon: icons[i] ?? '<circle cx="12" cy="12" r="4"/>' })).filter(l => l.inTabBar !== false);
+const mid = Math.ceil(tabLinks.length / 2);
 ---
 <div class="s-progress" aria-hidden="true"><i></i></div>
 <header class="s-nav" id="nav">
@@ -23,12 +26,12 @@ const mid = Math.ceil(h.links.length / 2);
 
 <!-- phones: app-style tab bar at the bottom, with Join in the middle -->
 <nav class="s-tabbar" aria-label={h.menuLabel}>
-  {h.links.slice(0, mid).map((l, i) => (
-    <a href={href(l.href)} data-tab={l.href}><svg viewBox="0 0 24 24" aria-hidden="true" set:html={icons[i] ?? '<circle cx="12" cy="12" r="4"/>'} /><span>{l.short || l.label}</span></a>
+  {tabLinks.slice(0, mid).map(l => (
+    <a href={href(l.href)} data-tab={l.href}><svg viewBox="0 0 24 24" aria-hidden="true" set:html={l.icon} /><span>{l.short || l.label}</span></a>
   ))}
   <a href={href(h.buttonHref)} class="s-tab-join" data-tab={h.buttonHref}><b><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></b><span>{h.tabJoin}</span></a>
-  {h.links.slice(mid).map((l, i) => (
-    <a href={href(l.href)} data-tab={l.href}><svg viewBox="0 0 24 24" aria-hidden="true" set:html={icons[mid + i] ?? '<circle cx="12" cy="12" r="4"/>'} /><span>{l.short || l.label}</span></a>
+  {tabLinks.slice(mid).map(l => (
+    <a href={href(l.href)} data-tab={l.href}><svg viewBox="0 0 24 24" aria-hidden="true" set:html={l.icon} /><span>{l.short || l.label}</span></a>
   ))}
 </nav>
 

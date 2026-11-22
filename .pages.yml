@@ -118,6 +118,7 @@ content:
               - { name: label, label: Text, type: string }
               - { name: href, label: Link, type: string, description: "e.g. /about, /#program or a full https:// link" }
               - { name: short, label: Short text for the phone tab bar, type: string }
+              - { name: inTabBar, label: Show in the phone tab bar, type: boolean, description: "Keep 4 switched on so Join stays in the middle" }
           - { name: button, label: Button text, type: string }
           - { name: buttonHref, label: Button link, type: string }
           - { name: menuLabel, label: Phone menu label (screen readers), type: string }
@@ -609,3 +610,146 @@ content:
           - { name: error, label: Error message, type: text }
           - { name: notConfigured, label: Message before the form is connected, type: text }
           - { name: secureNote, label: Security note, type: string }
+
+  # ───────────────────────────── Rise & Read 2027 ─────────────────────────────
+  - name: riseread
+    label: "📚 Rise & Read page"
+    type: file
+    path: src/content/riseread.json
+    format: json
+    fields:
+      - name: seo
+        label: SEO
+        type: object
+        fields:
+          - { name: title, label: Page title, type: string }
+          - { name: description, label: Description, type: text, options: { maxlength: 300 } }
+      - name: hero
+        label: Top section
+        type: object
+        fields:
+          - { name: badge, label: Badge, type: string }
+          - { name: titleBefore, label: Heading — before the highlight, type: string }
+          - { name: titleHighlight, label: Heading — highlighted words, type: string }
+          - { name: titleAfter, label: Heading — after the highlight, type: string }
+          - { name: text, label: Paragraph, type: text }
+          - { name: button, label: Main button, type: string }
+          - { name: secondaryButton, label: Second button, type: string }
+          - { name: points, label: Points under the buttons, type: string, list: true }
+      - name: card
+        label: Reading-day card (top right)
+        type: object
+        fields:
+          - { name: greeting, label: Small line, type: string }
+          - { name: title, label: Title, type: string }
+          - { name: minutes, label: Big number in the timer, type: string }
+          - { name: minutesLabel, label: Timer label, type: string }
+          - { name: pages, label: Pages number, type: string }
+          - { name: pagesLabel, label: Pages label, type: string }
+          - { name: takeawayLabel, label: Takeaway label, type: string }
+          - { name: takeaway, label: Takeaway text, type: string }
+          - { name: checkIn, label: Check-in line, type: string }
+          - { name: stickerStreak, label: Sticker — top, type: string }
+          - { name: stickerBuddy, label: Sticker — bottom, type: string }
+      - name: problem
+        label: The problem
+        type: object
+        fields:
+          - { name: tag, label: Section tag, type: string }
+          - { name: text, label: Paragraph, type: text }
+          - { name: highlight, label: Big line, type: text }
+      - name: how
+        label: How it works
+        type: object
+        fields:
+          - { name: tag, label: Section tag, type: string }
+          - { name: title, label: Heading, type: string }
+          - name: steps
+            label: Steps
+            type: object
+            list: { collapsible: { collapsed: true, summary: "{title}" } }
+            fields:
+              - { name: title, label: Title, type: string }
+              - { name: text, label: Text, type: text }
+      - name: includes
+        label: What you get
+        type: object
+        fields:
+          - { name: tag, label: Section tag, type: string }
+          - { name: title, label: Heading, type: string }
+          - { name: items, label: Items, type: string, list: true }
+      - name: audience
+        label: Who it's for
+        type: object
+        fields:
+          - { name: tag, label: Section tag, type: string }
+          - { name: title, label: Heading, type: string }
+          - name: items
+            label: Groups
+            type: object
+            list: { collapsible: { collapsed: true, summary: "{title}" } }
+            fields:
+              - { name: title, label: Title, type: string }
+              - { name: text, label: Text, type: text }
+      - name: pricing
+        label: Pricing
+        type: object
+        fields:
+          - { name: tag, label: Section tag, type: string }
+          - { name: title, label: Heading, type: string }
+          - { name: text, label: Paragraph, type: string }
+          - { name: button, label: Button on each plan, type: string }
+          - name: plans
+            label: Plans
+            type: object
+            list: { collapsible: { collapsed: true, summary: "{name} — {price}" } }
+            fields:
+              - { name: name, label: Plan name, type: string, description: "A plan whose name contains 'Student' pre-picks Student in the form" }
+              - { name: price, label: Price, type: string, description: "e.g. ₹199 or Free" }
+              - { name: who, label: Who it's for, type: string }
+              - { name: highlight, label: Highlight this plan, type: boolean }
+      - name: coach
+        label: About the coach
+        type: object
+        fields:
+          - { name: tag, label: Section tag, type: string }
+          - { name: title, label: Heading, type: string }
+          - { name: role, label: Role line, type: string }
+          - { name: text, label: Paragraph, type: text }
+          - { name: photoAlt, label: Photo description (for screen readers), type: string }
+      - name: faq
+        label: FAQ
+        type: object
+        fields:
+          - { name: tag, label: Section tag, type: string }
+          - { name: title, label: Heading, type: string }
+          - name: items
+            label: Questions
+            type: object
+            list: { collapsible: { collapsed: true, summary: "{q}" } }
+            fields:
+              - { name: q, label: Question, type: string }
+              - { name: a, label: Answer, type: text }
+      - name: final
+        label: Final call to action + sign-up form
+        type: object
+        fields:
+          - { name: title, label: Heading, type: string }
+          - { name: titleHighlight, label: Heading — highlighted end, type: string }
+          - { name: text, label: Paragraph, type: text }
+          - { name: nameLabel, label: Name label, type: string }
+          - { name: namePlaceholder, label: Name placeholder, type: string }
+          - { name: phoneLabel, label: WhatsApp label, type: string }
+          - { name: phonePlaceholder, label: WhatsApp placeholder, type: string }
+          - { name: emailLabel, label: Email label, type: string }
+          - { name: emailPlaceholder, label: Email placeholder, type: string }
+          - { name: iAmLabel, label: "'I am a' label", type: string }
+          - { name: iAmOptions, label: "'I am a' choices (first one = student)", type: string, list: true }
+          - { name: orgLabel, label: College/company label, type: string }
+          - { name: orgPlaceholder, label: College/company placeholder, type: string }
+          - { name: submit, label: Button text, type: string }
+          - { name: sending, label: While sending, type: string }
+          - { name: success, label: After signing up, type: text }
+          - { name: error, label: Error message, type: text }
+          - { name: notConfigured, label: Message before the form is connected, type: text }
+          - { name: note, label: Small note under the form, type: string }

@@ -1,0 +1,200 @@
+---
+// Rise & Read 2027: a 21-day reading-habit challenge (waitlist landing page).
+// Every word comes from src/content/riseread.json, edited in Pages CMS → "📚 Rise & Read page".
+// Sign-ups go to the Google Sheet (tab "Rise & Read") through the same form receiver as the other forms.
+import { u } from '../lib/url';
+import Shell from '../layouts/Shell.astro';
+import Header from '../components/streak/Header.astro';
+import Footer from '../components/streak/Footer.astro';
+import { streakFonts } from '../components/streak/fonts';
+import '../styles/streak.css';
+import { riseread as c, founder, settings, t } from '../lib/content';
+
+const tones = ['c-yellow', 'c-blue', 'c-mint', 'c-lilac', 'c-yellow'];
+const site = Astro.site!;
+const abs = (p: string) => new URL(u(p), site).href;
+const priceNumber = (p: string) => (/\d/.test(p) ? Number(p.replace(/[^\d.]/g, '')) : 0);
+const f = c.final;
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Course',
+    name: c.seo.title,
+    description: t(c.seo.description),
+    provider: { '@id': abs('/') + '#org' },
+    inLanguage: 'en-IN',
+    offers: c.pricing.plans.map(pl => ({ '@type': 'Offer', category: pl.name, price: priceNumber(pl.price), priceCurrency: 'INR', availability: 'https://schema.org/PreOrder', url: abs('/rise-and-read') })),
+    hasCourseInstance: {
+      '@type': 'CourseInstance', courseMode: 'Online', startDate: '2027-01-01', courseWorkload: 'PT22M',
+      courseSchedule: { '@type': 'Schedule', repeatFrequency: 'Daily', repeatCount: 21 },
+      instructor: { '@type': 'Person', name: founder.name },
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: c.faq.items.map(q => ({ '@type': 'Question', name: t(q.q), acceptedAnswer: { '@type': 'Answer', text: t(q.a) } })),
+  },
+  {
+    '@context': 'https://schema.org', '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: settings.brand.name, item: abs('/') },
+      { '@type': 'ListItem', position: 2, name: c.seo.title, item: abs('/rise-and-read') },
+    ],
+  },
+];
+---
+<Shell fonts={streakFonts} title={c.seo.title} description={c.seo.description} jsonLd={jsonLd}>
+  <Header />
+
+  <main id="main" tabindex="-1" class="s-rr">
+    <!-- hero with a reading-day card -->
+    <section class="s-hero">
+      <div class="s-wrap s-hero-grid">
+        <div class="s-hero-copy">
+          <span class="s-badge">{t(c.hero.badge)}</span>
+          <h1>{c.hero.titleBefore} <mark class="y">{c.hero.titleHighlight}</mark> {c.hero.titleAfter}</h1>
+          <p>{t(c.hero.text)}</p>
+          <div class="s-hero-ctas">
+            <a href="#reserve" class="s-btn s-btn-sun">{c.hero.button}</a>
+            <a href="#how" class="s-btn s-btn-line">{c.hero.secondaryButton}</a>
+          </div>
+          <ul class="s-mini">{c.hero.points.map(p => <li>{t(p)}</li>)}</ul>
+        </div>
+
+        <div class="s-tracker-wrap">
+          <div class="s-sticker s1">{c.card.stickerStreak}</div>
+          <div class="s-sticker s3">{c.card.stickerBuddy}</div>
+          <div class="s-tracker s-rr-card">
+            <div class="s-tr-head">
+              <span class="s-tr-mark"><img src={u('/img/brand/mark-black.png')} alt="" width="215" height="256" /></span>
+              <div><small>{c.card.greeting}</small><b>{c.card.title}</b></div>
+            </div>
+            <div class="s-rr-timer">
+              <svg viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="52" /><circle class="s-rr-arc" cx="60" cy="60" r="52" /></svg>
+              <div><b>{c.card.minutes}</b><span>{c.card.minutesLabel}</span></div>
+            </div>
+            <div class="s-rr-book" aria-hidden="true">{Array.from({ length: 21 }, (_, i) => <i class:list={{ on: i < 7 }}></i>)}</div>
+            <div class="s-rr-stat"><b>{c.card.pages}</b><span>{c.card.pagesLabel}</span></div>
+            <div class="s-rr-take"><small>{c.card.takeawayLabel}</small><p>{c.card.takeaway}</p></div>
+            <p class="s-rr-check">{c.card.checkIn}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- the problem -->
+    <section class="s-sec s-tight-top">
+      <div class="s-wrap s-rr-problem">
+        <span class="s-eyebrow">{c.problem.tag}</span>
+        <p>{t(c.problem.text)}</p>
+        <p class="s-rr-big">{t(c.problem.highlight)}</p>
+      </div>
+    </section>
+
+    <!-- how it works -->
+    <section class="s-sec s-program" id="how">
+      <div class="s-wrap">
+        <div class="s-head"><span class="s-eyebrow">{c.how.tag}</span><h2>{c.how.title}</h2></div>
+        <ol class="s-rr-steps">
+          {c.how.steps.map((s, i) => (
+            <li class={`s-card ${tones[i % tones.length]}`}><span class="s-step">{String(i + 1).padStart(2, '0')}</span><h3>{s.title}</h3><p>{t(s.text)}</p></li>
+          ))}
+        </ol>
+      </div>
+    </section>
+
+    <!-- what you get + who it's for -->
+    <section class="s-sec">
+      <div class="s-wrap s-rr-two">
+        <div>
+          <div class="s-head s-left"><span class="s-eyebrow">{c.includes.tag}</span><h2>{c.includes.title}</h2></div>
+          <ul class="s-rr-list">{c.includes.items.map(i => <li>{t(i)}</li>)}</ul>
+        </div>
+        <div>
+          <div class="s-head s-left"><span class="s-eyebrow">{c.audience.tag}</span><h2>{c.audience.title}</h2></div>
+          <div class="s-rr-who">
+            {c.audience.items.map((a, i) => <article class={`s-card ${i ? 'c-blue' : 'c-yellow'}`}><h3>{a.title}</h3><p>{t(a.text)}</p></article>)}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- pricing -->
+    <section class="s-sec s-program" id="pricing">
+      <div class="s-wrap">
+        <div class="s-head"><span class="s-eyebrow">{c.pricing.tag}</span><h2>{c.pricing.title}</h2><p>{t(c.pricing.text)}</p></div>
+        <div class="s-rr-plans">
+          {c.pricing.plans.map(pl => (
+            <article class:list={['s-rr-plan', { hot: pl.highlight }]}>
+              <small>{pl.name}</small>
+              <b>{pl.price}</b>
+              <p>{t(pl.who)}</p>
+              <a href="#reserve" class:list={['s-btn', pl.highlight ? 's-btn-dark' : 's-btn-line']} data-iam={/student/i.test(pl.name) ? 'student' : undefined}>{c.pricing.button}</a>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- coach -->
+    <section class="s-sec s-founder">
+      <div class="s-wrap s-founder-card">
+        <div class="s-founder-img"><img src={u('/img/founder-sitting.webp')} alt={c.coach.photoAlt} width="576" height="1024" loading="lazy" /></div>
+        <div>
+          <span class="s-eyebrow">{c.coach.tag}</span>
+          <h2>{c.coach.title}</h2>
+          <p class="s-role">{c.coach.role}</p>
+          <p>{t(c.coach.text)}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- faq -->
+    <section class="s-sec" id="faq">
+      <div class="s-wrap">
+        <div class="s-head"><span class="s-eyebrow">{c.faq.tag}</span><h2>{c.faq.title}</h2></div>
+        <div class="s-faq">{c.faq.items.map(q => <details><summary>{t(q.q)}</summary><p>{t(q.a)}</p></details>)}</div>
+      </div>
+    </section>
+
+    <!-- final call to action with the waitlist form -->
+    <section class="s-final" id="reserve">
+      <div class="s-wrap">
+        <div class="s-final-box s-rr-final">
+          <img class="s-final-mark" src={u('/img/brand/mark-white.png')} alt="" width="215" height="256" />
+          <h2>{c.final.title} <span>{c.final.titleHighlight}</span></h2>
+          <p>{t(c.final.text)}</p>
+          <form class="s-form s-rr-form" data-hr-form data-kind="riseread" data-fallback-kind="interest" data-endpoint={settings.forms.endpoint}
+            data-msg-sending={f.sending} data-msg-success={f.success} data-msg-error={f.error} data-msg-not-configured={f.notConfigured}>
+            <label><span>{f.nameLabel}</span><input name="name" autocomplete="name" required maxlength="80" placeholder={f.namePlaceholder} /></label>
+            <label><span>{f.phoneLabel}</span><input name="phone" type="tel" autocomplete="tel" required pattern="[+0-9 ()-]{10,16}" placeholder={f.phonePlaceholder} /></label>
+            <label class="s-form-wide"><span>{f.emailLabel}</span><input name="email" type="email" autocomplete="email" required maxlength="120" placeholder={f.emailPlaceholder} /></label>
+            <div class="s-form-wide s-chips" role="radiogroup" aria-label={f.iAmLabel}>
+              <span>{f.iAmLabel}</span>
+              <div>{f.iAmOptions.map((o, i) => <label><input type="radio" name="iam" value={o} required data-student={i === 0 ? '1' : undefined} /><em>{o}</em></label>)}</div>
+            </div>
+            <label class="s-form-wide"><span>{f.orgLabel}</span><input name="organisation" maxlength="120" placeholder={f.orgPlaceholder} /></label>
+            <input type="hidden" name="service" value={c.seo.title} />
+            <label class="np-hp" aria-hidden="true">Website<input name="website" tabindex="-1" autocomplete="off" /></label>
+            <button type="submit" class="s-btn s-btn-sun s-wide s-form-wide">{f.submit} →</button>
+            <p class="s-form-status s-form-wide" data-status hidden role="status" aria-live="polite"></p>
+            <p class="s-rr-note s-form-wide">{f.note}</p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+
+  <script>
+    import { wireForms } from '../scripts/forms';
+    wireForms();
+    // the Student plan's button pre-picks "Student" in the form
+    document.querySelectorAll<HTMLAnchorElement>('a[data-iam="student"]').forEach(a => a.addEventListener('click', () => {
+      const r = document.querySelector<HTMLInputElement>('.s-rr-form input[data-student]');
+      if (r) r.checked = true;
+    }));
+  </script>
+</Shell>

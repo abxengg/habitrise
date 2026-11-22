@@ -1,6 +1,6 @@
 # Connect the website forms to a Google Sheet + email (5 minutes, free)
 
-All three forms (Register, "I'm interested" and the newsletter signup) send their details here. Each submission becomes a
+All the forms (Register, "I'm interested", the Rise & Read sign-up and the newsletter signup) send their details here. Each submission becomes a
 row in a Google Sheet **first**, then an email is sent. The last column, **Email status**, shows
 `sent`, or `failed: <reason>` if the email couldn't go out — the row is saved either way.
 
@@ -18,7 +18,7 @@ row in a Google Sheet **first**, then an email is sent. The last column, **Email
 5. **Test.** Submit the Interest form on /services. A row should appear in the "Interest" tab and
    an email should arrive.
 
-The "Registrations", "Interest" and "Newsletter" tabs (with bold headers) are created automatically on the first
+The "Registrations", "Interest", "Rise & Read" and "Newsletter" tabs (with bold headers) are created automatically on the first
 submission.
 
 **Changed the script later?** Use **Deploy → Manage deployments → Edit (pencil) → Version: New

@@ -1,0 +1,173 @@
+{
+  "seo": {
+    "title": "Rise & Read 2027 — 21-Day Reading-Habit Challenge",
+    "description": "Swap 20 minutes of reels for 20 pages a day. Rise & Read 2027 is a 21-day reading-habit challenge by Habit Rise, starting 1 January 2027. Students get a special price."
+  },
+  "hero": {
+    "badge": "📚 New for 2027 · Habit Rise",
+    "titleBefore": "Swap 20 minutes of reels for",
+    "titleHighlight": "20 pages",
+    "titleAfter": "that change your life.",
+    "text": "Rise & Read 2027 is a 21-day reading-habit challenge. Read daily, apply one idea a week, and finally finish the books you keep buying.",
+    "button": "Join the January 2027 cohort",
+    "secondaryButton": "How it works",
+    "points": [
+      "Starts 1 January 2027",
+      "Limited seats",
+      "Students get a special price"
+    ]
+  },
+  "card": {
+    "greeting": "Day 7 of 21",
+    "title": "Today's reading",
+    "minutes": "20",
+    "minutesLabel": "minutes · phone away",
+    "pagesLabel": "pages read this week",
+    "pages": "143",
+    "takeawayLabel": "Today's takeaway",
+    "takeaway": "Small habits compound. Start smaller than feels useful.",
+    "checkIn": "✓ Checked in on WhatsApp",
+    "stickerStreak": "🔥 7-day streak",
+    "stickerBuddy": "👋 Your reading buddy checked in"
+  },
+  "problem": {
+    "tag": "The problem",
+    "text": "You open your phone for one minute and lose an hour. The books you bought are still on the shelf.",
+    "highlight": "It isn't a discipline problem. It's a system problem, and systems can be built."
+  },
+  "how": {
+    "tag": "How it works",
+    "title": "Five simple steps, every week.",
+    "steps": [
+      {
+        "title": "Set your goal",
+        "text": "Free goal-setting and vision board session before 1 January."
+      },
+      {
+        "title": "Read 20 minutes a day",
+        "text": "Paper or Kindle, phone away. Check in daily on WhatsApp."
+      },
+      {
+        "title": "Share one takeaway",
+        "text": "One line a day. Short, honest, no essays."
+      },
+      {
+        "title": "Apply one idea a week",
+        "text": "Turn what you read into one action in your life."
+      },
+      {
+        "title": "Reflect live, weekly",
+        "text": "One session: 1 book, 1 idea, 1 action."
+      }
+    ]
+  },
+  "includes": {
+    "tag": "What you get",
+    "title": "Everything you need to finish the book.",
+    "items": [
+      "A 21-day guided reading plan for one self-help book",
+      "Daily check-in and streak tracking",
+      "A reading buddy to keep you accountable",
+      "3 weekly live sessions with Manikandan, habit coach",
+      "Goal-setting and vision board workshop (from Habit Rise)",
+      "\"Restart, don't quit\" rule: miss a day, you don't lose your place"
+    ]
+  },
+  "audience": {
+    "tag": "Who it's for",
+    "title": "Built for busy minds.",
+    "items": [
+      {
+        "title": "Students",
+        "text": "Build focus and a reading habit before placements and exams."
+      },
+      {
+        "title": "Working professionals",
+        "text": "Get your evenings back from the screen and grow on purpose."
+      }
+    ]
+  },
+  "pricing": {
+    "tag": "Pricing",
+    "title": "Pick your seat.",
+    "text": "One price for all 21 days.",
+    "button": "Reserve my seat",
+    "plans": [
+      {
+        "name": "Habit Rise member",
+        "price": "Free",
+        "who": "Current Habit Rise community",
+        "highlight": false
+      },
+      {
+        "name": "Student",
+        "price": "₹199",
+        "who": "Use code STUDENT or your college's code",
+        "highlight": true
+      },
+      {
+        "name": "Professional",
+        "price": "₹499",
+        "who": "Everyone else",
+        "highlight": false
+      }
+    ]
+  },
+  "coach": {
+    "tag": "About the coach",
+    "title": "Hi, I'm Mani 👋",
+    "role": "Habit coach · Founder, Habit Rise",
+    "text": "Manikandan Rajendran is a habit coach and founder of Habit Rise. He has trained 5,000+ students on habits and employability, and has spent 12+ years in banking technology leadership. He built Rise & Read for one reason: to help the next generation trade the scroll for growth.",
+    "photoAlt": "Manikandan Rajendran, habit coach and founder of Habit Rise"
+  },
+  "faq": {
+    "tag": "FAQ",
+    "title": "Quick answers.",
+    "items": [
+      {
+        "q": "Do I need to buy the book?",
+        "a": "Yes. Paper or Kindle. We'll share where to get it."
+      },
+      {
+        "q": "How much time a day?",
+        "a": "20 minutes of reading plus 2 minutes to check in."
+      },
+      {
+        "q": "What if I miss a day?",
+        "a": "Restart the next day. No penalty, no shame."
+      },
+      {
+        "q": "Is it in English?",
+        "a": "Sessions are in English with Tamil support."
+      },
+      {
+        "q": "What happens after 21 days?",
+        "a": "Continue to the next book cohort, or join Habit Rise coaching to go deeper."
+      }
+    ]
+  },
+  "final": {
+    "title": "2027 starts with",
+    "titleHighlight": "one page.",
+    "text": "Reserve your seat for the January cohort. We'll send the details on WhatsApp.",
+    "nameLabel": "Name",
+    "namePlaceholder": "Your name",
+    "phoneLabel": "WhatsApp number",
+    "phonePlaceholder": "+91 98765 43210",
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@example.com",
+    "iAmLabel": "I am a",
+    "iAmOptions": [
+      "Student",
+      "Working professional"
+    ],
+    "orgLabel": "College or company (optional)",
+    "orgPlaceholder": "Where are you from?",
+    "submit": "Reserve my seat",
+    "sending": "Reserving your seat…",
+    "success": "You're on the list! 📚 We'll send the January details on WhatsApp.",
+    "error": "Couldn't reserve your seat right now. Please try again, or message us on WhatsApp.",
+    "notConfigured": "Sign-ups open soon. Message us on WhatsApp to reserve your seat.",
+    "note": "We'll confirm your seat and next steps on WhatsApp."
+  }
+}

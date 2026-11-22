@@ -27,6 +27,7 @@ that land in a Google Sheet, and payments handed off to Razorpay.
 | `/` | Home: streak-tracker hero, how a morning works, the 21-day program, the Skool community, the founder, member stories, FAQ |
 | `/register` | **Pricing & registration**, the only page that shows prices. A rectangular ticket with a 3-step form (plan → about you → contact) and a live ticket stub that fills in as you type, then hands off to Razorpay |
 | `/services` | Coaching, workshops and corporate sessions, with an "I'm interested" form shown as a live chat |
+| `/rise-and-read` | **Rise & Read 2027**: a 21-day reading-habit challenge starting 1 January 2027 (waitlist landing page with its own prices and a sign-up form) |
 | `/about` | The founder's story, background and coaching areas |
 | `404` | Friendly "page not found" |
 
@@ -82,6 +83,7 @@ their name on it, so any change can be traced and undone.
 | 📖 **Founder page** | Headings and labels for `/about` |
 | 🧭 **Services page** | Services and the interest form, including its chat preview |
 | 💳 **Pricing & Register page** | The ticket, form steps, plan cards, live ticket stub and every form label and message |
+| 📚 **Rise & Read page** | Everything on `/rise-and-read`: hero and reading card, problem, steps, what you get, who it's for, plans and prices, coach, FAQ, sign-up form |
 
 ### Placeholders
 
@@ -116,10 +118,10 @@ Workflow: [`.github/workflows/pages.yml`](.github/workflows/pages.yml).
 
 ## Forms → Google Sheet + email
 
-The **Register**, **Interest** (services) and **Newsletter** forms post to a Google Apps Script web app,
+The **Register**, **Interest** (services), **Rise & Read** sign-up and **Newsletter** forms post to a Google Apps Script web app,
 [`scripts/google-apps-script/Code.gs`](scripts/google-apps-script/Code.gs). For every submission it:
 
-1. **saves a row first**, in the **Registrations**, **Interest** or **Newsletter** tab, so nothing is ever lost;
+1. **saves a row first**, in the **Registrations**, **Interest**, **Rise & Read** or **Newsletter** tab, so nothing is ever lost;
 2. **emails** `NOTIFY_EMAIL`. Reply-to is the visitor's email, and the sender name is "HabitRise Website";
 3. writes **`sent`** or **`failed: <reason>`** in the row's **Email status** column.
 
@@ -127,6 +129,10 @@ Tabs and bold headers are created automatically on the first submission. The scr
 hidden field and stops spreadsheet-formula injection.
 
 **Status:** connected. The receiver URL is set in *Site settings → Forms → Form receiver URL*.
+
+> **Rise & Read sign-ups:** to give them their own **Rise & Read** tab, paste the latest `Code.gs` into the Apps
+> Script editor and deploy a **New version** (see "Good to know" below). Until then, sign-ups are still saved, in
+> the **Interest** tab with the service "Rise & Read 2027" and "I am a: …" in the message column, so none are lost.
 
 ### Setting it up again, or for a new Sheet
 
@@ -160,7 +166,7 @@ Set in *Site settings → Prices & payment links*:
 | Everyone else | ₹699 | Professionals, entrepreneurs, career switchers and others |
 | Regular (struck through) | ~~₹999~~ | Shown as the early-bird comparison |
 
-Prices appear **only on `/register`**; the rest of the site and the share image have none. After the form is saved,
+Prices appear **only on `/register`** (and Rise & Read's own plans on `/rise-and-read`); the rest of the site and the share image have none. After the form is saved,
 the visitor gets a "Seat reserved" stamp and is sent to the **Razorpay payment link for their plan**. Until a link is
 pasted, they see "we'll send your payment link on WhatsApp" instead.
 
@@ -233,6 +239,8 @@ workflow and set the custom domain in the repo's **Settings → Pages**.
 
 - [x] Every word editable in Pages CMS; publishing via **Redeploy site** with automatic releases
 - [x] Forms connected to the Google Sheet with email notifications
+- [ ] Update the Google Apps Script with the latest `Code.gs` and deploy a **New version** (adds the Rise & Read tab)
+- [ ] Rise & Read: confirm prices (Free / ₹199 / ₹499), the first book, the vision-board session date and the weekly live-session time
 - [ ] Paste both **Razorpay payment links** (Site settings → Prices & payment links), then Redeploy
 - [ ] Give the client access to Pages CMS
 - [ ] Confirm the member stories are from real members (copied from the old site)
