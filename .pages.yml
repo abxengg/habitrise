@@ -533,6 +533,23 @@ content:
           - { name: tag, label: Section tag, type: string }
           - { name: title, label: Heading, type: string, description: "{nextMonday} shows the next cohort date" }
           - { name: text, label: Paragraph, type: text }
+      - name: programs
+        label: Program tabs (Join page)
+        type: object
+        fields:
+          - { name: label, label: Tabs label (screen readers), type: string }
+          - name: habitrise
+            label: Tab 1 — HabitRise challenge
+            type: object
+            fields:
+              - { name: title, label: Title, type: string }
+              - { name: meta, label: Small line, type: string, description: "{nextMonday} shows the next cohort date" }
+          - name: riseread
+            label: Tab 2 — Rise & Read
+            type: object
+            fields:
+              - { name: title, label: Title, type: string }
+              - { name: meta, label: Small line, type: string }
       - name: ticket
         label: Ticket (prices are in Site settings)
         type: object
@@ -719,6 +736,17 @@ content:
           - { name: role, label: Role line, type: string }
           - { name: text, label: Paragraph, type: text }
           - { name: photoAlt, label: Photo description (for screen readers), type: string }
+      - name: join
+        label: Ticket on the Join page (Rise & Read tab)
+        type: object
+        fields:
+          - { name: ticketLabel, label: Ticket top label, type: string }
+          - { name: programName, label: Programme name on the stub, type: string }
+          - { name: planTitle, label: Plan picker title, type: string }
+          - { name: detailsTitle, label: Details title, type: string }
+          - { name: starts, label: Start date, type: string }
+          - { name: iAmPreview, label: "'I am a' label on the stub", type: string }
+          - { name: serial, label: Ticket serial, type: string }
       - name: faq
         label: FAQ
         type: object
