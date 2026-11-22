@@ -1,0 +1,57 @@
+---
+// Shared layout for the Privacy and Terms pages. Text: src/content/legal.json (Pages CMS → "⚖️ Privacy & Terms").
+import { u } from '../../lib/url';
+import Shell from '../../layouts/Shell.astro';
+import Header from './Header.astro';
+import Footer from './Footer.astro';
+import { streakFonts } from './fonts';
+import '../../styles/streak.css';
+import { legal, settings, t } from '../../lib/content';
+
+interface Props { doc: 'privacy' | 'terms' }
+const d = legal[Astro.props.doc];
+const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const [before, after] = legal.contactText.split('{email}');
+const site = Astro.site!;
+const jsonLd = [{
+  '@context': 'https://schema.org', '@type': 'WebPage', name: d.seo.title, description: d.seo.description,
+  url: new URL(u('/' + Astro.props.doc), site).href, dateModified: d.updated, publisher: { '@id': new URL(u('/'), site).href + '#org' },
+}];
+---
+<Shell fonts={streakFonts} title={d.seo.title} description={d.seo.description} jsonLd={jsonLd}>
+  <Header />
+  <main id="main" tabindex="-1">
+    <section class="s-hero s-legal-hero">
+      <div class="s-wrap">
+        <div class="s-head">
+          <span class="s-eyebrow">{d.tag}</span>
+          <h1>{d.title}</h1>
+          <p>{t(d.intro)}</p>
+          <p class="s-legal-date">{legal.updatedLabel}: <b>{d.updated}</b></p>
+        </div>
+      </div>
+    </section>
+    <section class="s-sec s-legal">
+      <div class="s-wrap s-legal-grid">
+        <nav class="s-legal-toc" aria-label={legal.contentsLabel}>
+          <small>{legal.contentsLabel}</small>
+          <ol>{d.sections.map(s => <li><a href={`#${slug(s.heading)}`}>{s.heading}</a></li>)}</ol>
+        </nav>
+        <article class="s-legal-body">
+          {d.sections.map((s, i) => (
+            <section id={slug(s.heading)}>
+              <h2><span>{String(i + 1).padStart(2, '0')}</span>{s.heading}</h2>
+              {s.paragraphs.map(p => <p>{t(p)}</p>)}
+            </section>
+          ))}
+          <aside class="s-legal-contact">
+            <h3>{legal.contactTitle}</h3>
+            <p>{before}<a href={`mailto:${settings.contact.email}`}>{settings.contact.email}</a>{after}</p>
+            <a class="s-btn s-btn-dark" href={settings.contact.whatsapp} target="_blank" rel="noopener">{legal.contactButton} →</a>
+          </aside>
+        </article>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Shell>

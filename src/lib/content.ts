@@ -9,9 +9,10 @@ import about from '../content/about.json';
 import services from '../content/services.json';
 import register from '../content/register.json';
 import riseread from '../content/riseread.json';
+import legal from '../content/legal.json';
 import { u } from './url';
 
-export { settings, home, founder, about, services, register, riseread };
+export { settings, home, founder, about, services, register, riseread, legal };
 
 const p = settings.pricing;
 const values: Record<string, string> = {

@@ -40,6 +40,10 @@ const website = { '@context': 'https://schema.org', '@type': 'WebSite', '@id': h
 const schemas = [org, website, ...jsonLd];
 ---
 <!doctype html>
+<!--
+  HabitRise · Build the system.
+  Designed & built by ABX · https://theabx.in
+-->
 <html lang="en-IN">
   <head>
     <meta charset="UTF-8" />
@@ -51,6 +55,8 @@ const schemas = [org, website, ...jsonLd];
     <meta name="generator" content={Astro.generator} />
     <meta name="keywords" content={s.keywords} />
     <meta name="author" content={settings.brand.name} />
+    <meta name="designer" content="ABX · https://theabx.in" />
+    <link rel="author" type="text/plain" href={u('/humans.txt')} />
     <meta name="robots" content={noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large'} />
     <link rel="canonical" href={canonical} />
     <meta name="theme-color" content={themeColor} />
@@ -87,5 +93,6 @@ const schemas = [org, website, ...jsonLd];
   <body>
     <a href="#main" class="s-skip">{settings.header.skipLabel}</a>
     <slot />
+    <script is:inline>console.log('%c HabitRise %c crafted by ABX · https://theabx.in ', 'background:#f8af3c;color:#121212;font-weight:800;padding:4px 6px;border-radius:4px 0 0 4px', 'background:#121212;color:#f8af3c;padding:4px 6px;border-radius:0 4px 4px 0');</script>
   </body>
 </html>

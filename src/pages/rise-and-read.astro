@@ -159,13 +159,19 @@ const jsonLd = [
     </section>
 
     <!-- final call to action with the waitlist form -->
-    <section class="s-final" id="reserve">
+    <section class="s-sec s-book-sec" id="reserve">
       <div class="s-wrap">
-        <div class="s-final-box s-rr-final">
-          <img class="s-final-mark" src={u('/img/brand/mark-white.png')} alt="" width="215" height="256" />
-          <h2>{c.final.title} <span>{c.final.titleHighlight}</span></h2>
-          <p>{t(c.final.text)}</p>
-          <form class="s-form s-rr-form" data-hr-form data-kind="riseread" data-fallback-kind="interest" data-endpoint={settings.forms.endpoint}
+        <!-- an open book: the promise on the left page, the sign-up written on the right -->
+        <div class="s-book">
+          <div class="s-book-page s-book-left">
+            <img class="s-book-mark" src={u('/img/brand/mark-black.png')} alt="" width="215" height="256" />
+            <h2>{c.final.title} <span>{c.final.titleHighlight}</span></h2>
+            <p>{t(c.final.text)}</p>
+            <span class="s-book-ribbon" aria-hidden="true"></span>
+            <span class="s-book-no" aria-hidden="true">1</span>
+          </div>
+          <div class="s-book-page s-book-right">
+          <form class="s-form s-rr-form s-book-form" data-hr-form data-kind="riseread" data-fallback-kind="interest" data-endpoint={settings.forms.endpoint}
             data-msg-sending={f.sending} data-msg-success={f.success} data-msg-error={f.error} data-msg-not-configured={f.notConfigured}>
             <label><span>{f.nameLabel}</span><input name="name" autocomplete="name" required maxlength="80" placeholder={f.namePlaceholder} /></label>
             <label><span>{f.phoneLabel}</span><input name="phone" type="tel" autocomplete="tel" required pattern="[0-9+ \(\)\-]{10,16}" placeholder={f.phonePlaceholder} /></label>
@@ -181,6 +187,8 @@ const jsonLd = [
             <p class="s-form-status s-form-wide" data-status hidden role="status" aria-live="polite"></p>
             <p class="s-rr-note s-form-wide">{f.note}</p>
           </form>
+            <span class="s-book-no" aria-hidden="true">2</span>
+          </div>
         </div>
       </div>
     </section>

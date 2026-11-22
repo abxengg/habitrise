@@ -127,6 +127,12 @@ const jsonLd = [
           <h2>{c.program.title}</h2>
           <p>{t(c.program.text)}</p>
         </div>
+        <!-- the 21-day journey: one marker per day, the chosen level lights up -->
+        <div class="s-rail" data-level="0" aria-label={c.program.railLabel} role="img">
+          {c.program.weeks.map((w, wi) => (
+            <div class="s-rail-seg" data-seg={wi}>{Array.from({ length: 7 }, (_, d) => <i><span>{wi * 7 + d + 1}</span></i>)}</div>
+          ))}
+        </div>
         <div class="s-tabs" role="tablist">
           {c.program.weeks.map((w, i) => (
             <button role="tab" class:list={['s-tab', { on: i === 0 }]} data-tab={i} aria-selected={i === 0 ? 'true' : 'false'}>
@@ -138,6 +144,11 @@ const jsonLd = [
           <div class:list={['s-panel', { on: wi === 0 }]} data-panel={wi} role="tabpanel">
             <p class="s-panel-intro">{t(w.text)}</p>
             <ol>{w.lessons.map((l, li) => <li><span>{c.program.dayLabel} {wi * 7 + li + 1}</span>{l}</li>)}</ol>
+            <div class="s-panel-foot">
+              {wi < c.program.weeks.length - 1
+                ? <button type="button" class="s-btn s-btn-line" data-next-level={wi + 1}>{c.program.nextLabel} <span aria-hidden="true">→</span></button>
+                : <a href={u('/register')} class="s-btn s-btn-sun">{c.program.joinLabel} <span aria-hidden="true">→</span></a>}
+            </div>
           </div>
         ))}
       </div>
@@ -282,9 +293,16 @@ const jsonLd = [
       io.observe(tracker);
     }
     // program tabs
-    $$('.s-tab').forEach(t => t.addEventListener('click', () => {
-      $$('.s-tab').forEach(x => { x.classList.toggle('on', x === t); x.setAttribute('aria-selected', String(x === t)); });
-      $$('.s-panel').forEach(p => p.classList.toggle('on', p.dataset.panel === t.dataset.tab));
+    const rail = document.querySelector<HTMLElement>('.s-rail');
+    const showLevel = (n: string) => {
+      $$('.s-tab').forEach(x => { x.classList.toggle('on', x.dataset.tab === n); x.setAttribute('aria-selected', String(x.dataset.tab === n)); });
+      $$('.s-panel').forEach(p => p.classList.toggle('on', p.dataset.panel === n));
+      if (rail) rail.dataset.level = n;
+    };
+    $$('.s-tab').forEach(t => t.addEventListener('click', () => showLevel(t.dataset.tab!)));
+    $$('[data-next-level]').forEach(b => b.addEventListener('click', () => {
+      showLevel((b as HTMLElement).dataset.nextLevel!);
+      document.getElementById('program')?.querySelector('.s-tabs')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }));
   </script>
 </Shell>

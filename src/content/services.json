@@ -6,7 +6,26 @@
   "hero": {
     "tag": "Services",
     "title": "Ways to work with HabitRise.",
-    "text": "From the 21-day challenge to talks for your college or team — pick what fits, and we'll get in touch."
+    "text": "From the 21-day challenge to talks for your college or team — pick what fits, and we'll get in touch.",
+    "filterLabel": "Who is it for?",
+    "filters": [
+      {
+        "id": "all",
+        "label": "Everything"
+      },
+      {
+        "id": "me",
+        "label": "For me"
+      },
+      {
+        "id": "students",
+        "label": "Students & colleges"
+      },
+      {
+        "id": "teams",
+        "label": "Teams & companies"
+      }
+    ]
   },
   "services": [
     {
@@ -21,7 +40,37 @@
       ],
       "price": "See pricing",
       "button": "Register",
-      "buttonHref": "/register"
+      "buttonHref": "/register",
+      "icon": "⏰",
+      "for": [
+        "me",
+        "students"
+      ],
+      "bestFor": "Anyone who wants mornings that stick",
+      "format": "Live on Zoom",
+      "duration": "21 days · 45 min/day"
+    },
+    {
+      "id": "rise-and-read",
+      "title": "Rise & Read 2027",
+      "tagline": "New · reading habit",
+      "text": "A 21-day reading-habit challenge: 20 pages a day, one takeaway a day, one idea applied every week.",
+      "points": [
+        "Guided reading plan",
+        "Reading buddy + streaks",
+        "Weekly live reflection"
+      ],
+      "price": "Free for members",
+      "button": "See Rise & Read",
+      "buttonHref": "/rise-and-read",
+      "icon": "📚",
+      "for": [
+        "me",
+        "students"
+      ],
+      "bestFor": "Anyone who keeps buying books and never finishes them",
+      "format": "Live on Zoom + WhatsApp",
+      "duration": "21 days · 20 min/day"
     },
     {
       "id": "coaching",
@@ -35,7 +84,14 @@
       ],
       "price": "Price on request",
       "button": "I'm interested",
-      "buttonHref": "#interest"
+      "buttonHref": "#interest",
+      "icon": "🎯",
+      "for": [
+        "me"
+      ],
+      "bestFor": "Professionals and founders who want 1:1 focus",
+      "format": "Online, 1:1",
+      "duration": "Weekly sessions"
     },
     {
       "id": "workshops",
@@ -49,7 +105,14 @@
       ],
       "price": "Price on request",
       "button": "I'm interested",
-      "buttonHref": "#interest"
+      "buttonHref": "#interest",
+      "icon": "🎓",
+      "for": [
+        "students"
+      ],
+      "bestFor": "Schools, colleges and placement cells",
+      "format": "Online or on campus",
+      "duration": "90 minutes"
     },
     {
       "id": "corporate",
@@ -63,7 +126,14 @@
       ],
       "price": "Price on request",
       "button": "I'm interested",
-      "buttonHref": "#interest"
+      "buttonHref": "#interest",
+      "icon": "🏢",
+      "for": [
+        "teams"
+      ],
+      "bestFor": "Teams and leaders who want sharper focus",
+      "format": "Online or on site",
+      "duration": "Custom"
     }
   ],
   "interest": {
@@ -94,5 +164,46 @@
     "previewNameFallback": "…",
     "previewInterest": "I'm interested in {service}.",
     "previewReply": "Got it! 🙌 We'll reach out within 24 hours."
-  }
+  },
+  "labels": {
+    "bestFor": "Best for",
+    "format": "Format",
+    "duration": "Duration"
+  },
+  "process": {
+    "tag": "How we work together",
+    "title": "From hello to habit in three steps.",
+    "steps": [
+      {
+        "title": "Tell us what you need",
+        "text": "Fill in the form below or message us on WhatsApp. Two minutes, no commitment."
+      },
+      {
+        "title": "We plan it with you",
+        "text": "A short call to understand your goals, group size and dates. You get a clear plan."
+      },
+      {
+        "title": "Start building the system",
+        "text": "Sessions begin, habits stick, and you see the change in weeks, not months."
+      }
+    ]
+  },
+  "proof": [
+    {
+      "value": "5,000+",
+      "label": "Students trained"
+    },
+    {
+      "value": "15+",
+      "label": "Entrepreneurs mentored"
+    },
+    {
+      "value": "12+",
+      "label": "Years in leadership"
+    },
+    {
+      "value": "21",
+      "label": "Days to a new habit"
+    }
+  ]
 }

@@ -3,6 +3,9 @@ import Brand from './Brand.astro';
 import { u } from '../../lib/url';
 import { settings, href, t } from '../../lib/content';
 const f = settings.footer;
+// the live release number: set by the deploy workflow (SITE_VERSION), else package.json for local builds
+import pkg from '../../../package.json';
+const version = 'v' + (process.env.SITE_VERSION || pkg.version).replace(/^v/, '');
 const nl = settings.newsletter;
 const external = (h: string) => /^https?:/.test(h);
 ---
@@ -45,7 +48,11 @@ const external = (h: string) => /^https?:/.test(h);
     </div>
     <div class="s-foot-bottom">
       <small>{t(f.copyright)}</small>
-      <small>{f.legal.map((l, i) => <>{i > 0 && ' · '}<a href={href(l.href)}>{l.label}</a></>)}</small>
+      <small class="s-foot-legal">{f.legal.map((l, i) => <>{i > 0 && ' · '}<a href={href(l.href)}>{l.label}</a></>)}</small>
+      <small class="s-foot-meta">
+        <span class="s-ver" title={`${f.versionLabel} ${version}`}><span class="sr">{f.versionLabel} </span>{version}</span>
+        <a class="s-abx" href={f.credit.url} target="_blank" rel="noopener author"><code>&lt;/&gt;</code> {f.credit.label} <b>{f.credit.name}</b><i aria-hidden="true"></i></a>
+      </small>
     </div>
   </div>
 </footer>

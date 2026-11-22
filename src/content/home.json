@@ -166,7 +166,10 @@
           "The new you 🎉"
         ]
       }
-    ]
+    ],
+    "nextLabel": "Next level",
+    "joinLabel": "Join the challenge",
+    "railLabel": "Your 21-day journey"
   },
   "community": {
     "tag": "The community",

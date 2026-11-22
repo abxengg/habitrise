@@ -26,12 +26,14 @@ that land in a Google Sheet, and payments handed off to Razorpay.
 |---|---|
 | `/` | Home: streak-tracker hero, how a morning works, the 21-day program, the Skool community, the founder, member stories, FAQ |
 | `/register` | **Join**, with a tab for each program, each a rectangular ticket with a live stub that fills in as you type. **21-Day HabitRise Challenge**: 3-step form (plan → about you → contact), then Razorpay. **Rise & Read 2027**: plan + details. `/register?program=riseread` opens the second tab |
-| `/services` | Coaching, workshops and corporate sessions, with an "I'm interested" form shown as a live chat |
+| `/services` | Every way to work with HabitRise, with a "Who is it for?" filter, a numbers row, "How we work together" and an "I'm interested" form shown as a live chat |
 | `/rise-and-read` | **Rise & Read 2027**: a 21-day reading-habit challenge starting 1 January 2027 (waitlist landing page with its own prices and a sign-up form) |
 | `/about` | The founder's story, background and coaching areas |
+| `/privacy`, `/terms` | Privacy Policy and Terms of Use, with a sticky contents list (text in the CMS under ⚖️ Privacy & Terms) |
 | `404` | Friendly "page not found" |
 
-**On every page:** a newsletter signup styled as a letter (footer), floating Instagram / LinkedIn / WhatsApp buttons,
+**On every page:** the menu marks the page you're on with an amber ✱; the footer shows the live release number (e.g. `v1.0.6`)
+and the maker's credit; a newsletter signup styled as a letter (footer), floating Instagram / LinkedIn / WhatsApp buttons,
 and on phones an app-style tab bar at the bottom with **Join** in the middle. On phones the tab bar and top header slide away while
 you scroll down (and return when you scroll up), and the three contact buttons fold into one small button.
 
@@ -244,11 +246,19 @@ workflow and set the custom domain in the repo's **Settings → Pages**.
 - [ ] Rise & Read: confirm prices (Free / ₹199 / ₹499), the first book, the vision-board session date and the weekly live-session time
 - [ ] Paste both **Razorpay payment links** (Site settings → Prices & payment links), then Redeploy
 - [ ] Give the client access to Pages CMS
+- [ ] Mani to review the Privacy Policy and Terms (especially cancellations and refunds) in ⚖️ Privacy & Terms
 - [ ] Confirm the member stories are from real members (copied from the old site)
 - [ ] Replace the placeholder Services copy and the illustrative Skool card and leaderboard with real details
 - [ ] Founder to review the story text (👤 Founder in the CMS)
 - [ ] Point **habitrise.in** at the site, update the workflow's `SITE_URL` / `BASE_PATH`, and submit the sitemap in
       Google Search Console
+
+---
+
+## Credits
+
+Designed and built by **[ABX](https://theabx.in)**. The maker's mark lives in the footer ("</> Crafted by ABX"), in
+[`/humans.txt`](public/humans.txt), in each page's `<meta name="designer">` and source comment, and in the browser console.
 
 ---
 

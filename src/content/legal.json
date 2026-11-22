@@ -1,0 +1,127 @@
+{
+  "updatedLabel": "Last updated",
+  "contentsLabel": "On this page",
+  "contactTitle": "Questions?",
+  "contactText": "Write to us at {email} or message us on WhatsApp. We usually reply within a day.",
+  "contactButton": "Message us on WhatsApp",
+  "privacy": {
+    "seo": {
+      "title": "Privacy Policy",
+      "description": "How HabitRise collects, uses and protects the details you share through our website, programs and newsletter."
+    },
+    "tag": "Privacy",
+    "title": "Your details, handled with care.",
+    "updated": "22 November 2026",
+    "intro": "This policy explains what we collect when you use habitrise.in, join a program or subscribe to our newsletter, why we collect it, and the choices you have. We keep it short and in plain language.",
+    "sections": [
+      {
+        "heading": "What we collect",
+        "paragraphs": [
+          "Only what you type into our forms: your name, email address and WhatsApp number, and, depending on the form, your college or company, city, age, occupation, how you heard about us, the plan you chose and any message you write.",
+          "We do not use advertising trackers or analytics cookies on this website."
+        ]
+      },
+      {
+        "heading": "How we use it",
+        "paragraphs": [
+          "To register you for a program, send your payment link, add you to the cohort and its community, and contact you on WhatsApp or email about it.",
+          "To reply when you ask about our services, and to send the newsletter if you subscribed to it.",
+          "We never sell your details or share them for anyone else's marketing."
+        ]
+      },
+      {
+        "heading": "Where it is stored",
+        "paragraphs": [
+          "Form submissions are saved in a private Google Sheet and sent to our team by email (Google Workspace / Gmail). Only the HabitRise team can open them.",
+          "Payments are processed by Razorpay. We never see or store your card, UPI or bank details. Razorpay's own privacy policy applies to the payment.",
+          "Program sessions and the community run on Zoom, Skool and WhatsApp, which have their own privacy policies."
+        ]
+      },
+      {
+        "heading": "How long we keep it",
+        "paragraphs": [
+          "We keep registration details for as long as you take part in our programs, and for a reasonable time afterwards for records and accounts. Newsletter details are kept until you unsubscribe."
+        ]
+      },
+      {
+        "heading": "Your choices",
+        "paragraphs": [
+          "You can ask us to show, correct or delete the details we hold about you at any time, and you can unsubscribe from the newsletter with one click. Write to us and we will act on it promptly."
+        ]
+      },
+      {
+        "heading": "Young members",
+        "paragraphs": [
+          "Our programs are open to ages 12 and above. If you are under 18, please register with the permission of a parent or guardian."
+        ]
+      },
+      {
+        "heading": "Changes to this policy",
+        "paragraphs": [
+          "If we change how we handle your details, we will update this page and the date at the top."
+        ]
+      }
+    ]
+  },
+  "terms": {
+    "seo": {
+      "title": "Terms of Use",
+      "description": "The terms for using the HabitRise website and taking part in the 21-Day HabitRise Challenge, Rise & Read and other HabitRise programs."
+    },
+    "tag": "Terms",
+    "title": "The simple rules of the game.",
+    "updated": "22 November 2026",
+    "intro": "These terms apply when you use habitrise.in or join a HabitRise program, including the 21-Day HabitRise Challenge and Rise & Read. By registering, you agree to them.",
+    "sections": [
+      {
+        "heading": "The programs",
+        "paragraphs": [
+          "Our programs are live, online habit-building cohorts run by Manikandan Rajendran and the HabitRise team. Session times, dates and formats are listed on the program page and may occasionally change; we will tell you in advance."
+        ]
+      },
+      {
+        "heading": "Registration and payment",
+        "paragraphs": [
+          "Your seat is confirmed once your registration and payment are complete. Prices are shown in Indian Rupees on the registration page and are paid once for the whole program. Student prices are for currently enrolled school and college students.",
+          "Payments are processed securely by Razorpay."
+        ]
+      },
+      {
+        "heading": "Cancellations and refunds",
+        "paragraphs": [
+          "If you need to cancel, write to us before your cohort starts and we will help, including moving you to a later cohort where possible. Refund requests are reviewed case by case."
+        ]
+      },
+      {
+        "heading": "Community guidelines",
+        "paragraphs": [
+          "Be kind, be honest and respect everyone's privacy. Do not share other members' details, messages or session recordings outside the community. We may remove anyone who harasses others or disrupts the group."
+        ]
+      },
+      {
+        "heading": "Content and recordings",
+        "paragraphs": [
+          "Session recordings, worksheets and other program material are for your personal use while you are a member. Please do not copy, resell or publish them."
+        ]
+      },
+      {
+        "heading": "Not medical or professional advice",
+        "paragraphs": [
+          "Our programs share habits, routines and personal-growth ideas. They are not medical, psychological, financial or career advice. Check with a qualified professional before changing anything that affects your health."
+        ]
+      },
+      {
+        "heading": "Our responsibility",
+        "paragraphs": [
+          "We work hard to deliver every session as described, but results depend on your own effort. To the extent the law allows, our responsibility is limited to the amount you paid for the program."
+        ]
+      },
+      {
+        "heading": "Changes and governing law",
+        "paragraphs": [
+          "We may update these terms; the date at the top shows the latest version. These terms are governed by the laws of India."
+        ]
+      }
+    ]
+  }
+}

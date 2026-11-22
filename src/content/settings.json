@@ -69,33 +69,31 @@
   "header": {
     "links": [
       {
-        "label": "How it works",
-        "href": "/#how",
-        "short": "How",
-        "inTabBar": false
-      },
-      {
-        "label": "Program",
-        "href": "/#program",
-        "short": "Program",
+        "label": "Home",
+        "href": "/",
+        "short": "Home",
+        "inNav": false,
         "inTabBar": true
       },
       {
         "label": "Services",
         "href": "/services",
         "short": "Services",
+        "inNav": true,
         "inTabBar": true
       },
       {
         "label": "Founder",
         "href": "/about",
         "short": "Founder",
+        "inNav": true,
         "inTabBar": true
       },
       {
         "label": "Rise & Read",
         "href": "/rise-and-read",
         "short": "Read",
+        "inNav": true,
         "inTabBar": true
       }
     ],
@@ -192,13 +190,19 @@
     "legal": [
       {
         "label": "Privacy",
-        "href": "https://habitrise.in/privacy"
+        "href": "/privacy"
       },
       {
         "label": "Terms",
-        "href": "https://habitrise.in/terms"
+        "href": "/terms"
       }
-    ]
+    ],
+    "versionLabel": "Version",
+    "credit": {
+      "label": "Crafted by",
+      "name": "ABX",
+      "url": "https://theabx.in"
+    }
   },
   "seo": {
     "siteUrl": "https://habitrise.in",

@@ -1,66 +1,51 @@
 ---
+// Top menu (desktop/tablet) + app-style tab bar (phones). Links come from Site settings → Top menu.
+// The page you're on gets an amber ✱ in the menu and lights up in the tab bar.
 import Brand from './Brand.astro';
+import { u } from '../../lib/url';
 import { settings, href } from '../../lib/content';
 const h = settings.header;
-// tab-bar icons for the phone, in the same order as the menu links (How · Program · Services · Founder · Rise & Read)
-const icons = [
-  '<path d="M4 6h16M4 12h10M4 18h7"/><circle cx="18" cy="17" r="3"/>',
-  '<rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/>',
-  '<rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/>',
-  '<circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/>',
-  '<path d="M12 6c-2-1.5-5-2-8-1.5V19c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V4.5C17 4 14 4.5 12 6z"/><path d="M12 6v14.5"/>',
-];
-// phone tab bar: the links switched on for it, with Join in the middle; icons follow the menu order
-const tabLinks = h.links.map((l, i) => ({ ...l, icon: icons[i] ?? '<circle cx="12" cy="12" r="4"/>' })).filter(l => l.inTabBar !== false);
+
+// tab-bar icon by where the link goes
+const iconFor = (link: string) => {
+  if (link === '/') return '<path d="M4 11l8-7 8 7v9a1 1 0 0 1-1 1h-5v-6h-4v6H5a1 1 0 0 1-1-1z"/>';
+  if (link.includes('services')) return '<rect x="4" y="4" width="7" height="7" rx="2"/><rect x="13" y="4" width="7" height="7" rx="2"/><rect x="4" y="13" width="7" height="7" rx="2"/><rect x="13" y="13" width="7" height="7" rx="2"/>';
+  if (link.includes('about')) return '<circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/>';
+  if (link.includes('read')) return '<path d="M12 6c-2-1.5-5-2-8-1.5V19c3-.5 6 0 8 1.5 2-1.5 5-2 8-1.5V4.5C17 4 14 4.5 12 6z"/><path d="M12 6v14.5"/>';
+  if (link.includes('program')) return '<rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M9 3v4M15 3v4"/>';
+  return '<circle cx="12" cy="12" r="4"/>';
+};
+// which page is this? (works with the GitHub Pages sub-folder too)
+const clean = (p: string) => p.replace(/\/+$/, '') || '/';
+const here = clean(Astro.url.pathname);
+const isHere = (link: string) => !link.includes('#') && !/^https?:/.test(link) && clean(u(link)) === here;
+
+const navLinks = h.links.filter(l => l.inNav !== false);
+const tabLinks = h.links.filter(l => l.inTabBar !== false);
 const mid = Math.ceil(tabLinks.length / 2);
+const joinHere = isHere(h.buttonHref);
 ---
 <div class="s-progress" aria-hidden="true"><i></i></div>
 <header class="s-nav" id="nav">
   <Brand />
   <nav id="navLinks">
-    {h.links.map(l => <a href={href(l.href)}>{l.label}</a>)}
+    {navLinks.map(l => <a href={href(l.href)} class:list={{ on: isHere(l.href) }} aria-current={isHere(l.href) ? 'page' : undefined}>{l.label}</a>)}
   </nav>
-  <a href={href(h.buttonHref)} class="s-btn s-btn-dark s-nav-cta">{h.button}</a>
-  <button class="s-menu" id="navToggle" aria-label={h.menuLabel} aria-expanded="false"><span></span><span></span><span></span></button>
+  <a href={href(h.buttonHref)} class:list={['s-btn s-btn-dark s-nav-cta', { on: joinHere }]} aria-current={joinHere ? 'page' : undefined}>{h.button}</a>
 </header>
 
 <!-- phones: app-style tab bar at the bottom, with Join in the middle -->
 <nav class="s-tabbar" aria-label={h.menuLabel}>
   {tabLinks.slice(0, mid).map(l => (
-    <a href={href(l.href)} data-tab={l.href}><svg viewBox="0 0 24 24" aria-hidden="true" set:html={l.icon} /><span>{l.short || l.label}</span></a>
+    <a href={href(l.href)} class:list={{ on: isHere(l.href) }} aria-current={isHere(l.href) ? 'page' : undefined}><svg viewBox="0 0 24 24" aria-hidden="true" set:html={iconFor(l.href)} /><span>{l.short || l.label}</span></a>
   ))}
-  <a href={href(h.buttonHref)} class="s-tab-join" data-tab={h.buttonHref}><b><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></b><span>{h.tabJoin}</span></a>
+  <a href={href(h.buttonHref)} class:list={['s-tab-join', { on: joinHere }]} aria-current={joinHere ? 'page' : undefined}><b><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg></b><span>{h.tabJoin}</span></a>
   {tabLinks.slice(mid).map(l => (
-    <a href={href(l.href)} data-tab={l.href}><svg viewBox="0 0 24 24" aria-hidden="true" set:html={l.icon} /><span>{l.short || l.label}</span></a>
+    <a href={href(l.href)} class:list={{ on: isHere(l.href) }} aria-current={isHere(l.href) ? 'page' : undefined}><svg viewBox="0 0 24 24" aria-hidden="true" set:html={iconFor(l.href)} /><span>{l.short || l.label}</span></a>
   ))}
 </nav>
 
 <script>
-  // highlight the tab for the page (or home section) you're on
-  const tabs = [...document.querySelectorAll<HTMLAnchorElement>('.s-tabbar a')];
-  const here = () => {
-    const path = location.pathname.replace(/\/$/, '') || '/';
-    let on = tabs.find(a => { const p = new URL(a.href).pathname.replace(/\/$/, '') || '/'; return !new URL(a.href).hash && p === path && p !== (new URL(document.baseURI).pathname.replace(/\/$/, '') || '/'); });
-    if (!on) {
-      // on the home page: the section in view decides
-      for (const a of tabs) {
-        const id = new URL(a.href).hash.slice(1);
-        const el = id && new URL(a.href).pathname === location.pathname ? document.getElementById(id) : null;
-        if (el && el.getBoundingClientRect().top < innerHeight * .5) on = a;
-      }
-    }
-    tabs.forEach(a => a.classList.toggle('on', a === on));
-  };
-  addEventListener('scroll', () => requestAnimationFrame(here), { passive: true });
-  here();
-
   const nav = document.getElementById('nav')!;
-  const links = document.getElementById('navLinks')!;
-  const toggle = document.getElementById('navToggle')!;
   addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 20), { passive: true });
-  toggle.addEventListener('click', () => {
-    const open = links.classList.toggle('open');
-    toggle.setAttribute('aria-expanded', String(open));
-  });
-  links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
 </script>
