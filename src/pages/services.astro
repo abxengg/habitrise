@@ -9,7 +9,6 @@ import Phone from '../components/streak/Phone.astro';
 import '../styles/streak.css';
 import { services as c, settings, founder, t, href } from '../lib/content';
 
-const tones = ['c-yellow', 'c-blue', 'c-mint', 'c-lilac'];
 const f = c.interest;
 const site = Astro.site!;
 const abs = (p: string) => new URL(u(p), site).href;
@@ -51,7 +50,8 @@ const jsonLd = [
         <div class="s-svc-grid">
           {c.services.map((s, i) => (
             <article class="s-svc" id={s.id} data-for={s.for.join(' ')} style={`--i:${i}`}>
-              <div class={`s-svc-in ${tones[i % tones.length]}`}>
+              <div class="s-svc-in">
+              {i === 0 && <span class="s-svc-tape" aria-hidden="true"></span>}
               <div class="s-svc-top">
                 <span class="s-svc-icon" aria-hidden="true">{s.icon}</span>
                 <span class="s-step">{s.tagline}</span>

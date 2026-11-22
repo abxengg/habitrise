@@ -1459,3 +1459,26 @@ main:focus { outline: none; }
   .s-svc-foot { flex-direction: column; align-items: stretch; text-align: center; }
 }
 @media (prefers-reduced-motion: reduce) { .s-svc-in, .s-svc li { transition: none; } .s-svc:hover .s-svc-icon { animation: none; } }
+
+/* Service cards as index cards: white card stock, a red header line, faint blue rules ------- */
+.s-svc-in {
+  position: relative; background-color: #fff;
+  background-image: repeating-linear-gradient(transparent 0 31px, rgba(79,124,255,.12) 31px 32px);
+  background-position: 0 14px;
+  transition: transform .5s var(--ease-out), box-shadow .45s var(--ease-out), background-color .35s;
+}
+/* the red header rule runs edge to edge under the icon row */
+.s-svc-top { margin: calc(var(--s-4) * -1) calc(var(--s-4) * -1) 0; padding: var(--s-3) var(--s-4) 18px; border-bottom: 2px solid rgba(255,90,54,.6); background: #fff; border-radius: 30px 30px 0 0; transition: border-color .35s; }
+.s-svc-icon { background: #fffaf0; }
+.s-svc .s-step { background: var(--ink); color: #fff; }
+.s-svc-foot { border-top-color: rgba(18,18,18,.18); }
+.s-svc li::before { background: #fff; }
+/* the flagship is taped on */
+.s-svc-tape { position: absolute; top: -14px; left: 50%; width: 120px; height: 28px; translate: -50% 0; rotate: -3deg; background: rgba(248,175,60,.85); border-left: 2px dashed rgba(18,18,18,.15); border-right: 2px dashed rgba(18,18,18,.15); box-shadow: 0 2px 4px rgba(0,0,0,.08); z-index: 2; }
+@media (hover: hover) {
+  .s-svc:not(.s-dim):hover .s-svc-in { background-color: #fffdf6; }
+  .s-svc:not(.s-dim):hover .s-svc-top { border-bottom-color: var(--sun); }
+}
+@media (max-width: 760px) {
+  .s-svc-top { margin: calc(var(--s-3) * -1) calc(var(--s-3) * -1) 0; padding: var(--s-2) var(--s-3) 14px; border-radius: 22px 22px 0 0; }
+}
