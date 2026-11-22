@@ -557,6 +557,9 @@ content:
           - { name: success, label: Success message, type: text }
           - { name: error, label: Error message, type: text }
           - { name: notConfigured, label: Message before the form is connected, type: text }
+          - { name: formIcon, label: Form card icon (an emoji), type: string }
+          - { name: formTag, label: Form card tag, type: string }
+          - { name: formTitle, label: Form card title, type: string }
           - { name: previewTitle, label: Chat preview — title above it, type: string }
           - { name: previewName, label: Chat preview — contact name, type: string }
           - { name: previewStatus, label: Chat preview — status line, type: string }

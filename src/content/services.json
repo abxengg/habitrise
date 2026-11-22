@@ -163,7 +163,10 @@
     "previewFrom": " from {organisation}",
     "previewNameFallback": "…",
     "previewInterest": "I'm interested in {service}.",
-    "previewReply": "Got it! 🙌 We'll reach out within 24 hours."
+    "previewReply": "Got it! 🙌 We'll reach out within 24 hours.",
+    "formIcon": "✉️",
+    "formTag": "Takes 2 minutes",
+    "formTitle": "Your enquiry"
   },
   "labels": {
     "bestFor": "Best for",
