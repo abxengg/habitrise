@@ -216,6 +216,22 @@ pasted, they see "we'll send your payment link on WhatsApp" instead.
 
 ---
 
+## Ads & share images
+
+| File | Size | Use it for |
+|---|---|---|
+| [`public/ads/rise-and-read-thumb.png`](public/ads/rise-and-read-thumb.png) | 1200×630 | Link previews (WhatsApp, LinkedIn, X), YouTube-style thumbnails. Also the share image for `/rise-and-read` |
+| [`public/ads/rise-and-read-square.png`](public/ads/rise-and-read-square.png) | 1080×1080 | Instagram and LinkedIn posts |
+| [`public/og-image.png`](public/og-image.png) | 1200×630 | The share image for every other page |
+
+![Rise & Read 2027 thumbnail](public/ads/rise-and-read-thumb.png)
+
+They're HTML designs rendered with headless Chrome, so text changes are quick: edit
+[`scripts/ads/rise-and-read.html`](scripts/ads/rise-and-read.html) (or `scripts/og/og-image.html`) and run
+`node scripts/ads/render.mjs` (or `node scripts/og/render.mjs`). The ads carry no prices until they're confirmed.
+
+---
+
 ## SEO
 
 - Per-page title and description from each page's **SEO** block in the CMS, with defaults in Site settings → SEO.
