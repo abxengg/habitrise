@@ -48,6 +48,21 @@ export function wireForms() {
       notConfigured: d.msgNotConfigured ?? 'This form is not connected yet.', redirecting: d.msgRedirecting, noPaymentLink: d.msgNoPaymentLink,
     };
 
+    // Students (student plan, or "I am a: Student"): the email becomes "Personal email" and an optional
+    // college email appears. Hidden fields are disabled, so they are never sent.
+    const syncStudent = () => {
+      const student = !!form.querySelector('input[name="plan"][value="student"]:checked, input[name="iam"][data-student]:checked');
+      form.querySelectorAll<HTMLElement>('[data-student-only]').forEach(el => {
+        el.hidden = !student;
+        el.querySelectorAll('input').forEach(i => (i.disabled = !student));
+      });
+      form.querySelectorAll<HTMLElement>('[data-email-label]').forEach(l => {
+        l.textContent = (student ? l.dataset.studentText : l.dataset.defaultText) || l.textContent;
+      });
+    };
+    form.addEventListener('change', syncStudent);
+    form.addEventListener('reset', () => setTimeout(syncStudent));
+
     // Register: the college field is required only for the student plan
     const college = form.querySelector<HTMLElement>('[data-college]');
     const collegeInput = college?.querySelector('input');
@@ -70,6 +85,7 @@ export function wireForms() {
     const pre = new URLSearchParams(location.search).get('plan');
     if (pre) { const r = form.querySelector<HTMLInputElement>(`input[name="plan"][value="${pre}"]`); if (r) r.checked = true; }
     syncPlan();
+    syncStudent();
 
     form.addEventListener('submit', async e => {
       e.preventDefault();

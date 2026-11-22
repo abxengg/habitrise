@@ -156,6 +156,9 @@
     "phonePlaceholder": "98765 43210",
     "emailLabel": "Email",
     "emailPlaceholder": "you@example.com",
+    "personalEmailLabel": "Personal email",
+    "collegeEmailLabel": "College email (optional)",
+    "collegeEmailPlaceholder": "you@college.edu",
     "iAmLabel": "I am a",
     "iAmOptions": [
       "Student",

@@ -132,7 +132,8 @@ const jsonLd = [
             <fieldset class="s-wz-step" data-step="2" hidden>
               <legend>{f.contactTitle}</legend>
               <div class="s-wz-grid">
-                <label><span>{f.emailLabel}</span><input name="email" type="email" autocomplete="email" required maxlength="120" placeholder={f.emailPlaceholder} /></label>
+                <label><span data-email-label data-default-text={f.emailLabel} data-student-text={f.personalEmailLabel}>{f.emailLabel}</span><input name="email" type="email" autocomplete="email" required maxlength="120" placeholder={f.emailPlaceholder} /></label>
+                <label class="s-form-wide" data-student-only hidden><span>{f.collegeEmailLabel}</span><input name="collegeEmail" type="email" autocomplete="off" maxlength="120" placeholder={f.collegeEmailPlaceholder} disabled /></label>
                 <Phone label={f.phoneLabel} placeholder={f.phonePlaceholder} />
                 <div class="s-form-wide s-chips" role="radiogroup" aria-label={f.sourceLabel}>
                   <span>{f.sourceLabel}</span>
@@ -206,10 +207,11 @@ const jsonLd = [
                 <div class="s-wz-grid">
                   <label class="s-form-wide"><span>{rf.nameLabel}</span><input name="name" autocomplete="name" required maxlength="80" placeholder={rf.namePlaceholder} /></label>
                   <Phone label={rf.phoneLabel} placeholder={rf.phonePlaceholder} />
-                  <label><span>{rf.emailLabel}</span><input name="email" type="email" autocomplete="email" required maxlength="120" placeholder={rf.emailPlaceholder} /></label>
+                  <label><span data-email-label data-default-text={rf.emailLabel} data-student-text={rf.personalEmailLabel}>{rf.emailLabel}</span><input name="email" type="email" autocomplete="email" required maxlength="120" placeholder={rf.emailPlaceholder} /></label>
+                <label class="s-form-wide" data-student-only hidden><span>{rf.collegeEmailLabel}</span><input name="collegeEmail" type="email" autocomplete="off" maxlength="120" placeholder={rf.collegeEmailPlaceholder} disabled /></label>
                   <div class="s-form-wide s-chips" role="radiogroup" aria-label={rf.iAmLabel}>
                     <span>{rf.iAmLabel}</span>
-                    <div>{rf.iAmOptions.map(o => <label><input type="radio" name="iam" value={o} required /><em>{o}</em></label>)}</div>
+                    <div>{rf.iAmOptions.map((o, i) => <label><input type="radio" name="iam" value={o} required data-student={i === 0 ? '1' : undefined} /><em>{o}</em></label>)}</div>
                   </div>
                   <label class="s-form-wide"><span>{rf.orgLabel}</span><input name="organisation" maxlength="120" placeholder={rf.orgPlaceholder} /></label>
                   <input type="hidden" name="service" value={rr.seo.title} />

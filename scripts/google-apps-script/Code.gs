@@ -29,13 +29,13 @@ const FORMS = {
     subject: d => `New registration: ${d.name} (${d.plan === 'student' ? 'Student' : 'Professional'})`,
     fields: [
       ['plan', 'Plan'], ['name', 'Name'], ['email', 'Email'], ['phone', 'WhatsApp'], ['college', 'College / school'],
-      ['city', 'City'], ['age', 'Age'], ['occupation', 'Occupation'], ['source', 'Heard from'], ['consent', 'Consent'], ['page', 'Page'],
+      ['city', 'City'], ['age', 'Age'], ['occupation', 'Occupation'], ['source', 'Heard from'], ['consent', 'Consent'], ['collegeEmail', 'College email'], ['page', 'Page'],
     ],
   },
   riseread: {
     sheet: 'Rise & Read',
     subject: d => `Rise & Read sign-up: ${d.name} (${d.plan || d.iam || '—'})`,
-    fields: [['plan', 'Plan'], ['name', 'Name'], ['phone', 'WhatsApp'], ['email', 'Email'], ['iam', 'I am a'], ['organisation', 'College / company'], ['page', 'Page']],
+    fields: [['plan', 'Plan'], ['name', 'Name'], ['phone', 'WhatsApp'], ['email', 'Email'], ['iam', 'I am a'], ['organisation', 'College / company'], ['collegeEmail', 'College email'], ['page', 'Page']],
   },
   newsletter: {
     sheet: 'Newsletter',
@@ -78,6 +78,7 @@ function doPost(e) {
   if (missing) return json({ ok: false, error: 'missing required details' });
   if (d.email && !EMAIL_RE.test(plain(d.email))) return json({ ok: false, error: 'invalid email' });
   if (d.phone && !PHONE_RE.test(plain(d.phone))) return json({ ok: false, error: 'invalid phone' });
+  if (d.collegeEmail && !EMAIL_RE.test(plain(d.collegeEmail))) return json({ ok: false, error: 'invalid college email' });
 
   // flood and double-click protection
   const cache = CacheService.getScriptCache();
@@ -134,8 +135,12 @@ function doGet() {
 function getSheet(form) {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
   const sheet = ss.getSheetByName(form.sheet) || ss.insertSheet(form.sheet);
+  const header = ['Timestamp', ...form.fields.map(([, label]) => label), 'Email status'];
+  if (sheet.getLastRow() > 0 && sheet.getLastColumn() < header.length) {
+    // a form gained a field: rewrite the header row so the labels match the new columns
+    sheet.getRange(1, 1, 1, header.length).setValues([header]).setFontWeight('bold').setBackground('#121212').setFontColor('#f8af3c');
+  }
   if (sheet.getLastRow() === 0) {
-    const header = ['Timestamp', ...form.fields.map(([, label]) => label), 'Email status'];
     sheet.appendRow(header);
     sheet.getRange(1, 1, 1, header.length).setFontWeight('bold').setBackground('#121212').setFontColor('#f8af3c');
     sheet.setFrozenRows(1);

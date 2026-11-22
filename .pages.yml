@@ -651,6 +651,9 @@ content:
           - { name: namePlaceholder, label: Name placeholder, type: string }
           - { name: emailLabel, label: Email label, type: string }
           - { name: emailPlaceholder, label: Email placeholder, type: string }
+          - { name: personalEmailLabel, label: "Email label for students ('Personal email')", type: string }
+          - { name: collegeEmailLabel, label: College email label (students only), type: string }
+          - { name: collegeEmailPlaceholder, label: College email placeholder, type: string }
           - { name: phoneLabel, label: Phone label, type: string }
           - { name: phonePlaceholder, label: Phone placeholder, type: string }
           - { name: collegeLabel, label: College label, type: string }
@@ -815,6 +818,9 @@ content:
           - { name: phonePlaceholder, label: WhatsApp placeholder, type: string }
           - { name: emailLabel, label: Email label, type: string }
           - { name: emailPlaceholder, label: Email placeholder, type: string }
+          - { name: personalEmailLabel, label: "Email label for students ('Personal email')", type: string }
+          - { name: collegeEmailLabel, label: College email label (students only), type: string }
+          - { name: collegeEmailPlaceholder, label: College email placeholder, type: string }
           - { name: iAmLabel, label: "'I am a' label", type: string }
           - { name: iAmOptions, label: "'I am a' choices (first one = student)", type: string, list: true }
           - { name: orgLabel, label: College/company label, type: string }

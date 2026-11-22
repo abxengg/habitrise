@@ -176,7 +176,8 @@ const jsonLd = [
             data-msg-sending={f.sending} data-msg-success={f.success} data-msg-error={f.error} data-msg-not-configured={f.notConfigured}>
             <label><span>{f.nameLabel}</span><input name="name" autocomplete="name" required maxlength="80" placeholder={f.namePlaceholder} /></label>
             <Phone label={f.phoneLabel} placeholder={f.phonePlaceholder} />
-            <label class="s-form-wide"><span>{f.emailLabel}</span><input name="email" type="email" autocomplete="email" required maxlength="120" placeholder={f.emailPlaceholder} /></label>
+            <label class="s-form-wide"><span data-email-label data-default-text={f.emailLabel} data-student-text={f.personalEmailLabel}>{f.emailLabel}</span><input name="email" type="email" autocomplete="email" required maxlength="120" placeholder={f.emailPlaceholder} /></label>
+                <label class="s-form-wide" data-student-only hidden><span>{f.collegeEmailLabel}</span><input name="collegeEmail" type="email" autocomplete="off" maxlength="120" placeholder={f.collegeEmailPlaceholder} disabled /></label>
             <div class="s-form-wide s-chips" role="radiogroup" aria-label={f.iAmLabel}>
               <span>{f.iAmLabel}</span>
               <div>{f.iAmOptions.map((o, i) => <label><input type="radio" name="iam" value={o} required data-student={i === 0 ? '1' : undefined} /><em>{o}</em></label>)}</div>
