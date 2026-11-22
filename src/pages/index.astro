@@ -300,9 +300,14 @@ const jsonLd = [
       if (rail) rail.dataset.level = n;
     };
     $$('.s-tab').forEach(t => t.addEventListener('click', () => showLevel(t.dataset.tab!)));
+    // "Next level" switches in place: the page doesn't move, and focus lands on the new level's button
     $$('[data-next-level]').forEach(b => b.addEventListener('click', () => {
-      showLevel((b as HTMLElement).dataset.nextLevel!);
-      document.getElementById('program')?.querySelector('.s-tabs')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      const n = (b as HTMLElement).dataset.nextLevel!;
+      const y = b.getBoundingClientRect().top;
+      showLevel(n);
+      const next = document.querySelector<HTMLElement>(`.s-panel[data-panel="${n}"] .s-panel-foot .s-btn`);
+      // keep the new button exactly where the old one was, even if the panel height changed
+      if (next) { scrollBy({ top: next.getBoundingClientRect().top - y, behavior: 'instant' as ScrollBehavior }); next.focus({ preventScroll: true }); }
     }));
   </script>
 </Shell>
