@@ -222,9 +222,13 @@
   "notFound": {
     "title": "Page not found",
     "description": "This page doesn't exist.",
-    "tag": "404",
-    "heading": "You're up early — but this page isn't.",
-    "text": "The page you're looking for doesn't exist or has moved.",
-    "button": "Back to HabitRise"
+    "tag": "Error 404",
+    "bubble": "Zzz… five more minutes…",
+    "awake": "Okay, okay, I'm up! Streak saved. Now let's find a real page.",
+    "heading": "This page hit snooze.",
+    "text": "The page you're looking for doesn't exist or has moved. Missing one page is fine. What counts is showing up tomorrow.",
+    "button": "Back to HabitRise",
+    "secondButton": "Join the challenge",
+    "hint": "Tap the clock to wake it up."
   }
 }

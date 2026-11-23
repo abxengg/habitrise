@@ -1,4 +1,6 @@
 ---
+// 404: a comic panel where the "0" is a sleepy alarm clock that hit snooze. Tap it to wake it up.
+// Text: src/content/settings.json → notFound (Pages CMS → Site settings → "Page not found").
 import { u } from '../lib/url';
 import Shell from '../layouts/Shell.astro';
 import Header from '../components/streak/Header.astro';
@@ -10,15 +12,160 @@ const nf = settings.notFound;
 ---
 <Shell fonts={streakFonts} title={nf.title} description={nf.description} noindex>
   <Header />
-  <main id="main" tabindex="-1" class="s-hero s-404">
-    <div class="s-wrap">
-      <div class="s-head">
-        <span class="s-eyebrow">{nf.tag}</span>
+  <main id="main" tabindex="-1" class="nf">
+    <div class="s-wrap nf-grid">
+      <figure class="nf-panel" aria-label="Comic: the zero in 404 is an alarm clock fast asleep">
+        <span class="nf-boom nf-boom-a" aria-hidden="true">RIIING!</span>
+        <span class="nf-boom nf-boom-b" aria-hidden="true">BZZT!</span>
+        <p class="nf-bubble" data-bubble data-awake={nf.awake} aria-live="polite">{nf.bubble}</p>
+        <div class="nf-code">
+          <span class="nf-4" aria-hidden="true">4</span>
+          <button type="button" class="nf-clock" data-clock aria-label={nf.hint}>
+            <span class="nf-z" aria-hidden="true"><i>Z</i><i>z</i><i>z</i></span>
+            <svg viewBox="0 0 160 180" aria-hidden="true">
+              <g class="nf-bells">
+                <path d="M30 52a26 26 0 0 1 34-26z" />
+                <path d="M130 52a26 26 0 0 0-34-26z" />
+                <path d="M80 18v12M66 14h28" class="nf-line" />
+              </g>
+              <path d="M42 150l-12 18M118 150l12 18" class="nf-line" />
+              <circle cx="80" cy="98" r="62" class="nf-body" />
+              <circle cx="80" cy="98" r="48" class="nf-face" />
+              <g class="nf-ticks">
+                <path d="M80 56v8M80 132v8M38 98h8M114 98h8" class="nf-line thin" />
+              </g>
+              <!-- sleeping face -->
+              <g class="nf-sleep">
+                <path d="M58 92q8 7 16 0M86 92q8 7 16 0" class="nf-line" />
+                <path d="M72 116q8 4 16 0" class="nf-line" />
+              </g>
+              <!-- awake face -->
+              <g class="nf-awake">
+                <circle cx="66" cy="90" r="7" class="nf-eye" /><circle cx="94" cy="90" r="7" class="nf-eye" />
+                <circle cx="68" cy="88" r="2.4" fill="#fff" /><circle cx="96" cy="88" r="2.4" fill="#fff" />
+                <ellipse cx="80" cy="117" rx="8" ry="9" class="nf-mouth" />
+              </g>
+              <circle cx="80" cy="98" r="4" class="nf-pin" />
+              <path d="M80 98l14-20" class="nf-line nf-hand" />
+            </svg>
+          </button>
+          <span class="nf-4 nf-4b" aria-hidden="true">4</span>
+        </div>
+        <div class="nf-streak" aria-hidden="true">
+          <i class="on">✓</i><i class="on">✓</i><i class="on">✓</i><i class="miss">?</i><i>5</i><i>6</i><i>7</i>
+        </div>
+        <figcaption class="nf-hint">{nf.hint}</figcaption>
+      </figure>
+
+      <div class="nf-copy">
+        <span class="nf-tag">{nf.tag}</span>
         <h1>{nf.heading}</h1>
         <p>{nf.text}</p>
-        <p><a class="s-btn s-btn-dark" href={u('/')}>{nf.button}</a></p>
+        <div class="nf-acts">
+          <a class="s-btn s-btn-dark" href={u('/')}>{nf.button} <span aria-hidden="true">→</span></a>
+          <a class="s-btn s-btn-line" href={u('/register')}>{nf.secondButton}</a>
+        </div>
       </div>
     </div>
   </main>
   <Footer />
 </Shell>
+
+<style>
+  .nf { padding: clamp(120px, 14vw, 160px) 0 clamp(64px, 8vw, 104px); overflow: hidden; }
+  .nf-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(32px, 6vw, 80px); align-items: center; }
+
+  /* the comic panel */
+  .nf-panel { position: relative; margin: 0; padding: 64px 24px 28px; border: 3px solid var(--ink); border-radius: 28px; box-shadow: 10px 10px 0 var(--ink);
+    background: radial-gradient(circle, rgba(18,18,18,.13) 1.3px, transparent 1.6px) 0 0 / 14px 14px, linear-gradient(160deg, var(--cream), #ffe2ae);
+    transform: rotate(-1.2deg); text-align: center; }
+  .nf-boom { position: absolute; font-family: var(--brand-font); letter-spacing: .02em; color: var(--coral); -webkit-text-stroke: 2px var(--ink); paint-order: stroke fill; text-shadow: 3px 3px 0 var(--ink); opacity: 0; pointer-events: none; }
+  .nf-boom-a { top: 18px; left: 18px; font-size: 30px; transform: rotate(-14deg); }
+  .nf-boom-b { bottom: 70px; right: 18px; font-size: 26px; color: var(--blue); transform: rotate(10deg); }
+
+  .nf-bubble { position: relative; display: inline-block; max-width: 300px; margin: 0 0 18px; padding: 12px 18px; background: #fff; border: 3px solid var(--ink); border-radius: 20px; font-weight: 800; font-size: 16px; line-height: 1.35; box-shadow: 4px 4px 0 var(--ink); transition: background-color .3s; }
+  .nf-bubble::after { content: ''; position: absolute; left: 50%; bottom: -15px; width: 20px; height: 20px; background: inherit; border: 3px solid var(--ink); border-top: 0; border-left: 0; transform: translateX(-50%) rotate(45deg); }
+
+  .nf-code { display: flex; align-items: center; justify-content: center; gap: 4px; }
+  .nf-4 { font-family: var(--brand-font); font-size: clamp(120px, 17vw, 200px); line-height: 1; color: var(--sun); -webkit-text-stroke: 4px var(--ink); paint-order: stroke fill; text-shadow: 7px 7px 0 var(--ink); animation: nf-bob 3.2s ease-in-out infinite; }
+  .nf-4b { animation-delay: -1.6s; }
+
+  .nf-clock { position: relative; width: clamp(130px, 17vw, 190px); padding: 0; border: 0; background: none; cursor: pointer; -webkit-tap-highlight-color: transparent; transform-origin: 50% 90%; animation: nf-breathe 3.2s ease-in-out infinite; }
+  .nf-clock:focus-visible { outline: 3px solid var(--blue); outline-offset: 6px; border-radius: 50%; }
+  .nf-clock svg { display: block; width: 100%; overflow: visible; }
+  .nf-clock svg path, .nf-clock svg circle, .nf-clock svg ellipse { stroke: var(--ink); stroke-width: 5; stroke-linecap: round; stroke-linejoin: round; }
+  .nf-bells path:not(.nf-line) { fill: var(--coral); }
+  .nf-line { fill: none; }
+  .nf-line.thin { stroke-width: 4; }
+  .nf-body { fill: var(--coral); }
+  .nf-face { fill: #fff; }
+  .nf-eye, .nf-pin { fill: var(--ink); }
+  .nf-mouth { fill: var(--ink); }
+  .nf-hand { stroke-width: 4; transform-origin: 80px 98px; }
+  .nf-awake { opacity: 0; }
+
+  .nf-z { position: absolute; top: -6px; right: -18px; width: 60px; height: 70px; pointer-events: none; }
+  .nf-z i { position: absolute; bottom: 0; left: 0; font-style: normal; font-family: var(--brand-font); color: var(--blue); -webkit-text-stroke: 1.5px var(--ink); paint-order: stroke fill; opacity: 0; animation: nf-z 3s ease-in infinite; }
+  .nf-z i:nth-child(1) { font-size: 26px; }
+  .nf-z i:nth-child(2) { font-size: 20px; animation-delay: 1s; }
+  .nf-z i:nth-child(3) { font-size: 15px; animation-delay: 2s; }
+
+  .nf-streak { display: flex; justify-content: center; gap: 6px; margin-top: 22px; }
+  .nf-streak i { display: grid; place-items: center; width: 34px; height: 34px; border-radius: 10px; border: 2.5px solid var(--ink); background: #fff; font-style: normal; font-weight: 800; font-size: 13px; color: var(--ink-3); }
+  .nf-streak i.on { background: var(--mint); color: #fff; }
+  .nf-streak i.miss { background: var(--sun); color: var(--ink); animation: nf-pulse 1.6s ease-in-out infinite; }
+  .nf-hint { margin-top: 14px; font-size: 13px; font-weight: 700; color: var(--ink-2); }
+
+  /* awake: the clock rings, the bubble changes, the missed day gets ticked */
+  .nf-panel.up .nf-clock { animation: nf-ring .09s linear 10 alternate; }
+  .nf-panel.up .nf-sleep, .nf-panel.up .nf-z { opacity: 0; }
+  .nf-panel.up .nf-awake { opacity: 1; }
+  .nf-panel.up .nf-hand { animation: nf-spin .9s var(--ease-out); }
+  .nf-panel.up .nf-boom { animation: nf-pop .5s var(--ease-out) forwards; }
+  .nf-panel.up .nf-boom-b { animation-delay: .12s; }
+  .nf-panel.up .nf-bubble { background: #fff6e4; }
+  .nf-panel.up .nf-hint { visibility: hidden; }
+  .nf-panel.up .nf-streak i.miss { background: var(--mint); color: #fff; animation: nf-pop-day .5s var(--ease-out); }
+
+  .nf-copy h1 { font-size: clamp(40px, 5.4vw, 64px); line-height: 1.02; letter-spacing: -.03em; margin: 18px 0 16px; }
+  .nf-copy p { color: var(--ink-2); font-size: 18px; max-width: 460px; margin: 0; }
+  .nf-tag { display: inline-block; padding: 6px 14px; border: 2.5px solid var(--ink); border-radius: 999px; background: var(--sun); font-weight: 800; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; box-shadow: 3px 3px 0 var(--ink); transform: rotate(-2deg); }
+  .nf-acts { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
+
+  @keyframes nf-bob { 50% { transform: translateY(-8px) rotate(-2deg); } }
+  @keyframes nf-breathe { 50% { transform: scale(1.03, .97); } }
+  @keyframes nf-z { 0% { opacity: 0; transform: translate(0, 0); } 20% { opacity: 1; } 100% { opacity: 0; transform: translate(34px, -60px) rotate(12deg); } }
+  @keyframes nf-ring { from { transform: rotate(-9deg); } to { transform: rotate(9deg); } }
+  @keyframes nf-spin { from { transform: rotate(0); } to { transform: rotate(720deg); } }
+  @keyframes nf-pop { 0% { opacity: 0; scale: .3; } 70% { opacity: 1; scale: 1.15; } 100% { opacity: 1; scale: 1; } }
+  @keyframes nf-pulse { 50% { transform: scale(1.12); } }
+  @keyframes nf-pop-day { 0% { transform: scale(.6); } 70% { transform: scale(1.2); } }
+
+  @media (max-width: 860px) {
+    .nf-grid { grid-template-columns: 1fr; }
+    .nf-panel { padding: 56px 14px 22px; box-shadow: 7px 7px 0 var(--ink); }
+    .nf-copy { text-align: center; }
+    .nf-copy p { margin: 0 auto; }
+    .nf-acts { justify-content: center; }
+  }
+  @media (max-width: 420px) {
+    .nf-4 { -webkit-text-stroke-width: 3px; text-shadow: 5px 5px 0 var(--ink); }
+    .nf-streak i { width: 30px; height: 30px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .nf-4, .nf-clock, .nf-z i, .nf-streak i.miss { animation: none !important; }
+    .nf-z i { opacity: 1; position: static; }
+    .nf-panel.up .nf-clock, .nf-panel.up .nf-hand { animation: none; }
+  }
+</style>
+
+<script>
+  const clock = document.querySelector<HTMLButtonElement>('[data-clock]');
+  const panel = clock?.closest('.nf-panel');
+  const bubble = document.querySelector<HTMLElement>('[data-bubble]');
+  clock?.addEventListener('click', () => {
+    if (!panel || panel.classList.contains('up')) return;
+    panel.classList.add('up');
+    if (bubble && bubble.dataset.awake) bubble.textContent = bubble.dataset.awake;
+  });
+</script>

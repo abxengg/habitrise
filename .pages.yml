@@ -188,9 +188,13 @@ content:
           - { name: title, label: Browser-tab title, type: string }
           - { name: description, label: Search description, type: string }
           - { name: tag, label: Tag, type: string }
+          - { name: bubble, label: Sleeping clock's speech bubble, type: string }
+          - { name: awake, label: Bubble after the clock is tapped, type: string }
           - { name: heading, label: Heading, type: string }
           - { name: text, label: Paragraph, type: text }
           - { name: button, label: Button text, type: string }
+          - { name: secondButton, label: Second button text (goes to Join), type: string }
+          - { name: hint, label: Small hint under the comic, type: string }
 
   # ─────────────────────────────── Home page ───────────────────────────────
   - name: home
