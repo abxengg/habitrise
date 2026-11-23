@@ -4,7 +4,7 @@
     "description": "Rise at 6 and keep the streak. HabitRise is a 21-day live habit challenge with daily 6 AM Zoom sessions, the S.A.V.E.R.S morning routine and a private Skool community."
   },
   "hero": {
-    "badge": "🔥 5,000+ streaks started",
+    "badge": "🎓 5,000+ students trained",
     "line1": "Rise at 6.",
     "line2": "Keep the",
     "line2Highlight": "streak.",
@@ -16,13 +16,13 @@
     "points": [
       "Live on Zoom every morning",
       "Private Skool community",
-      "Ages 12+"
+      "Ages 16+"
     ]
   },
   "tracker": {
     "stickerPoints": "+50 pts",
     "stickerLive": "🔴 Live in 2 min",
-    "stickerRating": "⭐ 4.9/5",
+    "stickerRating": "⏰ 6:00 AM IST",
     "greeting": "Good morning ☀️",
     "title": "Your 21-day streak",
     "ofDays": "/ 21 days",
@@ -102,25 +102,25 @@
   "stats": [
     {
       "value": "5,000+",
-      "label": "Lives transformed"
+      "label": "Students trained at colleges"
     },
     {
-      "value": "4.9/5",
-      "label": "Average rating"
+      "value": "150+",
+      "label": "Community members"
     },
     {
       "value": "12+",
-      "label": "Years of leadership experience"
+      "label": "Years of professional experience"
     },
     {
       "value": "21",
-      "label": "Days to a new habit"
+      "label": "Live mornings, one habit system"
     }
   ],
   "program": {
     "tag": "The program",
     "title": "21 days, 3 levels.",
-    "text": "Each week unlocks the next. Open to everyone aged 12 and above.",
+    "text": "Each week unlocks the next. Open to everyone aged 16 and above.",
     "levelLabel": "Level",
     "dayLabel": "Day",
     "weeks": [
@@ -141,9 +141,9 @@
       {
         "days": "Days 8–14",
         "title": "Build the System",
-        "text": "Destroy fear, eliminate procrastination and install a daily power routine.",
+        "text": "Face fear, beat procrastination and install a daily morning routine.",
         "lessons": [
-          "Conquer fear forever",
+          "Build confidence through action",
           "Defeat procrastination",
           "Declutter your life",
           "Shift to positivity",
@@ -154,8 +154,8 @@
       },
       {
         "days": "Days 15–21",
-        "title": "Complete Transformation",
-        "text": "Master focus, communication and uniqueness — and celebrate your new self.",
+        "title": "Make It Stick",
+        "text": "Sharpen focus and communication, own your uniqueness — and plan how the routine continues after Day 21.",
         "lessons": [
           "Focus & deep work",
           "Daily learning system",
@@ -176,9 +176,9 @@
     "title": "Your 6 AM club lives on Skool.",
     "text": "Every member gets the private HabitRise group: daily check-ins, the classroom, the live calendar and a leaderboard.",
     "groupName": "HabitRise 6 AM Club",
-    "groupMeta": "🔒 Private · 5,000+ members · 21 live mornings",
+    "groupMeta": "🔒 Private · 150+ members · 21 live mornings",
     "groupText": "Build discipline with people who wake up when you do. Live sessions every morning at 6:00 AM IST, lessons and replays in the classroom, and a feed full of early risers.",
-    "membersMore": "and 5,000+ more",
+    "membersMore": "and 150+ more",
     "button": "Join the group",
     "leaderboardTitle": "Leaderboard · this week",
     "levelsTitle": "Levels",
@@ -212,7 +212,7 @@
     "title": "Straight from the group chat.",
     "text": "What members say once the 21 days are done.",
     "chatTitle": "HabitRise Members",
-    "chatMembers": "5,000+ members",
+    "chatMembers": "150+ members",
     "items": [
       {
         "name": "Praveen Kumar",
@@ -264,15 +264,15 @@
     "items": [
       {
         "q": "What time are the live sessions?",
-        "a": "Every day at 6:00 AM IST for all 21 days. Starting before the world wakes up is the whole point."
+        "a": "Every day at 6:00 AM IST for all 21 days. The 6 AM start is the format of this challenge, not a rule for life: sleep comes first, and replays are in the classroom if you miss a morning."
       },
       {
         "q": "Who can join?",
-        "a": "Anyone aged 12 and above — students, working professionals, entrepreneurs and career switchers all go through the same system together."
+        "a": "Anyone aged 16 and above (under 18s with a parent or guardian's permission) — students, working professionals, entrepreneurs and career switchers all go through the same system together."
       },
       {
         "q": "How much does it cost?",
-        "a": "There's a special price for students and a standard price for working professionals — one-time, for all 21 days. See the Pricing page for the current early-bird prices."
+        "a": "There's a special price for students and a standard price for working professionals — one-time, for all 21 days. See the Join page for the current prices."
       },
       {
         "q": "How do I pay?",

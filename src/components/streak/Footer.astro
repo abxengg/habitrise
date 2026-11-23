@@ -9,7 +9,7 @@ const version = 'v' + (process.env.SITE_VERSION || pkg.version).replace(/^v/, ''
 const nl = settings.newsletter;
 const external = (h: string) => /^https?:/.test(h);
 ---
-<footer class="s-foot">
+<footer class="s-foot" data-version={version}>
   <div class="s-wrap">
     <section class="s-news" aria-labelledby="newsTitle">
       <div class="s-news-copy">
@@ -50,7 +50,6 @@ const external = (h: string) => /^https?:/.test(h);
       <small>{t(f.copyright)}</small>
       <small class="s-foot-legal">{f.legal.map((l, i) => <>{i > 0 && ' · '}<a href={href(l.href)}>{l.label}</a></>)}</small>
       <small class="s-foot-meta">
-        <span class="s-ver" title={`${f.versionLabel} ${version}`}><span class="sr">{f.versionLabel} </span>{version}</span>
         <a class="s-abx" href={href(f.credit.url)} target="_blank" rel="noopener author"><code>&lt;/&gt;</code> {f.credit.label} <b>{f.credit.name}</b><i aria-hidden="true"></i></a>
       </small>
     </div>

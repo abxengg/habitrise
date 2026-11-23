@@ -67,7 +67,7 @@ const jsonLd = [
     <section class="s-strip">
       <div class="s-marquee" aria-label={c.audienceStrip.ariaLabel}>
         <div class="s-marquee-track">
-          {[0, 1].map(() => c.audienceStrip.items.map((a, i) => <span style={`--c:${chipColors[i % 5]}`}>{a}</span>))}
+          {[0, 1].map(k => c.audienceStrip.items.map((a, i) => <span style={`--c:${chipColors[i % 5]}`} aria-hidden={k ? 'true' : undefined}>{a}</span>))}
         </div>
       </div>
     </section>
@@ -87,7 +87,7 @@ const jsonLd = [
             <p>{t(c.how.cards[0].text)}</p>
             <div class="s-ui s-ui-live">
               <div class="s-video"><img src={u('/img/founder-hero.webp')} alt="" width="900" height="900" loading="lazy" /><span class="s-live-tag">{c.how.liveTag}</span></div>
-              <div class="s-attendees">{c.stories.items.slice(0, 5).map((s, i) => <i style={`background:${avatar(i)}`}>{initials(s.name)}</i>)}<span>{c.how.attendees}</span></div>
+              <div class="s-attendees">{c.stories.items.slice(0, 5).map((s, i) => <i aria-hidden="true" style={`background:${avatar(i)}`}>{initials(s.name)}</i>)}<span>{c.how.attendees}</span></div>
             </div>
           </article>
           <article class="s-card c-blue">
@@ -103,7 +103,7 @@ const jsonLd = [
             <h3>{c.how.cards[2].title}</h3>
             <p>{t(c.how.cards[2].text)}</p>
             <div class="s-ui s-ui-post">
-              <div><i style={`background:${avatar(0)}`}>{initials(c.how.post.name)}</i><b>{c.how.post.name}</b><small>{c.how.post.day}</small></div>
+              <div><i aria-hidden="true" style={`background:${avatar(0)}`}>{initials(c.how.post.name)}</i><b>{c.how.post.name}</b><small>{c.how.post.day}</small></div>
               <p>{c.how.post.text}</p>
               <span>{c.how.post.likes}</span><span>{c.how.post.comments}</span><span class="pts">{c.how.post.points}</span>
             </div>
@@ -170,13 +170,13 @@ const jsonLd = [
               <h3>{c.community.groupName}</h3>
               <p class="s-meta">{t(c.community.groupMeta)}</p>
               <p>{t(c.community.groupText)}</p>
-              <div class="s-members">{c.stories.items.map((s, i) => <i style={`background:${avatar(i)}`}>{initials(s.name)}</i>)}<span>{c.community.membersMore}</span></div>
+              <div class="s-members">{c.stories.items.map((s, i) => <i aria-hidden="true" style={`background:${avatar(i)}`}>{initials(s.name)}</i>)}<span>{c.community.membersMore}</span></div>
               <a href={u('/register')} class="s-btn s-btn-dark">{c.community.button}</a>
             </div>
           </article>
           <aside class="s-board">
             <h4>{c.community.leaderboardTitle}</h4>
-            <ol>{c.stories.items.slice(0, 5).map((s, i) => <li><span>{i + 1}</span><i style={`background:${avatar(i)}`}>{initials(s.name)}</i>{s.name.split(' ')[0]}<b>+{212 - i * 17}</b></li>)}</ol>
+            <ol>{c.stories.items.slice(0, 5).map((s, i) => <li><span>{i + 1}</span><i aria-hidden="true" style={`background:${avatar(i)}`}>{initials(s.name)}</i>{s.name.split(' ')[0]}<b>+{212 - i * 17}</b></li>)}</ol>
             <h4>{c.community.levelsTitle}</h4>
             <div class="s-levels">{c.community.levels.map(l => <span><i>{l.level}</i>{l.name}</span>)}</div>
             <p class="s-note">{c.community.note}</p>
@@ -213,7 +213,7 @@ const jsonLd = [
           <div class="s-chat-top"><b>{c.stories.chatTitle}</b><small>{c.stories.chatMembers}</small></div>
           {c.stories.items.map((s, i) => (
             <div class:list={['s-msg', { right: i % 2 === 1 }]}>
-              <i style={`background:${avatar(i)}`}>{initials(s.name)}</i>
+              <i aria-hidden="true" style={`background:${avatar(i)}`}>{initials(s.name)}</i>
               <div><small>{s.name} · {s.role}</small><p>{s.quote}</p><span>{s.result}</span></div>
             </div>
           ))}
