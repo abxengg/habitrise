@@ -30,7 +30,7 @@ that land in a Google Sheet, and payments handed off to Razorpay.
 | `/rise-and-read` | **Rise & Read 2027**: a 21-day reading-habit challenge starting 1 January 2027 (waitlist landing page with its own prices and a sign-up form) |
 | `/about` | The founder's story, background and coaching areas |
 | `/privacy`, `/terms` | Privacy Policy and Terms of Use, with a sticky contents list (text in the CMS under ⚖️ Privacy & Terms) |
-| `404` | Friendly "page not found" |
+| `404` | A comic panel where the "0" is a sleepy alarm clock that hit snooze; tap it to wake it and save the streak |
 
 **On every page:** the menu marks the page you're on with a small amber ✱ (the phone tab bar lights it up); the footer shows the live release number (e.g. `v1.0.6`)
 and the maker's credit; a newsletter signup styled as a letter (footer), floating Instagram / LinkedIn / WhatsApp buttons,
